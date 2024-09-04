@@ -9,7 +9,7 @@
 // Custom function to check if a character is a delimiter
 int is_delimiter(char c)
 {
-    return strchr(DELIMITERS, c) != NULL;
+    return ft_strchr(DELIMITERS, c) != NULL;
 }
 
 void ft_error(const char *msg)
@@ -25,7 +25,7 @@ char **tokenize_input(char *input)
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *));
     char *token;
-    int start = 0, end = 0, length = strlen(input);
+    int start = 0, end = 0, length = ft_strlen(input);
 
     if (!tokens)
         ft_error("allocation error");
@@ -40,7 +40,7 @@ char **tokenize_input(char *input)
                 token = malloc((end - start + 1) * sizeof(char));
                 if (!token)
                     ft_error("allocation error");
-                strncpy(token, &input[start], end - start);
+                ft_strlcpy(token, &input[start], end - start + 1);
                 token[end - start] = '\0';
                 tokens[position] = token;
                 position++;
@@ -63,7 +63,7 @@ char **tokenize_input(char *input)
                 token = malloc((end - start + 1) * sizeof(char));
                 if (!token)
                     ft_error("allocation error");
-                strncpy(token, &input[start], end - start);
+                ft_strlcpy(token, &input[start], end - start);
                 token[end - start] = '\0';
                 tokens[position] = token;
                 position++;
