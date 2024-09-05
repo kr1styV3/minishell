@@ -15,6 +15,7 @@ int main(int ac, char **av, char **envp)
     (void)envp;
     (void)ac;
     (void)av;
-    read_line_from_user();
+    while (1)
+        read_line_from_user();
     return 0;
 }

@@ -6,6 +6,11 @@ LIBFT = $(LIBFT_DIR)libft.a
 OBJ_DIR = .obj/
 INC_DIR = headers/
 
+# Add the path for readline headers and libraries
+READLINE_INC = -I/opt/homebrew/opt/readline/include
+READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
+
+
 # Add a list of your pipex source files here
 SRC_FILES = $(addprefix src/,main.c \
 	parsing.c)
@@ -15,7 +20,7 @@ SRC_FILES = $(addprefix src/,main.c \
 OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o)
 
 # Add -I$(INC_DIR) to your flags to include header files from the includes directory
-CFLAGS += -I$(INC_DIR)
+CFLAGS += -I$(INC_DIR) $(READLINE_INC)
 
 # Bold High Intensity
 BOLD_INTENSE_BLACK=\033[1;90m
@@ -50,7 +55,6 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 # Pattern rule for object files
-# Pattern rule for object files
 $(OBJ_DIR)%.o: src/%.c
 	@echo "Compiling $<..."
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -59,7 +63,7 @@ $(OBJ_DIR)%.o: src/%.c
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
 	@echo "$(BOLD_INTENSE_RED)Creating executable $@...$(NC)"
-	@$(CC) $(OBJ_FILES) -L$(LIBFT_DIR) -lft -o $(NAME)
+	@$(CC) $(OBJ_FILES) -L$(LIBFT_DIR) -lft $(READLINE_LIB) -o $(NAME)
 	@clear
 
 $(LIBFT):
@@ -67,7 +71,7 @@ $(LIBFT):
 
 valgrind: $(NAME)
 	@echo "Debugger Mode: Running Valgrind.."
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -\-verbose --log-file=valgrind-out.txt ./$(NAME) file "izshgoiha09873r9q8h" "wc -l" out
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME) file "izshgoiha09873r9q8h" "wc -l" out
 
 clean:
 	@echo "Cleaning object files..."

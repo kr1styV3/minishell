@@ -118,12 +118,14 @@ char **tokenize_input(char *input)
 
 void read_line_from_user()
 {
-    char command[100];
+    char *command;
     char **tokens;
 
-    if (fgets(command, sizeof(command), stdin) == NULL)
-        ft_error("fgets");
-
+    command = readline("minishell> "); 
+    if (ft_strncmp(command, "end", 3)==0)
+    {
+        ft_error("terminated");
+    }
     // Tokenize the input command using the custom tokenizer
     tokens = tokenize_input(command);
 
