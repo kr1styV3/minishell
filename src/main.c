@@ -12,10 +12,16 @@
 
 int main(int ac, char **av, char **envp)
 {
-    (void)envp;
-    (void)ac;
-    (void)av;
-    while (1)
-        read_line_from_user();
-    return 0;
+	t_token		*token;
+
+	token = init_token();
+	(void)envp;
+	(void)ac;
+	(void)av;
+	while (1)
+	{
+		read_line_from_user(token);
+		//executor();
+	}
+	return 0;
 }

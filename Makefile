@@ -13,7 +13,8 @@ READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
 
 # Add a list of your pipex source files here
 SRC_FILES = $(addprefix src/,main.c \
-	parsing.c)
+	parsing.c \
+	t_token_utils.c)
 
 
 # Define the corresponding object files and place them in $(OBJ_DIR)
