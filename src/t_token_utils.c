@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/06 16:50:00 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:05:47 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_token	*init_token(void)
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		ft_error("Failed to allocate memory for token.");
-	token->value = NULL;
+	token->token = NULL;
+	token->word = NULL;
 	token->fd_overwrite_output = 0;
 	token->fd_append_output = 0;
 	token->fd_input = 0;

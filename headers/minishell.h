@@ -13,7 +13,8 @@
 
 typedef struct s_token
 {
-	char	*value;
+	char	*token;
+	char	*word;
 	int		fd_overwrite_output;// command > file /*
 	int		fd_append_output;// command >> file	  * fd da dove prendere il file per eseguzione
 	int		fd_input;// command < file	          /*
