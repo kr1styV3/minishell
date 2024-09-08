@@ -9,110 +9,124 @@
 #define OPERATORS "<>|&"
 
 
-
-int	skip_whitespaces(char *c)
+int skip_whitespaces(char *str)
 {
-	int	i;
-
-	i = 0;
-	if(ft_isspace(*c) == 1)
-	{
-		while (ft_isspace(c[i]) == 1)
-			i++;
-		return (i);
-	}
-	return (0);
+	int i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	return i;
 }
 
-char	*load_token(char *str)
+char *extract_token(char *str)
 {
-	int		i;
-	char	*token;
+	int i = 0;
+	char *token;
 
-	i = 0;
-	while (str[i] && ft_isalnum(str[i]) == 1)
+	// Continue as long as it's alphanumeric.
+	while (str[i] && ft_isalnum(str[i]))
 		i++;
-	token = ft_calloc(sizeof(char) , i + 1);
+
+	token = ft_calloc(i + 1, sizeof(char));
 	if (!token)
-		return (NULL);
-	i = 0;
-	while (str[i] && ft_isalnum(str[i]) == 1)
-	{
-		token[i] = str[i];
-		i++;
-	}
-	return (token);
+		return NULL;
+
+	// Copy the valid token.
+	ft_strncpy(token, str, i);
+	return token;
 }
 
-char	*load_word(char *str)
+char *extract_word(char *str)
 {
-	int		i;
-	char	*word;
+	int i = 0;
+	char *word;
 
-	i = 0;
-	while (str[i] && str[i] != 34 && str[i] != 39)
+	while (str[i] && str[i] != 34 && str[i] != 39) // Stop at closing quote.
 		i++;
-	word = ft_calloc(sizeof(char) , i + 1);
+
+	word = ft_calloc(i + 1, sizeof(char));
 	if (!word)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != 34 && str[i] != 39)
-	{
-		word[i] = str[i];
-		i++;
-	}
-	return (word);
+		return NULL;
+
+	ft_strncpy(word, str, i);
+	return word;
 }
 
-int	understand_load_token(char *str, t_token *token)
+int process_token(t_token *token, char *str)
 {
-	int	i;
+	token->token = extract_token(str); // Extract alphanumeric token.
+	if (!token->token)
+		return -1;  // Memory allocation error.
 
-	i = 0;
-	if (ft_isalnum(str[i]) == 1)
-	{
-		token->token = load_token(&str[i]);
-		if (!token->token)
-			free_tokens_line(str, token, "Failed to allocate memory for token value.");
-		i += ft_strlen(token->token);
-	}
-	i += skip_whitespaces(&str[i]);
-	if (str[i] == 34 || str[i] == 39)
-	{
-		token->word = load_word(&str[i + 1]);
-		if (!token->word)
-			free_tokens_line(str, token, "Failed to allocate memory for word value.");
-		i += ft_strlen(token->word) + 2;
-	}
-	// if (ft_strchr(OPERATORS, str[i]))
-	// {
-	// 	if (str[i] == '<')
-	// 		check_input_fd(token);
-	// 	else if (str[i] == '>' && str[i + 1] == '>')
-	// 		check_append_fd(token, &str[i]);
-	// 	else if (str[i] == '>')
-	// 		check_output_fd(token, &str[i]);
-	// 	else if (str[i] == '|')
-	// 		token->pipe = 1;
-	// 	else if (str[i] == '&')
-	// 		token->background = 1;
-	// }
-	return (i);
+	return ft_strlen(token->token);  // Return the length of the token processed.
 }
 
-void	tokenizer(char *str, t_token *token)
+int process_word(t_token *token, char *str)
 {
-	int		string_position;
-	t_token	*initial_token;
+	char quote = str[0];  // Either ' or ".
+	token->word = extract_word(&str[1]);  // Extract everything inside the quotes.
+	(void)quote;
+	if (!token->word)
+		return -1;
 
-	initial_token = token;
-	(void)initial_token;
+	return ft_strlen(token->word) + 2;  // Account for opening and closing quotes.
+}
+
+int process_operator(t_token *token, char *str)
+{
+	token->operator = str[0];  // Save the operator (e.g., |, >, <).
+
+	// Special case for ">>" operator.
+	if (str[0] == '>' && str[1] == '>')
+		return 2;
+
+	return 1;
+}
+
+void tokenizer(char *str, t_token *token)
+{
+	int string_position;
+	t_state state;
+
 	string_position = 0;
-	while (str && str[string_position])
+	state = NORMAL;
+	while (str[string_position])
 	{
-		if (ft_isspace(str[string_position]) == 1)
+		if (state == SKIP_WHITESPACE)
+		{
 			string_position += skip_whitespaces(&str[string_position]);
-		string_position += understand_load_token(&str[string_position], token);
+			state = NORMAL;
+		}
+
+		else if (state == NORMAL)
+		{
+			if (ft_isalnum(str[string_position]))
+			{
+				string_position += process_token(token, &str[string_position]);
+				state = SKIP_WHITESPACE;
+			}
+			else if (str[string_position] == 34 || str[string_position] == 39)  // Quote found.
+			{
+				state = IN_WORD;
+			}
+			else if (ft_strchr(OPERATORS, str[string_position]))  // Operator found.
+			{
+				state = IN_OPERATOR;
+			}
+			else
+			{
+				string_position++;  // Move forward for unknown characters.
+			}
+		}
+		else if (state == IN_WORD)
+		{
+			string_position += process_word(token, &str[string_position]);
+			state = SKIP_WHITESPACE;
+		}
+		else if (state == IN_OPERATOR)
+		{
+			string_position += process_operator(token, &str[string_position]);
+			state = SKIP_WHITESPACE;
+		}
 		token->next = init_token();
 		token = token->next;
 	}
