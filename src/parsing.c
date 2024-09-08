@@ -44,25 +44,6 @@ char	*load_token(char *str)
 	return (token);
 }
 
-void	free_tokens_line(char *str, t_token *token, char *error_message)
-{
-	t_token	*tmp;
-
-	while (token)
-	{
-		tmp = token->next;
-		if (token->token)
-			free(token->token);
-		if (token->word)
-			free(token->word);
-		free(token);
-		token = tmp;
-	}
-	if (str)
-		free(str);
-	ft_error(error_message);
-}
-
 char	*load_word(char *str)
 {
 	int		i;
@@ -134,21 +115,6 @@ void	tokenizer(char *str, t_token *token)
 		string_position += understand_load_token(&str[string_position], token);
 		token->next = init_token();
 		token = token->next;
-	}
-}
-
-void	print_tokens(t_token *token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->token)
-			printf("Token: %s\n", tmp->token);
-		if (tmp->word)
-			printf("Word: %s\n", tmp->word);
-		tmp = tmp->next;
 	}
 }
 
