@@ -131,7 +131,7 @@ void	tokenizer(char *str, t_token *token)
 	{
 		if (ft_isspace(str[string_position]) == 1)
 			string_position += skip_whitespaces(&str[string_position]);
-		string_position = understand_load_token(&str[string_position], token);
+		string_position += understand_load_token(&str[string_position], token);
 		token->next = init_token();
 		token = token->next;
 	}
@@ -144,8 +144,10 @@ void	print_tokens(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		printf("Token: %s\n", tmp->token);
-		printf("Word: %s\n", tmp->word);
+		if (tmp->token)
+			printf("Token: %s\n", tmp->token);
+		if (tmp->word)
+			printf("Word: %s\n", tmp->word);
 		tmp = tmp->next;
 	}
 }
