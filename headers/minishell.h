@@ -19,6 +19,8 @@ typedef struct s_token
 	int		fd_overwrite_output;// command > file /*
 	int		fd_append_output;// command >> file	  * fd da dove prendere il file per eseguzione
 	int		fd_input;// command < file	          /*
+	char	*here_doc;
+	bool 	next_is_pipe;// command | command
 	bool	background;// command & se e vero il comando deve essere eseguito in background senno esegui normalmente
 	struct s_token *next;
 }   t_token;
@@ -26,25 +28,34 @@ typedef struct s_token
 typedef enum
 {
 	NORMAL,         // Default state: reading alphanumeric tokens.
+	IN_BUILTIN,     // Inside a builtin command.
 	IN_WORD,        // Inside a quoted string.
 	IN_OPERATOR,    // Reading an operator like |, <, >.
 	SKIP_WHITESPACE // Skipping spaces.
 }	t_state;
 
+
+void	free_token(t_token *token);
+int	process_builtin(t_token *token, char *str, int i, t_state *state, char **env);
+int	ft_isbuiltin(char *cmd);
+int	here_doc(t_token *token, char *str, int string_position);
+int	check_overwrite_fd(t_token *token, char *str, int string_position);
+int	check_append_fd(t_token *token, char *str, int string_position);
 /**
  * @brief Reads a line from the user
  * @param token The token to be filled with the user input.
  * @return This function does not return; it writes directly to the token.
  */
-void	read_line_from_user(t_token *token);
+void	read_line_from_user(t_token *token, char **env);
 
 // parsing.c
 /**
  * @brief Skips the whitespaces in the given string.
  * @param str The string from which the whitespaces are skipped.
+ * @param state The state of the parser to change to NORMAL state.
  * @return The number of characters skipped.
  */
-int	skip_whitespaces(char *str);
+int	skip_whitespaces(char *str, t_state *state);
 
 /**
  * @brief Extracts an alphanumeric token from the string.
@@ -64,9 +75,10 @@ char *extract_token(char *str);
  * or double ("") quotes, stopping at the closing quote.
  *
  * @param str The input string starting after the opening quote.
+ * @param quote The quote character used to enclose the word.
  * @return A pointer to the extracted word, or NULL if memory allocation fails.
  */
-char *extract_word(char *str);
+char *extract_word(char *str, char quote);
 
 /**
  * @brief Processes an alphanumeric token from the input string.
@@ -76,9 +88,10 @@ char *extract_word(char *str);
  *
  * @param token A pointer to the `t_token` structure where the token will be stored.
  * @param str The input string to extract the token from.
+ * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_token(t_token *token, char *str);
+int process_token(t_token *token, char *str, int string_position, t_state *state);
 
 /**
  * @brief Processes a quoted word from the input string.
@@ -88,9 +101,10 @@ int process_token(t_token *token, char *str);
  *
  * @param token A pointer to the `t_token` structure where the word will be stored.
  * @param str The input string starting with a quote.
+ * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_word(t_token *token, char *str);
+int process_word(t_token *token, char *str, int string_position, t_state *state);
 
 /**
  * @brief Processes an operator character from the input string.
@@ -100,9 +114,10 @@ int process_word(t_token *token, char *str);
  *
  * @param token A pointer to the `t_token` structure where the operator will be stored.
  * @param str The input string containing the operator.
+ * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed (e.g., 2 for ">>" or 1 for other operators).
  */
-int process_operator(t_token *token, char *str);
+int process_operator(t_token *token, char *str, int string_position, t_state *state);
 
 /**
  * @brief Parses the string and fills the token structure.
@@ -110,7 +125,7 @@ int process_operator(t_token *token, char *str);
  * @param token The token to be filled.
  * @return This function does not return; it writes directly to the token.
  */
-void	tokenizer(char *str, t_token *token);
+void	tokenizer(char *str, t_token *token, char **env);
 
 // t_token_utils.c
 /**
