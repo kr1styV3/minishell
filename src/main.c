@@ -1,15 +1,5 @@
 #include "minishell.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <signal.h>
-
-#define YELLOW "\x1b[33m"
-#define RED "\x1b[31m"
-#define RESET "\x1b[0m"
+#include "parsing.h"
 
 volatile sig_atomic_t should_exit = 0;
 

@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:02:04 by chrlomba         ###   ########.fr       */
+/*   Created: 2024/09/09 05:07:21 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/09/09 05:31:34 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "builtins.h"
+#include "minishell.h"
 
-# include "minishell.h"
-
-#endif
+int	ft_exit(t_token *token, char *str)
+{
+	free_token(token);
+	free(str);
+	exit(0);
+}

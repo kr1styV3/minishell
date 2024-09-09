@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:02:04 by chrlomba         ###   ########.fr       */
+/*   Created: 2024/09/09 05:09:58 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/09/09 05:10:11 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "../../headers/builtins.h"
 
-# include "minishell.h"
+int	ft_export(char **env)
+{
+	int		i;
 
-#endif
+	i = 0;
+	while (env[i])
+	{
+		ft_putendl_fd(env[i], 1);
+		i++;
+	}
+	return (0);
+}

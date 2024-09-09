@@ -15,13 +15,18 @@ READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
 SRC_FILES = $(addprefix src/,main.c \
 	parsing.c \
 	t_token_utils.c\
-	operators.c\
-	builtin.c)
+	operators.c)
 
-
+BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
+	ft_echo.c \
+	ft_env.c \
+	ft_exit.c \
+	ft_export.c \
+	ft_pwd.c \
+	ft_unset.c\
+	process_builtin.c)
 # Define the corresponding object files and place them in $(OBJ_DIR)
-OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o)
-
+OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o) $(BUILTIN_FILES:src/builtins/%.c=$(OBJ_DIR)%.o)
 # Add -I$(INC_DIR) to your flags to include header files from the includes directory
 CFLAGS += -I$(INC_DIR) $(READLINE_INC)
 
@@ -63,6 +68,10 @@ $(OBJ_DIR)%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BOLD_INTENSE_GREEN)Compiled $@ successfully!$(NC)"
 
+$(OBJ_DIR)%.o: src/builtins/%.c
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BOLD_INTENSE_GREEN)Compiled $@ successfully!$(NC)"
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
 	@echo "$(BOLD_INTENSE_RED)Creating executable $@...$(NC)"

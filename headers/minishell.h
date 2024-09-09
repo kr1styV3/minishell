@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <fcntl.h>
+#include <signal.h>
 
 typedef struct s_token
 {
@@ -35,98 +37,6 @@ typedef enum
 }	t_state;
 
 
-void	free_token(t_token *token);
-int	process_builtin(t_token *token, char *str, int i, t_state *state, char **env);
-int	ft_isbuiltin(char *cmd);
-int	here_doc(t_token *token, char *str, int string_position);
-int	check_overwrite_fd(t_token *token, char *str, int string_position);
-int	check_append_fd(t_token *token, char *str, int string_position);
-/**
- * @brief Reads a line from the user
- * @param token The token to be filled with the user input.
- * @return This function does not return; it writes directly to the token.
- */
-void	read_line_from_user(t_token *token, char **env);
-
-// parsing.c
-/**
- * @brief Skips the whitespaces in the given string.
- * @param str The string from which the whitespaces are skipped.
- * @param state The state of the parser to change to NORMAL state.
- * @return The number of characters skipped.
- */
-int	skip_whitespaces(char *str, t_state *state);
-
-/**
- * @brief Extracts an alphanumeric token from the string.
- *
- * This function reads from the beginning of the input string and extracts an
- * alphanumeric token, allocating memory for it.
- *
- * @param str The input string to extract the token from.
- * @return A pointer to the extracted token, or NULL if memory allocation fails.
- */
-char *extract_token(char *str);
-
-/**
- * @brief Extracts a word from a quoted string.
- *
- * This function extracts a word from a string enclosed by either single ('')
- * or double ("") quotes, stopping at the closing quote.
- *
- * @param str The input string starting after the opening quote.
- * @param quote The quote character used to enclose the word.
- * @return A pointer to the extracted word, or NULL if memory allocation fails.
- */
-char *extract_word(char *str, char quote);
-
-/**
- * @brief Processes an alphanumeric token from the input string.
- *
- * This function processes an alphanumeric token, extracting it from the input
- * string and storing it in the provided `t_token` structure.
- *
- * @param token A pointer to the `t_token` structure where the token will be stored.
- * @param str The input string to extract the token from.
- * @param state The state of the parser to change to SKIP_WHITESPACE.
- * @return The number of characters processed or -1 if memory allocation fails.
- */
-int process_token(t_token *token, char *str, int string_position, t_state *state);
-
-/**
- * @brief Processes a quoted word from the input string.
- *
- * This function processes a word enclosed in single or double quotes, extracting
- * it and storing it in the provided `t_token` structure.
- *
- * @param token A pointer to the `t_token` structure where the word will be stored.
- * @param str The input string starting with a quote.
- * @param state The state of the parser to change to SKIP_WHITESPACE.
- * @return The number of characters processed or -1 if memory allocation fails.
- */
-int process_word(t_token *token, char *str, int string_position, t_state *state);
-
-/**
- * @brief Processes an operator character from the input string.
- *
- * This function processes operator characters such as |, <, >, and stores them
- * in the provided `t_token` structure.
- *
- * @param token A pointer to the `t_token` structure where the operator will be stored.
- * @param str The input string containing the operator.
- * @param state The state of the parser to change to SKIP_WHITESPACE.
- * @return The number of characters processed (e.g., 2 for ">>" or 1 for other operators).
- */
-int process_operator(t_token *token, char *str, int string_position, t_state *state);
-
-/**
- * @brief Parses the string and fills the token structure.
- * @param str The string to be parsed.
- * @param token The token to be filled.
- * @return This function does not return; it writes directly to the token.
- */
-void	tokenizer(char *str, t_token *token, char **env);
-
 // t_token_utils.c
 /**
  * @brief Initializes the token structure
@@ -147,5 +57,11 @@ void	free_tokens_line(char *str, t_token *token, char *error_message);
  * @return This function does not return; it writes directly to the standard output.
  */
 void	print_tokens(t_token *token);
+/**
+ * @brief Frees the memory allocated for the tokens.
+ * @param token The token to be freed.
+ * @return This function does not return; it frees the memory.
+ */
+void	free_token(t_token *token);
 
 # endif

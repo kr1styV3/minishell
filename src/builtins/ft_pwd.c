@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:02:04 by chrlomba         ###   ########.fr       */
+/*   Created: 2024/09/09 05:10:26 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/09/09 05:11:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "../../headers/builtins.h"
 
-# include "minishell.h"
+int ft_pwd(void)
+{
+	char cwd[4096];
 
-#endif
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		perror("pwd");
+		return -1;
+	}
+	ft_putendl_fd(cwd, 1);
+
+	return (0);
+}

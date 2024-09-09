@@ -1,8 +1,6 @@
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
+#include "parsing.h"
+#include "builtins.h"
 
 #define DELIMITERS " \t\r\n\a"
 
