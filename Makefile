@@ -30,26 +30,6 @@ OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o) $(BUILTIN_FILES:src/builtins/%.c=
 # Add -I$(INC_DIR) to your flags to include header files from the includes directory
 CFLAGS += -I$(INC_DIR) $(READLINE_INC)
 
-# Bold High Intensity
-BOLD_INTENSE_BLACK=\033[1;90m
-BOLD_INTENSE_RED=\033[1;91m
-BOLD_INTENSE_GREEN=\033[1;92m
-BOLD_INTENSE_YELLOW=\033[1;93m
-BOLD_INTENSE_BLUE=\033[1;94m
-BOLD_INTENSE_PURPLE=\033[1;95m
-BOLD_INTENSE_CYAN=\033[1;96m
-BOLD_INTENSE_WHITE=\033[1;97m
-
-# Background
-BACKGROUND_BLACK=\033[40m
-BACKGROUND_RED=\033[41m
-BACKGROUND_GREEN=\033[42m
-BACKGROUND_YELLOW=\033[43m
-BACKGROUND_BLUE=\033[44m
-BACKGROUND_PURPLE=\033[45m
-BACKGROUND_CYAN=\033[46m
-BACKGROUND_WHITE=\033[47m
-# ANSI escape sequence for no color (reset)
 
 NC = \033[0m
 
@@ -57,7 +37,7 @@ all: pre-build $(OBJ_DIR) $(NAME)
 
 pre-build:
 	@clear
-	@echo "$(BOLD_INTENSE_CYAN)Starting compilation...$(NC)"
+	@echo "Starting compilation..."
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -66,24 +46,25 @@ $(OBJ_DIR):
 $(OBJ_DIR)%.o: src/%.c
 	@echo "Compiling $<..."
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(BOLD_INTENSE_GREEN)Compiled $@ successfully!$(NC)"
+	@echo "Compiled $@ successfully!"
 
 $(OBJ_DIR)%.o: src/builtins/%.c
 	@echo "Compiling $<..."
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(BOLD_INTENSE_GREEN)Compiled $@ successfully!$(NC)"
+	@echo "Compiled $@ successfully!"
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
-	@echo "$(BOLD_INTENSE_RED)Creating executable $@...$(NC)"
+	@echo "Creating executable $@..."
 	@$(CC) $(OBJ_FILES) -L$(LIBFT_DIR) -lft $(READLINE_LIB) -o $(NAME)
 	@clear
+	@echo "$$SHELL_ART"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 valgrind: $(NAME)
 	@echo "Debugger Mode: Running Valgrind.."
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME) file "izshgoiha09873r9q8h" "wc -l" out
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME)
 
 clean:
 	@echo "Cleaning object files..."
@@ -103,3 +84,19 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+define SHELL_ART
+
+           _.-''|''-._
+        .-'     |     `-.
+      .'\       |       /`.
+    .'   \      |      /   `.
+    \     \     |     /     /
+     `\    \    |    /    /'
+       `\   \   |   /   /'
+         `\  \  |  /  /'
+        _.-`\ \ | / /'-._
+       {_____`\\|//'_____}
+               `-'
+endef
+export SHELL_ART
