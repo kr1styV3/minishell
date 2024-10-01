@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:01:45 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:14:01 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,19 @@
 
 # include "minishell.h"
 
+typedef enum
+{
+	NORMAL,         // Default state: reading alphanumeric tokens.
+	IN_BUILTIN,     // Inside a builtin command.
+	IN_WORD,        // Inside a quoted string.
+	IN_OPERATOR,    // Reading an operator like |, <, >.
+	SKIP_WHITESPACE // Skipping spaces.
+}	t_state;
+
 // parsing.c
+int	parse_flags(t_token *token, char *str, int string_position);
 /**
+
  * @brief Reads a line from the user
  * @param token The token to be filled with the user input.
  * @return This function does not return; it writes directly to the token.

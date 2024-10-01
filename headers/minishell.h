@@ -17,6 +17,7 @@ typedef struct s_token
 {
 	char	*token;
 	char	*word;
+	char	**args;
 	char	operator;
 	int		fd_overwrite_output;// command > file /*
 	int		fd_append_output;// command >> file	  * fd da dove prendere il file per eseguzione
@@ -25,19 +26,15 @@ typedef struct s_token
 	bool 	next_is_pipe;// command | command
 	bool	background;// command & se e vero il comando deve essere eseguito in background senno esegui normalmente
 	struct s_token *next;
+	struct s_token *prev;
 }   t_token;
 
-typedef enum
-{
-	NORMAL,         // Default state: reading alphanumeric tokens.
-	IN_BUILTIN,     // Inside a builtin command.
-	IN_WORD,        // Inside a quoted string.
-	IN_OPERATOR,    // Reading an operator like |, <, >.
-	SKIP_WHITESPACE // Skipping spaces.
-}	t_state;
 
 
 // t_token_utils.c
+void return_to_head(t_token *token);
+void	free_inside_token(t_token *token, char *msg, char *cmd);
+t_token	*reinit_token(t_token *prev_token);
 /**
  * @brief Initializes the token structure
  * @return A pointer to the newly allocated token.

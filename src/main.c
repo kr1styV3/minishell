@@ -1,5 +1,7 @@
 #include "minishell.h"
 #include "parsing.h"
+#include "builtins.h"
+#include "executor.h"
 
 volatile sig_atomic_t should_exit = 0;
 
@@ -50,20 +52,58 @@ void setup_signal_handling()
     sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+int	checker(t_token *token, char **envp)
+{
+	char	*path;
+	char	**paths;
+	char	*part_path;
+	int		i;
+
+	i = 0;
+	path = ft_getenv("PATH", envp);
+	paths = ft_split(path, ':');
+	free(path);
+	while (paths[i])
+	{
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, token->token);
+		free(part_path);
+		if (access(path, X_OK) == 0)
+		{
+			free(token->token);
+			token->args[0] = ft_strdup(path);
+			ft_free_mtx(paths);
+			return (0);
+		}
+		free(path);
+		i++;
+	}
+	ft_free_mtx(paths);
+	return (1);
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_token		*token;
+	t_token		*tmp;
 
 	token = init_token();
-	setup_signal_handling();
-	(void)envp;
+	// setup_signal_handling();
 	(void)ac;
 	(void)av;
 	while (!should_exit)
 	{
 		read_line_from_user(token, envp);
-		//executor();
-
+		return_to_head(token);
+		tmp = token;
+		while (tmp)
+		{
+			if (checker(tmp, envp) == 1)
+				free_inside_token(token, "minishell: command not found: ", tmp->token);
+			tmp = tmp->next;
+		}
+		// print_tokens(token);
+		execute(token);
 	}
 	return 0;
 }

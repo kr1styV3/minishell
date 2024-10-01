@@ -15,7 +15,9 @@ READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
 SRC_FILES = $(addprefix src/,main.c \
 	parsing.c \
 	t_token_utils.c\
-	operators.c)
+	operators.c\
+	executor.c\
+	flags.c)
 
 BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_echo.c \

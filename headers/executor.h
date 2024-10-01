@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:02:04 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:27:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,17 @@
 # define EXECUTOR_H
 
 # include "minishell.h"
+
+typedef enum e_exec_state
+{
+	EXEC_START,
+	EXEC_CMD,
+	EXEC_PIPE,
+	EXEC_REDIRECTION,
+	EXEC_BACKGROUND,
+	EXEC_END
+}	t_exec_state;
+
+void execute(t_token *token_list);
 
 #endif

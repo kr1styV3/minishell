@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:22:27 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:41:08 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int process_operator(t_token *token, char *str, int string_position, t_state *st
 {
 	int length;
 
-	length = 0;
+	length = 1;
 	token->operator = str[string_position];  // Save the operator (e.g., |, >, <).
 	if (str[string_position] == '>' && str[string_position + 1] == '>')  // ">>" operator
 		length = check_append_fd(token, str, string_position + 2) + 2;  // Check if the operator is ">>" and set the file descriptor.
@@ -101,13 +101,14 @@ int process_operator(t_token *token, char *str, int string_position, t_state *st
 		length = check_overwrite_fd(token, str, string_position + 1) + 1;// Initialize file path for output redirection
 	else if (str[string_position] == '<' && str[string_position + 1] == '<')  // "<<" operator
 		length = here_doc(token, str, string_position + 2) + 2;  // Check if the operator is "<<" and set the file descriptor.
-	else if (str[0] == '<')  // "<" operator
+	else if (str[string_position] == '<')  // "<" operator
 		length = input_from_file(token, str, string_position + 1) + 1;  // Initialize file path for input redirection
-	else if (str[0] == '|')  // "|" operator
+	else if (str[string_position] == '|')
 		token->next_is_pipe = true;  // Set operator type
-	else if (str[0] == '&')  // "&" operator
+	else if (str[string_position] == '&')
 		token->background = true;  // Set background execution flag
-	else
-		*state = SKIP_WHITESPACE;  // Default case
+	else if (str[string_position] == '-')
+		length = parse_flags(token, str, string_position);  // Parse flags
+	*state = SKIP_WHITESPACE;  // Default case
 	return length;
 }

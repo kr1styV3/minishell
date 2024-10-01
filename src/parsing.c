@@ -4,7 +4,7 @@
 
 #define DELIMITERS " \t\r\n\a"
 
-#define OPERATORS "<>|&"
+#define OPERATORS "<>|&-"
 
 
 int skip_whitespaces(char *str, t_state *state)
@@ -64,6 +64,7 @@ int process_token(t_token *token, char *str, int string_position, t_state *state
 		return (free_tokens_line(str, token, "memory allocation"), -1);  // Memory allocation error.
 	word_len = ft_strlen(token->token);  // Skip whitespaces after token.
 	*state = SKIP_WHITESPACE;
+	word_len += skip_whitespaces(&str[string_position + word_len], state);
 	return (word_len);  // Return the length of the token processed.
 }
 
@@ -107,7 +108,9 @@ void tokenizer(char *str, t_token *token, char **env)
 			string_position += process_word(token, str, string_position, &state);
 		if (state == IN_OPERATOR)
 			string_position += process_operator(token, str, string_position, &state);
-		token->next = init_token();
+		if (str[string_position] == '\0')
+			return ;
+		token->next = reinit_token(token);
 		token = token->next;
 	}
 }
@@ -117,10 +120,6 @@ void read_line_from_user(t_token *token, char **env)
 	char	*read_line;
 
 	read_line = readline("Minishell > ");
-	if (!read_line)
-		ft_error("EOF");//not error but end of readind ctrl+d
 	add_history(read_line);
 	tokenizer(read_line, token, env);
-	print_tokens(token);
-
 }
