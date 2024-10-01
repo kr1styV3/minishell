@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/01 17:14:01 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:57:28 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef enum
 }	t_state;
 
 // parsing.c
-int	parse_flags(t_token *token, char *str, int string_position);
 /**
 
  * @brief Reads a line from the user
@@ -172,5 +171,83 @@ int input_from_file(t_token *token, char *str, int string_position);
  * @return int The length of the processed string or 0 if the operator doesn't modify the length.
  */
 int process_operator(t_token *token, char *str, int string_position, t_state *state);
+
+// flags.c
+
+
+/**
+ * @brief Extracts the length of the next flag in the string.
+ *
+ * This function iterates through the string starting from `start_pos`,
+ * counting alphanumeric characters and hyphens ('-') to determine
+ * the length of the next flag.
+ *
+ * @param str The input string containing flags.
+ * @param start_pos The starting position in the string to begin extraction.
+ *
+ * @return The length of the next flag.
+ */
+int extract_flag_length(const char *str, int start_pos);
+
+/**
+ * @brief Allocates memory and copies a flag substring from the source string.
+ *
+ * This function allocates memory for a flag based on the specified `length`
+ * and copies the substring from `str` starting at `start_pos` into the
+ * newly allocated memory.
+ *
+ * @param str The input string containing flags.
+ * @param start_pos The starting position in the string to copy from.
+ * @param length The number of characters to copy for the flag.
+ *
+ * @return A pointer to the newly allocated and copied flag string.
+ *         Returns `NULL` if memory allocation fails.
+ */
+char *allocate_and_copy_flag(const char *str, int start_pos, int length);
+
+/**
+ * @brief Handles memory allocation errors by freeing resources and reporting the error.
+ *
+ * This function is invoked when a memory allocation error occurs. It frees
+ * the allocated tokens using `free_tokens_line` and returns an error code.
+ *
+ * @param str The input string being parsed.
+ * @param token A pointer to the `t_token` structure containing allocated resources.
+ * @param error_message A descriptive error message to be used for logging or reporting.
+ *
+ * @return Returns `-1` to indicate an error.
+ */
+int handle_allocation_error(char *str, t_token *token, char *error_message);
+
+/**
+ * @brief Assigns temporary flags to the `token->args` array.
+ *
+ * This function transfers the flags stored in the `tmp_flags` array into
+ * the `args` member of the `t_token` structure. It starts assigning from
+ * index 1 to accommodate any reserved positions (e.g., program name).
+ *
+ * @param token A pointer to the `t_token` structure where flags are to be assigned.
+ * @param tmp_flags An array of temporary flag strings.
+ * @param args_pos The number of flags parsed and stored in `tmp_flags`.
+ *
+ * @return Returns `0` on successful assignment.
+ */
+int assign_flags_to_token_args(t_token *token, char *tmp_flags[], int args_pos);
+
+/**
+ * @brief Parses flags from a string and assigns them to a token structure.
+ *
+ * The `parse_flags` function processes a segment of the input string starting
+ * at `string_position`, extracting flags, handling memory allocation, and
+ * assigning the parsed flags to the `args` member of the provided `t_token`.
+ *
+ * @param token A pointer to the `t_token` structure to which parsed flags will be assigned.
+ * @param str The input string containing flags to parse.
+ * @param string_position The starting position in the string to begin parsing.
+ *
+ * @return On success, returns the number of characters processed.
+ *         On failure, returns `-1`.
+ */
+int parse_flags(t_token *token, char *str, int string_position);
 
 #endif
