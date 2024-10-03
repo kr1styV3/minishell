@@ -25,6 +25,7 @@ typedef struct s_token
 	char	*here_doc;
 	bool 	next_is_pipe;// command | command
 	bool	background;// command & se e vero il comando deve essere eseguito in background senno esegui normalmente
+	int		last_exit_status;
 	struct s_token *next;
 	struct s_token *prev;
 }   t_token;

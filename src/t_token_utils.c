@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/01 18:26:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:40:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_token	*init_token(void)
 	token->here_doc = NULL;
 	token->next_is_pipe = false;
 	token->next = NULL;
+	token->last_exit_status = 0;
 	token->prev = NULL;
 	token->args = ft_calloc(2, sizeof(char *));
 	return (token);
@@ -49,6 +50,7 @@ t_token	*reinit_token(t_token *prev_token)
 	token->here_doc = NULL;
 	token->next_is_pipe = false;
 	token->next = NULL;
+	token->last_exit_status = prev_token->last_exit_status;
 	token->prev = prev_token;
 	token->args = ft_calloc(2, sizeof(char *));
 	return (token);

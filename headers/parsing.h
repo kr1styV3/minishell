@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/01 18:57:28 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:23:43 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ typedef enum
 	IN_BUILTIN,     // Inside a builtin command.
 	IN_WORD,        // Inside a quoted string.
 	IN_OPERATOR,    // Reading an operator like |, <, >.
+	IN_VARIABLE,    // Reading a variable name.
 	SKIP_WHITESPACE // Skipping spaces.
 }	t_state;
 
 // parsing.c
+int	checker(t_token *token, char **envp);
+int	process_variable(t_token *token, char *str, int string_position, char **env);
 /**
 
  * @brief Reads a line from the user

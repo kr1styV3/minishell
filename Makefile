@@ -17,7 +17,8 @@ SRC_FILES = $(addprefix src/,main.c \
 	t_token_utils.c\
 	operators.c\
 	executor.c\
-	flags.c)
+	flags.c\
+	env_variables.c)
 
 BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_echo.c \

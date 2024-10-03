@@ -101,9 +101,13 @@ void tokenizer(char *str, t_token *token, char **env)
 				state = IN_WORD;
 			if (ft_strchr(OPERATORS, str[string_position]))  // Operator found.
 				state = IN_OPERATOR;
+			if (str[string_position] == '$' && !IN_BUILTIN)
+				state = IN_VARIABLE;
 		}
 		if (state == IN_BUILTIN)
 			string_position += process_builtin(token, str, string_position, &state, env);
+		if (state == IN_VARIABLE)
+			string_position += process_variable(token, str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
 			string_position += process_word(token, str, string_position, &state);
 		if (state == IN_OPERATOR)

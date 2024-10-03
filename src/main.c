@@ -98,8 +98,9 @@ int main(int ac, char **av, char **envp)
 		tmp = token;
 		while (tmp)
 		{
-			if (checker(tmp, envp) == 1)
-				free_inside_token(token, "minishell: command not found: ", tmp->token);
+			if (tmp->token)
+				if (checker(tmp, envp) == 1)
+					free_inside_token(token, "minishell: command not found: ", tmp->token);
 			tmp = tmp->next;
 		}
 		// print_tokens(token);

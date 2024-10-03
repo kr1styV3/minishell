@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/01 17:23:04 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:18:48 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *extract_until_not_alfanum(char *str);
  * @param i Position in the input string to start processing.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_echo(t_token *token, char *str, int i);
+int ft_echo(t_token *token, char *str, int i, char **env);
 
 /**
  * @brief Extract the path from a given string, stopping at the first space.

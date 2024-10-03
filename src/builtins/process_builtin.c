@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:06:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:06:46 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:18:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	process_builtin(t_token *token, char *str, int i, t_state *state, char **env
 {
 	*state = SKIP_WHITESPACE;
 	if (!ft_strcmp(token->token, "echo"))
-		return (ft_echo(token, str, i));
+		return (ft_echo(token, str, i, env));
 	if (!ft_strcmp(token->token, "cd"))
 		return (ft_cd(token, str, i, env));
 	if (!ft_strcmp(token->token, "pwd"))
