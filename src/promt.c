@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:39:35 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/04 14:13:12 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:20:52 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,35 +62,8 @@ char *get_promt(char **env)
 	user = ft_getenv("USER", env);
 	pwd = ft_getenv("PWD", env);
 	get_system_hostname(host_name, 256);
-	promt = ft_strdup(BLUE);
-	promt = ft_strjoin(promt, "[");
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, GREEN);
-	promt = ft_strjoin(promt, user);
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, "@");
-	promt = ft_strjoin(promt, CYAN);
-	promt = ft_strjoin(promt, host_name);
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, BLUE);
-	promt = ft_strjoin(promt, "]");
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, " - ");
-	promt = ft_strjoin(promt, BLUE);
-	promt = ft_strjoin(promt, "[");
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, BOLD);
-	promt = ft_strjoin(promt, pwd);
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, BLUE);
-	promt = ft_strjoin(promt, "]");
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, "\n");
-	promt = ft_strjoin(promt, YELLOW);
-	promt = ft_strjoin(promt, "Minishell");
-	promt = ft_strjoin(promt, NC);
-	promt = ft_strjoin(promt, PINK);
-	promt = ft_strjoin(promt, " $ ");
-
+	promt = ft_multijoin(27, BLUE, "[", NC, GREEN, user, NC, "@", CYAN, host_name, NC, BLUE, "]", NC, " - ", BOLD, pwd, NC, BLUE, "]", NC, "\n", YELLOW, "Minishell", NC, PINK, " $ ", NC);
+	free(user);
+	free(pwd);
 	return (promt);
 }
