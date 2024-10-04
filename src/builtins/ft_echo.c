@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:13:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/03 17:10:23 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:52:03 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int ft_echo(t_token *token, char *str, int i, char **env)
                 {
                     char *temp = ft_strjoin(output, token->word);
                     free(output);
+                    free (token->word);
                     if (!temp)
                         return (free_tokens_line(str, token, "malloc error"), -1);
                     output = temp;

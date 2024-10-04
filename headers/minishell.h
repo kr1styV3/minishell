@@ -35,6 +35,7 @@ typedef struct s_token
 // t_token_utils.c
 void return_to_head(t_token *token);
 void	free_inside_token(t_token *token, char *msg, char *cmd);
+char *execute_and_capture_output(char *command, char **env);
 t_token	*reinit_token(t_token *prev_token);
 /**
  * @brief Initializes the token structure
