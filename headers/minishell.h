@@ -33,6 +33,8 @@ typedef struct s_token
 
 
 // t_token_utils.c
+char *get_promt(char **env);
+void get_system_hostname(char *hostname, size_t size);
 void return_to_head(t_token *token);
 void	free_inside_token(t_token *token, char *msg, char *cmd);
 char *execute_and_capture_output(char *command, char **env);
