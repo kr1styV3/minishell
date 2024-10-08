@@ -2,38 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug with GDB",
-            "type": "cppdbg",
+            "name": "Debug with LLDB",
+            "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/minishell",   // Path to your executable
+            "program": "${workspaceFolder}/minishell",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",            // Working directory
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",       // Path to GDB on your main PC
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "Debug with LLDB (CodeLLDB)",
-            "type": "lldb",                         // CodeLLDB uses "lldb" type
-            "request": "launch",
-            "program": "${workspaceFolder}/minishell",   // Path to your executable
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",            // Working directory
-            "environment": [],
-            "externalConsole": false,
-            "sourceMap": {                          // Optional source mapping, if needed
+            "sourceMap": {
                 "/build/root": "${workspaceFolder}"
-            }
+            },
+            "stepInTarget": true,
+            "logging": { "engineLogging": true }  // Enable engine logging to troubleshoot issues
         }
+
     ]
 }
