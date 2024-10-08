@@ -106,8 +106,8 @@ int main(int ac, char **av, char **envp)
 			}
 			tmp = tmp->next;
 		}
-		// print_tokens(token);
-		execute(token);
+		print_tokens(token);
+		// execute(token);
 	}
 	return 0;
 }

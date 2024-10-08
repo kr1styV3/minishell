@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:32:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:03:59 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:20:11 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,29 @@ void tokenizer(char *str, t_token *token, char **env)
 {
 	int	string_position;
 	t_state	state;
-	state_handler_func handler;
+	t_state_handler_map *handler;
 	int	increment;
 
 	string_position = 0;
 	state = SKIP_WHITESPACE;
+    handler = init_handler();
  	while (str[string_position])
     {
-        handler = state_handlers[state];
+        handler->handler = get_handler(handler, state);
         if (handler != NULL)
         {
-            increment = handler(token, str, string_position, &state, env);
+            increment = handler->handler(token, str, string_position, &state, env);
             string_position += increment;
         }
         if (str[string_position] == '\0')
-            return;
-
-        token->next = reinit_token(token);
-        token = token->next;
+            break ;
+        if(token->token != NULL)
+        {
+            token->next = reinit_token(token);
+            token = token->next;
+        }
     }
+    free(handler);
 }
 
 void read_line_from_user(t_token *token, char **env)

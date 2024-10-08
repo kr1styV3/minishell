@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:42:03 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:33:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:47:35 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "../headers/builtins.h"
 #include "../headers/env_variables.h"
 
-state_handler_func state_handlers[] = {
-    [NORMAL]         = handle_normal,
-    [IN_BUILTIN]     = handle_in_builtin,
-    [IN_WORD]        = handle_in_word,
-    [IN_OPERATOR]    = handle_in_operator,
-    [IN_VARIABLE]    = handle_in_variable,
-    [SKIP_WHITESPACE]= handle_skip_whitespace
-};
 
 int handle_skip_whitespace(t_token *token, char *str, int pos, t_state *state, char **env)
 {
