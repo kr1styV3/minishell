@@ -2,6 +2,7 @@
 #include "parsing.h"
 #include "builtins.h"
 #include "executor.h"
+#include "read_line.h"
 
 volatile sig_atomic_t should_exit = 0;
 

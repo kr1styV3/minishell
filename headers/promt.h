@@ -65,6 +65,6 @@ char *get_pwd_with_home_replacement(char **env);
  *
  * @return A newly allocated string containing the shell prompt. The caller is responsible for freeing the returned string.
  */
-char *get_prompt(char **env);
+char *get_promt(char **env);
 
 # endif
