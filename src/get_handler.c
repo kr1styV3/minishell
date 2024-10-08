@@ -20,15 +20,14 @@ t_state_handler_map *init_handler(void)
     handler_map = (t_state_handler_map *)malloc(6 * sizeof(t_state_handler_map));
     if (!handler_map)
         return NULL;  // Handle memory allocation failure
-
-    // Map each state to its handler function
-    handler_map[SKIP_WHITESPACE] = (t_state_handler_map){SKIP_WHITESPACE, handle_skip_whitespace};
-    handler_map[IN_BUILTIN] = (t_state_handler_map){IN_BUILTIN, handle_in_builtin};
-    handler_map[IN_WORD] = (t_state_handler_map){IN_WORD, handle_in_word};
-    handler_map[IN_OPERATOR] = (t_state_handler_map){IN_OPERATOR, handle_in_operator};
-    handler_map[IN_VARIABLE] = (t_state_handler_map){IN_VARIABLE, handle_in_variable};
-    handler_map[NORMAL] = (t_state_handler_map){NORMAL, handle_normal};
+    handler_map[0] = (t_state_handler_map){SKIP_WHITESPACE, handle_skip_whitespace};
+    handler_map[1] = (t_state_handler_map){IN_BUILTIN, handle_in_builtin};
+    handler_map[2] = (t_state_handler_map){IN_WORD, handle_in_word};
+    handler_map[3] = (t_state_handler_map){IN_OPERATOR, handle_in_operator};
+    handler_map[4] = (t_state_handler_map){IN_VARIABLE, handle_in_variable};
+    handler_map[5] = (t_state_handler_map){NORMAL, handle_normal};
 	handler_map[6] = (t_state_handler_map){-1, NULL};
+    printf("handler size %lu", sizeof(t_state_handler_map));
     return handler_map;
 }
 

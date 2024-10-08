@@ -72,6 +72,7 @@ void tokenizer(char *str, t_token *token, char **env)
         }
     }
     free(handler);
+    free_tokens_line(str, token, "test");
 }
 
 void read_line_from_user(t_token *token, char **env)
@@ -82,6 +83,7 @@ void read_line_from_user(t_token *token, char **env)
 	promt = get_promt(env);
 	read_line = readline(promt);
 	free(promt);
+    promt = NULL;
 	add_history(read_line);
 	tokenizer(read_line, token, env);
 }

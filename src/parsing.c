@@ -25,10 +25,11 @@ char *extract_token(char *str)
 	string_position = 0;
 	while (str[string_position] && ft_isalnum(str[string_position]))
 		string_position++;
-	token = ft_calloc(string_position + 1, sizeof(char));
+	token = malloc(string_position + 1 * sizeof(char));
 	if (!token)
 		return NULL;
 	ft_strncpy(token, str, string_position);
+	token[string_position + 1] = 0;
 	return token;
 }
 
