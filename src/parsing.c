@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "parsing.h"
 #include "builtins.h"
-
+#include "../headers/promt.h"
 #define DELIMITERS " \t\r\n\a"
 
 #define OPERATORS "<>|&-"

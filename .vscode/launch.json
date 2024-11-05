@@ -6,13 +6,13 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/minishell",   // Path to your executable
-            "args": [],                             // Command-line arguments (if any)
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",            // Working directory
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",       // Path to GDB in WSL
+            "miDebuggerPath": "/usr/bin/gdb",       // Path to GDB on your main PC
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing",
@@ -20,6 +20,20 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "Debug with LLDB (CodeLLDB)",
+            "type": "lldb",                         // CodeLLDB uses "lldb" type
+            "request": "launch",
+            "program": "${workspaceFolder}/minishell",   // Path to your executable
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",            // Working directory
+            "environment": [],
+            "externalConsole": false,
+            "sourceMap": {                          // Optional source mapping, if needed
+                "/build/root": "${workspaceFolder}"
+            }
         }
     ]
 }

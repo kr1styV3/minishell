@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:22:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/04 13:03:33 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/08 11:41:29 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 char *execute_and_capture_output(char *command, char **env)
 {
     int pipefd[2];
-    pid_t pid;
+    pid_t pid = 1;
     int status;
-    char *temp;
+    char *temp = NULL;
     char *temp2;
 
     if (pipe(pipefd) == -1)
