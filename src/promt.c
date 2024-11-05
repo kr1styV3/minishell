@@ -6,11 +6,22 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:39:35 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 12:44:06 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:22:36 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/promt.h"
+#include "../headers/minishell.h"
+#include "../headers/builtins.h"
+#define GREEN       "\033[0;32m"
+#define PURPLE      "\033[0;35m"
+#define YELLOW      "\033[0;33m"
+#define PINK        "\033[0;35m"
+#define CYAN        "\033[0;36m"
+#define RED         "\033[0;31m"
+#define BOLD        "\033[1m"
+#define BLUE		"\033[0;34m"
+#define UNDERLINE   "\033[4m"
+#define NC          "\033[0m"   // Reset color
 
 void get_system_hostname(char *hostname, size_t size)
 {

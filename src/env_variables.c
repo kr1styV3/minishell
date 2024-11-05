@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:22:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:29:52 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:20:29 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 char *execute_and_capture_output(char *command, char **env)
 {
     int pipefd[2];
-    pid_t pid = 1;
+    pid_t pid;
     int status;
-    char *temp = NULL;
+    char *temp;
     char *temp2;
 
     if (pipe(pipefd) == -1)
