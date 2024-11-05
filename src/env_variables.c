@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:22:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/04 13:03:33 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:29:41 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../headers/executor.h"
 #include "../my_libft/headers/get_next_line.h"
 #include "../my_libft/headers/libft.h"
+#include "../headers/read_line.h"
+#include "pre_executor.h"
 
 char *execute_and_capture_output(char *command, char **env)
 {

@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/11/05 14:27:12 by chrlomba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "parsing.h"
 #include "builtins.h"
 #include "executor.h"
+#include "read_line.h"
 
 volatile sig_atomic_t should_exit = 0;
 
