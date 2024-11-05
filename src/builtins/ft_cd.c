@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:12:05 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/09/09 05:22:46 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:57:15 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int	ft_cd(t_token *token, char *str, int i, char **env)
 		return (free_tokens_line(str, token, "cd error"), -1);
 	}
 	free(path);
+	free(token->token);
 	return (len);
 }

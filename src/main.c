@@ -2,6 +2,7 @@
 #include "parsing.h"
 #include "builtins.h"
 #include "executor.h"
+#include "read_line.h"
 
 volatile sig_atomic_t should_exit = 0;
 
@@ -105,8 +106,8 @@ int main(int ac, char **av, char **envp)
 			}
 			tmp = tmp->next;
 		}
-		// print_tokens(token);
-		execute(token);
+		print_tokens(token);
+		// execute(token);
 	}
 	return 0;
 }

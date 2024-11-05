@@ -19,7 +19,10 @@ SRC_FILES = $(addprefix src/,main.c \
 	executor.c\
 	flags.c\
 	env_variables.c\
-	promt.c)
+	promt.c\
+	read_line.c\
+	handler.c\
+	get_handler.c)
 
 BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_echo.c \
