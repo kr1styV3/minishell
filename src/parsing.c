@@ -1,9 +1,7 @@
 #include "minishell.h"
 #include "parsing.h"
 #include "builtins.h"
-#include "../headers/promt.h"
-#include "handler.h"
-#define DELIMITERS " \t\r\n\a"
+
 
 int skip_whitespaces(char *str, t_state *state)
 {

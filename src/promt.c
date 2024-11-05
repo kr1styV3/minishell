@@ -6,11 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:39:35 by chrlomba          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/11/05 13:22:36 by chrlomba         ###   ########.fr       */
-=======
-/*   Updated: 2024/11/05 14:34:53 by chrlomba         ###   ########.fr       */
->>>>>>> wawa errors
+/*   Updated: 2024/11/05 15:05:51 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +97,6 @@ char *get_pwd_with_home_replacement(char **env)
     free(home);
     return shortened_pwd;
 }
-
 char *get_promt(char **env)
 {
 	char *promt;

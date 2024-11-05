@@ -5,14 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 05:13:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:36:03 by chrlomba         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/05 15:06:14 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
 #include "../../headers/env_variables.h"
+
 
 char	*extract_until_not_alfanum(char *str)
 {

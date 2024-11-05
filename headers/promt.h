@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:23 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:02:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:05:29 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define BLUE		"\033[0;34m"
 # define UNDERLINE   "\033[4m"
 # define NC          "\033[0m"   // Reset color
+
 
 /**
  * @brief Retrieves the system hostname and stores it in the provided buffer.
