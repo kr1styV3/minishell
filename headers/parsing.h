@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/03 17:23:43 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:35:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,9 @@
 # define PARSING_H
 
 # include "minishell.h"
-
-typedef enum
-{
-	NORMAL,         // Default state: reading alphanumeric tokens.
-	IN_BUILTIN,     // Inside a builtin command.
-	IN_WORD,        // Inside a quoted string.
-	IN_OPERATOR,    // Reading an operator like |, <, >.
-	IN_VARIABLE,    // Reading a variable name.
-	SKIP_WHITESPACE // Skipping spaces.
-}	t_state;
+# include "state.h"
 
 // parsing.c
-int	checker(t_token *token, char **envp);
-int	process_variable(t_token *token, char *str, int string_position, char **env);
-/**
-
- * @brief Reads a line from the user
- * @param token The token to be filled with the user input.
- * @return This function does not return; it writes directly to the token.
- */
-void	read_line_from_user(t_token *token, char **env);
 /**
  * @brief Skips the whitespaces in the given string.
  * @param str The string from which the whitespaces are skipped.
@@ -99,14 +81,6 @@ int process_word(t_token *token, char *str, int string_position, t_state *state)
  * @return The number of characters processed (e.g., 2 for ">>" or 1 for other operators).
  */
 int process_operator(t_token *token, char *str, int string_position, t_state *state);
-
-/**
- * @brief Parses the string and fills the token structure.
- * @param str The string to be parsed.
- * @param token The token to be filled.
- * @return This function does not return; it writes directly to the token.
- */
-void	tokenizer(char *str, t_token *token, char **env);
 
 // operators.c
 /**

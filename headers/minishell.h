@@ -33,11 +33,6 @@ typedef struct s_token
 
 
 // t_token_utils.c
-char *get_promt(char **env);
-void get_system_hostname(char *hostname, size_t size);
-void return_to_head(t_token *token);
-void	free_inside_token(t_token *token, char *msg, char *cmd);
-char *execute_and_capture_output(char *command, char **env);
 t_token	*reinit_token(t_token *prev_token);
 /**
  * @brief Initializes the token structure
@@ -64,5 +59,30 @@ void	print_tokens(t_token *token);
  * @return This function does not return; it frees the memory.
  */
 void	free_token(t_token *token);
+/**
+ * @brief Moves the given token pointer to the head of the token list.
+ *
+ * This function traverses the token list backwards using the `prev` pointer
+ * until it reaches the first token (where `prev` is `NULL`).
+ *
+ * @param token Pointer to the current token in the list. It will traverse
+ * backwards until it reaches the head of the list.
+ */
+void return_to_head(t_token *token);
+/**
+ * @brief Frees the memory allocated for the given token and prints error messages.
+ *
+ * This function releases all dynamically allocated memory inside a token structure,
+ * including the token string, word, here-doc string, and arguments array. It also
+ * prints an error message composed of the provided `msg` and `cmd` to standard error.
+ * After freeing the memory of the entire token list, it reinitializes the token by
+ * calling `init_token()`.
+ *
+ * @param token Pointer to the token to be freed. This function will free
+ * all tokens in the list starting from this one.
+ * @param msg The error message to print before freeing the tokens.
+ * @param cmd The command related to the error, to be printed after `msg`.
+ */
+void free_inside_token(t_token *token, char *msg, char *cmd);
 
 # endif

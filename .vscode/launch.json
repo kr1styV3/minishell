@@ -1,39 +1,32 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Debug with GDB",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/minishell",   // Path to your executable
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",            // Working directory
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",       // Path to GDB on your main PC
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "Debug with LLDB (CodeLLDB)",
-            "type": "lldb",                         // CodeLLDB uses "lldb" type
-            "request": "launch",
-            "program": "${workspaceFolder}/minishell",   // Path to your executable
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",            // Working directory
-            "environment": [],
-            "externalConsole": false,
-            "sourceMap": {                          // Optional source mapping, if needed
-                "/build/root": "${workspaceFolder}"
-            }
+      {
+        "name": "(gdb) Launch WSL",
+        "type": "vgdb",
+        "request": "launch",
+        "program": "${workspaceFolder}/minishell",  // Path to your executable
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "miDebuggerPath": "/usr/bin/gdb",  // Ensure GDB is installed in WSL
+        "pipeTransport": {
+          "pipeCwd": "",
+          "pipeProgram": "wsl",
+          "pipeArgs": [],
+          "debuggerPath": "/usr/bin/gdb"
         }
+      }
     ]
-}
+  }
+  
