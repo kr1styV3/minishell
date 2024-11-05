@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:52:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:07:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:15:21 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define READ_LINE_H
 
 # include "minishell.h"
+# include "parsing.h"
 
 /**
  * @brief Parses the string and fills the token structure.

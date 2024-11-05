@@ -6,19 +6,20 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:07:32 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:18:17 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "env_variables.h"
 #include "promt.h"
+#include "read_line.h"
 
 #define DELIMITERS " \t\r\n\a"
 
 #define OPERATORS "<>|&-"
 
-void tokenizer(char *str, t_token *token, char **env)
+void	tokenizer(char *str, t_token *token, char **env)
 {
 	int string_position;
 	t_state state;
