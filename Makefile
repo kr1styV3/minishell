@@ -31,7 +31,8 @@ BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_export.c \
 	ft_pwd.c \
 	ft_unset.c\
-	process_builtin.c)
+	process_builtin.c\
+	read_line.c)
 # Define the corresponding object files and place them in $(OBJ_DIR)
 OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o) $(BUILTIN_FILES:src/builtins/%.c=$(OBJ_DIR)%.o)
 # Add -I$(INC_DIR) to your flags to include header files from the includes directory

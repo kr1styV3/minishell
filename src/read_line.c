@@ -5,74 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 14:32:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 13:43:42 by chrlomba         ###   ########.fr       */
+/*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/11/05 15:02:20 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parsing.h"
-#include "handler.h"
-#include "promt.h"
-
-#define OPERATORS "<>|&-"
-
-int handle_normal(t_token *token, char *str, int pos, t_state *state, char **env)
-{
-	(void)env;
-    if (ft_isalnum(str[pos]))
-        return process_token(token, str, pos, state);
-    if (ft_isbuiltin(token->token))
-    {
-        *state = IN_BUILTIN;
-        return 0;
-    }
-    if (str[pos] == '"' || str[pos] == '\'') // Quote found.
-    {
-        *state = IN_WORD;
-        return 0;
-    }
-    if (ft_strchr(OPERATORS, str[pos])) // Operator found.
-    {
-        *state = IN_OPERATOR;
-        return 0;
-    }
-    if (str[pos] == '$' && *state != IN_BUILTIN)
-    {
-        *state = IN_VARIABLE;
-        return 0;
-    }
-    return 1; // Default increment
-}
 
 void tokenizer(char *str, t_token *token, char **env)
 {
-	int	string_position;
-	t_state	state;
-	t_state_handler_map *handler;
-	int	increment;
+	int string_position;
+	t_state state;
 
 	string_position = 0;
 	state = SKIP_WHITESPACE;
-    handler = init_handler();
- 	while (str[string_position])
-    {
-        handler->handler = get_handler(handler, state);
-        if (handler != NULL)
-        {
-            increment = handler->handler(token, str, string_position, &state, env);
-            string_position += increment;
-        }
-        if (str[string_position] == '\0')
-            break ;
-        if(token->token != NULL)
-        {
-            token->next = reinit_token(token);
-            token = token->next;
-        }
-    }
-    free(handler);
-    free_tokens_line(str, token, "test");
+	while (str[string_position])
+	{
+		if (state == SKIP_WHITESPACE)
+			string_position += skip_whitespaces(&str[string_position], &state);
+		if (state == NORMAL)
+		{
+			if (ft_isalnum(str[string_position]))
+				string_position += process_token(token, str, string_position, &state);
+			if (ft_isbuiltin(token->token))
+				state = IN_BUILTIN;
+			if (str[string_position] == 34 || str[string_position] == 39)  // Quote found.
+				state = IN_WORD;
+			if (ft_strchr(OPERATORS, str[string_position]))  // Operator found.
+				state = IN_OPERATOR;
+			if (str[string_position] == '$' && !IN_BUILTIN)
+				state = IN_VARIABLE;
+		}
+		if (state == IN_BUILTIN)
+			string_position += process_builtin(token, str, string_position, &state, env);
+		if (state == IN_VARIABLE)
+			string_position += process_variable(token, str, string_position + 1, env) + 1;
+		if (state == IN_WORD)
+			string_position += process_word(token, str, string_position, &state);
+		if (state == IN_OPERATOR)
+			string_position += process_operator(token, str, string_position, &state);
+		if (str[string_position] == '\0')
+			return ;
+		token->next = reinit_token(token);
+		token = token->next;
+	}
 }
 
 void read_line_from_user(t_token *token, char **env)
@@ -83,7 +59,6 @@ void read_line_from_user(t_token *token, char **env)
 	promt = get_promt(env);
 	read_line = readline(promt);
 	free(promt);
-    promt = NULL;
 	add_history(read_line);
 	tokenizer(read_line, token, env);
 }

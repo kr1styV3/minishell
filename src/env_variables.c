@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 19:22:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 13:20:29 by chrlomba         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/05 15:03:09 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../headers/minishell.h"
 #include "../headers/parsing.h"
@@ -16,6 +17,8 @@
 #include "../headers/executor.h"
 #include "../my_libft/headers/get_next_line.h"
 #include "../my_libft/headers/libft.h"
+#include "../headers/read_line.h"
+#include "pre_executor.h"
 #include "../headers/read_line.h"
 #include "pre_executor.h"
 

@@ -1,21 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   promt.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 14:28:23 by chrlomba          #+#    #+#             */
+/*   Updated: 2024/11/05 15:02:36 by chrlomba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PROMT_H
 # define PROMT_H
 
-#include "../headers/minishell.h"
-#include "../headers/builtins.h"
-#include "../my_libft/headers/my_va_list.h"
-
-#define GREEN       "\033[0;32m"
-#define PURPLE      "\033[0;35m"
-#define YELLOW      "\033[0;33m"
-#define PINK        "\033[0;35m"
-#define CYAN        "\033[0;36m"
-#define RED         "\033[0;31m"
-#define BOLD        "\033[1m"
-#define BLUE		"\033[0;34m"
-#define UNDERLINE   "\033[4m"
-#define NC          "\033[0m"   // Reset color
-
+# include "../headers/minishell.h"
+# include "../headers/builtins.h"
+# include "../my_libft/headers/my_va_list.h"
+# define GREEN       "\033[0;32m"
+# define PURPLE      "\033[0;35m"
+# define YELLOW      "\033[0;33m"
+# define PINK        "\033[0;35m"
+# define CYAN        "\033[0;36m"
+# define RED         "\033[0;31m"
+# define BOLD        "\033[1m"
+# define BLUE		"\033[0;34m"
+# define UNDERLINE   "\033[4m"
+# define NC          "\033[0m"   // Reset color
 
 /**
  * @brief Retrieves the system hostname and stores it in the provided buffer.
