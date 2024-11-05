@@ -2,10 +2,6 @@
 #include "parsing.h"
 #include "builtins.h"
 
-#define DELIMITERS " \t\r\n\a"
-
-#define OPERATORS "<>|&-"
-
 
 int skip_whitespaces(char *str, t_state *state)
 {

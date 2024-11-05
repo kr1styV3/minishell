@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:39:35 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 14:34:53 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:39:42 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ char *get_pwd_with_home_replacement(char **env)
     free(home);
     return shortened_pwd;
 }
-
 char *get_promt(char **env)
 {
 	char *promt;

@@ -6,11 +6,17 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 14:25:29 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:43:34 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "env_variables.h"
+#include "promt.h"
+
+#define DELIMITERS " \t\r\n\a"
+
+#define OPERATORS "<>|&-"
 
 void tokenizer(char *str, t_token *token, char **env)
 {
