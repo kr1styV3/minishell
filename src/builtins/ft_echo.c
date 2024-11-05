@@ -6,13 +6,16 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/05 15:06:14 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:07:43 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
+#include "../../headers/env_variables.h"
+
 #include "../../headers/env_variables.h"
 
 
