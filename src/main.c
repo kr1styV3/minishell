@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 14:27:12 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:51:00 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ int	checker(t_token *token, char **envp)
 		free(part_path);
 		if (access(path, X_OK) == 0)
 		{
-			free(token->token);
-			token->args[0] = ft_strdup(path);
+			if (token->token != NULL)
+				free(token->token);
+			if (token->args != NULL)
+				token->args[0] = ft_strdup(path);
 			ft_free_mtx(paths);
 			return (0);
 		}
@@ -119,7 +121,8 @@ int main(int ac, char **av, char **envp)
 			tmp = tmp->next;
 		}
 		print_tokens(token);
-		// execute(token);
+		execute(token, envp);
+		inside_token_free(token);
 	}
 	return 0;
 }

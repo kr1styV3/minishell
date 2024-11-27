@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:35:37 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:52:27 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int process_token(t_token *token, char *str, int string_position, t_state *state
  * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_word(t_token *token, char *str, int string_position, t_state *state);
+int process_word(t_token *token, char *str, int string_position, t_state *state, char **env);
 /**
  * @brief Processes an operator character from the input string.
  *

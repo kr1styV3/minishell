@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:18:17 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:12:10 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,36 @@
 #define DELIMITERS " \t\r\n\a"
 
 #define OPERATORS "<>|&-"
+
+#define CHECKWORDARG "<>|&-\'\" "
+
+int	ft_checkwordarg(t_token *token, char *str, int i)
+{
+	int		len = 0;
+	char	quote;
+
+	if (ft_isbuiltin(token->token))
+		return (0);
+	if (!ft_strchr(CHECKWORDARG, str[i]))
+	{
+		while (!ft_strchr(CHECKWORDARG, str[i + len]) && str[i + len] != 0)
+		{
+			len++;
+		}
+		token->args[1] = ft_substr(str, i, len);
+	}
+	if (str[i] == '\"' || str[i] == '\'')
+	{
+		len = 1;
+		quote = str[i];
+		while (str[i + len] != quote)
+			len++;
+		token->args[1] = ft_substr(str, i + 1, len -1);
+		len++;
+	}
+	printf("what i parsed is : %s \n", token->args[1]);
+	return (len);
+}
 
 void	tokenizer(char *str, t_token *token, char **env)
 {
@@ -34,6 +64,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(token, str, string_position, &state);
+			string_position += ft_checkwordarg(token, str, string_position);
 			if (ft_isbuiltin(token->token))
 				state = IN_BUILTIN;
 			if (str[string_position] == 34 || str[string_position] == 39)  // Quote found.
@@ -48,13 +79,25 @@ void	tokenizer(char *str, t_token *token, char **env)
 		if (state == IN_VARIABLE)
 			string_position += process_variable(token, str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
-			string_position += process_word(token, str, string_position, &state);
-		if (state == IN_OPERATOR)
+			string_position += process_word(token, str, string_position, &state, env);
+		if (state == IN_OPERATOR || ft_strchr(OPERATORS, str[string_position]))
 			string_position += process_operator(token, str, string_position, &state);
-		if (str[string_position] == '\0')
+		if (ft_strchr(OPERATORS, str[string_position]))
+			string_position += process_operator(token, str, string_position, &state);
+		if (str[string_position] == '\0' && state == FREE_TOKEN)
+		{
+			free_token(token);
 			return ;
-		token->next = reinit_token(token);
-		token = token->next;
+		}
+		else if (str[string_position] == '\0')
+		{
+			return ;
+		}
+		else
+		{
+			token->next = reinit_token(token);
+			token = token->next;
+		}
 	}
 }
 
@@ -68,4 +111,5 @@ void read_line_from_user(t_token *token, char **env)
 	free(promt);
 	add_history(read_line);
 	tokenizer(read_line, token, env);
+	free(read_line);
 }

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:34:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/08 15:35:28 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:55:30 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ typedef enum
 	IN_WORD,        // Inside a quoted string.
 	IN_OPERATOR,    // Reading an operator like |, <, >.
 	IN_VARIABLE,    // Reading a variable name.
-	SKIP_WHITESPACE // Skipping spaces.
+	SKIP_WHITESPACE, // Skipping spaces.
+	FREE_TOKEN
 }	t_state;
 
 #endif

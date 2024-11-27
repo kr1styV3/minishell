@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:14:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:08:58 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ char *extract_token(char *str)
 	string_position = 0;
 	while (str[string_position] && ft_isalnum(str[string_position]))
 		string_position++;
-	token = malloc(string_position + 1 * sizeof(char));
+	token = ft_calloc(string_position + 1, sizeof(char));
 	if (!token)
-		return NULL;
+		return (NULL);
 	ft_strncpy(token, str, string_position);
-	token[string_position + 1] = 0;
-	return token;
+	return (token);
 }
 
 char *extract_word(char *str, char quote)
@@ -77,14 +76,29 @@ int process_token(t_token *token, char *str, int string_position, t_state *state
 	return (word_len);  // Return the length of the token processed.
 }
 
-int process_word(t_token *token, char *str, int string_position, t_state *state)
+int	process_word(t_token *token, char *str, int string_position, t_state *state, char **env)
 {
-	char quote;  // Either ' or ".
+	char quote;
+	int len = 0;  // Either ' or ".
 
 	quote = str[string_position];
 	token->word = extract_word(&str[string_position + 1], quote);  // Extract everything inside the quotes.
 	if (!token->word)
 		return (free_tokens_line(str, token, "memory allocation"), -1); // Memory allocation error.
 	*state = SKIP_WHITESPACE;
-	return (ft_strlen(token->word) + 2);  // Account for opening and closing quotes.
+	if (token->token)
+	{
+		token->token = ft_freejoin(token->token, token->word);
+		len = ft_strlen(token->word) + 2;
+		free(token->word);
+		token->word = NULL;
+	}
+	if (ft_isbuiltin(token->token))
+	{
+		int j = 0;
+		while (str[string_position + 1 + j] != ' ')
+			j++;
+		j = process_builtin(token, str, string_position + 1 + j, state, env);
+	}
+	return (len);  // Account for opening and closing quotes.
 }
