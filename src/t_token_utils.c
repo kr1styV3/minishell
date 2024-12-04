@@ -6,53 +6,81 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/27 19:27:56 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:09:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "t_token.h"
 
 t_token	*init_token(void)
 {
-	t_token *token;
+	t_token	*token;
+	t_parse *parse;
+	t_operator	*op;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		ft_error("Failed to allocate memory for token.");
-	token->token = NULL;
-	token->word = NULL;
-	token->fd_overwrite_output = 0;
-	token->fd_append_output = 0;
-	token->fd_input = 0;
-	token->background = false;
-	token->here_doc = NULL;
-	token->next_is_pipe = false;
+	token->exec = true;
+	token->arg = ft_calloc(3, sizeof(char *));
+	if (!token->arg)
+	{
+		free(token);
+		ft_error("Failed to allocate memory for args.");
+	}
+	parse = (t_parse *)malloc(sizeof(t_parse));
+	if (!parse)
+	{
+		free(token->arg);
+		free(token);
+		ft_error("Failed to allocate memory for t_parse.");
+	}
+	parse->token = NULL;
+	parse->word = NULL;
+	token->parsed = parse;
+	op = (t_operator *)malloc (sizeof(t_operator));
+	if (!op)
+	{
+		free(token->arg);
+		free(token->parsed);
+		free(token);
+		ft_error("Failed to allocate memory for t_operator.");
+	}
+	token->operator = op;
 	token->next = NULL;
-	token->last_exit_status = 0;
-	token->prev = NULL;
-	token->args = ft_calloc(3, sizeof(char *));
 	return (token);
 }
 
 t_token	*reinit_token(t_token *prev_token)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		ft_error("Failed to allocate memory for token.");
-	token->token = NULL;
-	token->word = NULL;
-	token->fd_overwrite_output = 0;
-	token->fd_append_output = 0;
-	token->fd_input = 0;
-	token->background = false;
-	token->here_doc = NULL;
-	token->next_is_pipe = false;
-	token->next = NULL;
-	token->last_exit_status = prev_token->last_exit_status;
-	token->prev = prev_token;
-	token->args = ft_calloc(2, sizeof(char *));
+		free_tokens_line(NULL, prev_token, "Failed to allocate memory for token.");
+	token->arg = ft_calloc(3, sizeof(char *));
+	if (!token->arg)
+	{
+		free(token);
+		free_tokens_line(NULL, prev_token, "Failed to allocate memory for args.");
+	}
+	token->parsed = (t_parse *)malloc(sizeof(t_parse));
+	if (!token->parsed)
+	{
+		free(token->arg);
+		free(token);
+		free_tokens_line(NULL, prev_token, "Failed to allocate memory for t_parse.");
+	}
+	token->operator = (t_operator *)malloc (sizeof(t_parse));
+	if (!token->operator)
+	{
+		free(token->arg);
+		free(token->parsed);
+		free(token);
+		free_tokens_line(NULL, prev_token, "Failed to allocate memory for t_operator.");
+	}
+	prev_token->next = token;
 	return (token);
 }
 
@@ -63,14 +91,14 @@ void	free_tokens_line(char *str, t_token *token, char *error_message)
 	while (token)
 	{
 		tmp = token->next;
-		if (token->token)
-			free(token->token);
-		if (token->word)
-			free(token->word);
-		if (token->here_doc)
-			free(token->here_doc);
-		if (token->args)
-			ft_free_mtx(token->args);
+		if (token->parsed->token)
+			free(token->parsed->token);
+		if (token->parsed->word)
+			free(token->parsed->word);
+		free(token->parsed);
+		free(token->operator);
+		if (token->arg)
+			ft_free_mtx(token->arg);
 		free(token);
 		token = tmp;
 	}
@@ -79,62 +107,24 @@ void	free_tokens_line(char *str, t_token *token, char *error_message)
 	ft_error(error_message);
 }
 
-void return_to_head(t_token *token)
-{
-	while (token->prev != NULL)
-	{
-		token = token->prev;
-	}
-}
-
-void	print_tokens(t_token *token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->token)
-			printf("token : %s\n", token->token);
-		if (tmp->word)
-			printf("Word: %s\n", tmp->word);
-		if (tmp->here_doc)
-			printf("Here_doc: %s\n", tmp->here_doc);
-		if (tmp->operator == '|')
-			printf("Operator: %c\n", tmp->operator);
-		if (tmp->fd_overwrite_output)
-			printf("operator > : %i \n", tmp->fd_overwrite_output);
-		if (tmp->args)
-		{
-			for (int i = 0; tmp->args[i]; i++)
-			{
-				if (tmp->args[i])
-					printf("Args[%d]: %s\n", i, tmp->args[i]);
-			}
-		}
-		tmp = tmp->next;
-		printf("next ... \n");
-	}
-}
 
 void	free_token(t_token *token)
 {
+	t_token	*tmp;
+
 	while (token)
 	{
-		if (token->token)
-			free(token->token);
-		if (token->word)
-			free(token->word);
-		if (token->here_doc)
-			free(token->here_doc);
-		if (token->args)
-			ft_free_mtx(token->args);
-		token->token = NULL;
-		token->args = NULL;
-		if (token->next)
-			token = token->next;
-		else
-			return ;
+		tmp = token->next;
+		if (token->parsed->token)
+			free(token->parsed->token);
+		if (token->parsed->word)
+			free(token->parsed->word);
+		free(token->parsed);
+		free(token->operator);
+		if (token->arg)
+			ft_free_mtx(token->arg);
+		free(token);
+		token = tmp;
 	}
 }
 
@@ -148,14 +138,14 @@ void	free_inside_token(t_token *token, char *msg, char *cmd)
 	while (token)
 	{
 		tmp = token->next;
-		if (token->token)
-			free(token->token);
-		if (token->word)
-			free(token->word);
-		if (token->here_doc)
-			free(token->here_doc);
-		if (token->args)
-			ft_free_mtx(token->args);
+		if (token->parsed->token)
+			free(token->parsed->token);
+		if (token->parsed->word)
+			free(token->parsed->word);
+		free(token->parsed);
+		free(token->operator);
+		if (token->arg)
+			ft_free_mtx(token->arg);
 		free(token);
 		token = tmp;
 	}
@@ -169,21 +159,14 @@ void	inside_token_free(t_token *token)
 	while (token)
 	{
 		tmp = token->next;
-		if (token->token)
-		{
-			free(token->token);
-			token->token = NULL;
-		}
-		if (token->word)
-			free(token->word);
-		if (token->here_doc)
-			free(token->here_doc);
-		if (token->fd_append_output)
-			close(token->fd_append_output);
-		if (token->fd_input)
-			close(token->fd_append_output);
-		if (token->fd_overwrite_output)
-			close(token->fd_overwrite_output);
+		if (token->parsed->token)
+			free(token->parsed->token);
+		if (token->parsed->word)
+			free(token->parsed->word);
+		free(token->parsed);
+		free(token->operator);
+		if (token->arg)
+			ft_free_mtx(token->arg);
 		free(token);
 		token = tmp;
 	}

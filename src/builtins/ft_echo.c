@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/05 15:07:43 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:55:11 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
 #include "../../headers/env_variables.h"
-
-#include "../../headers/env_variables.h"
+#include "t_token.h"
 
 
 char	*extract_until_not_alfanum(char *str)
@@ -75,9 +74,9 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, char **
         string_position += var_length + 1; // +1 to skip '$'
 
         // Concatenate the preceding literal with the variable's value
-        if (token->word)
+        if (token->parsed->word)
         {
-            char *temp = ft_strjoin(preceding, token->word);
+            char *temp = ft_strjoin(preceding, token->parsed->word);
             free(preceding);
             if (!temp)
                 return NULL;
@@ -181,11 +180,11 @@ int ft_echo(t_token *token, char *str, int i, char **env)
                     return (free_tokens_line(str, token, "variable processing error"), -1);
                 }
                 len += var_len + 1; // +1 for '$'
-                if (token->word)
+                if (token->parsed->word)
                 {
-                    char *temp = ft_strjoin(output, token->word);
+                    char *temp = ft_strjoin(output, token->parsed->word);
                     free(output);
-                    free (token->word);
+                    free (token->parsed->word);
                     if (!temp)
                         return (free_tokens_line(str, token, "malloc error"), -1);
                     output = temp;

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:42:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/26 17:24:29 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:02:53 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int assign_flags_to_token_args(t_token *token, char *flags[], int num_flags)
     int i;
 
     // Reallocate memory for the args array to fit all flags
-    token->args = ft_recalloc(token->args, 1, num_flags + 1); // Keep args[0] empty
-    if (!token->args)
+    token->arg = ft_recalloc(token->arg, 1, num_flags + 1); // Keep args[0] empty
+    if (!token->arg)
         return (-1);
 
     // Assign flags starting from token->args[1]
     for (i = 0; i < num_flags; i++)
     {
-        token->args[i + 1] = flags[i];
+        token->arg[i + 1] = flags[i];
     }
     return (0);
 }

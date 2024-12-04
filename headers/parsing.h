@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/27 18:52:27 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:31:06 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishell.h"
 # include "state.h"
+# include "t_token.h"
 
 // parsing.c
 /**
@@ -56,7 +57,7 @@ char *extract_word(char *str, char quote);
  * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_token(t_token *token, char *str, int string_position, t_state *state);
+int process_token(t_token **token, char *str, int string_position, t_state *state);
 /**
  * @brief Processes a quoted word from the input string.
  *

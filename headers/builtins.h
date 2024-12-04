@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr> >        +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/10/01 20:18:48 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:40:05 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int ft_exit(t_token *token, char *str);
  * @param env Array of environment variables.
  * @return int Length of the processed string, or 0 if no built-in command is found.
  */
-int process_builtin(t_token *token, char *str, int i, t_state *state, char **env);
+int process_builtin(t_token **token, char *str, int i, t_state *state, char **env);
 
 /**
  * @brief Check if a command is a built-in.

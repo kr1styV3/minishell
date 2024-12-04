@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:52:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:15:21 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:37:39 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	tokenizer(char *str, t_token *token, char **env);
  * @param token The token to be filled with the user input.
  * @return This function does not return; it writes directly to the token.
  */
-void	read_line_from_user(t_token *token, char **env);
+void	read_line_from_user(t_token **token, char **env);
 
 #endif

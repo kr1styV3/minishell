@@ -1,0 +1,1121 @@
+[0;34m[[0m[0;32mchrlomba[0m@[0;36mc2r5p12.42firenze.it[0m[0;34m][0m - [0;34m[[0m[1m~/Desktop/42/cursus/circle_3/minishell[0m[0;34m][0m
+[0;33mMinishell[0m[0;35m $ [0mecho 'Hello, World!'
+World!
+[0;34m[[0m[0;32mchrlomba[0m@[0;36mc2r5p12.42firenze.it[0m[0;34m][0m - [0;34m[[0m[1m~/Desktop/42/cursus/circle_3/minishell[0m[0;34m][0m
+[0;33mMinishell[0m[0;35m $ [0mecho 'Hello, World!'
+World!
+
+[0;34m[[0m[0;32mchrlomba[0m@[0;36mc2r5p12.42firenze.it[0m[0;34m][0m - [0;34m[[0m[1m~/Desktop/42/cursus/circle_3/minishell[0m[0;34m][0m
+[0;33mMinishell[0m[0;35m $ [0mpwd
+/nfs/homes/chrlomba/Desktop/42/cursus/circle_3/minishell
+[0;34m[[0m[0;32mchrlomba[0m@[0;36mc2r5p12.42firenze.it[0m[0;34m][0m - [0;34m[[0m[1m~/Desktop/42/cursus/circle_3/minishell[0m[0;34m][0m
+[0;33mMinishell[0m[0;35m $ [0mls -la
+what i parsed is : (null) 
+
+Valgrind Output:
+==1341140== Memcheck, a memory error detector
+==1341140== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1341140== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==1341140== Command: ./minishell
+==1341140== Parent PID: 1341136
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109787: main (main.c:114)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10978B: main (main.c:114)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109681: checker (main.c:83)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109685: checker (main.c:83)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 1
+==1341140==    at 0x10DBEB: ft_strlen (ft_strlen.c:22)
+==1341140==    by 0x10D704: ft_strjoin (ft_strjoin.c:39)
+==1341140==    by 0x109696: checker (main.c:83)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4b16570 is 0 bytes inside a block of size 18 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FBC: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x10D9A7: ft_freejoin (ft_freejoin.c:40)
+==1341140==    by 0x109B52: process_word (parsing.c:92)
+==1341140==    by 0x10BBD8: tokenizer (read_line.c:83)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== Invalid read of size 1
+==1341140==    at 0x10D684: copy_chars (ft_strjoin.c:23)
+==1341140==    by 0x10D777: ft_strjoin (ft_strjoin.c:47)
+==1341140==    by 0x109696: checker (main.c:83)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4b16570 is 0 bytes inside a block of size 18 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FBC: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x10D9A7: ft_freejoin (ft_freejoin.c:40)
+==1341140==    by 0x109B52: process_word (parsing.c:92)
+==1341140==    by 0x10BBD8: tokenizer (read_line.c:83)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1097AF: main (main.c:117)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1097B3: main (main.c:117)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 1
+==1341140==    at 0x10DBEB: ft_strlen (ft_strlen.c:22)
+==1341140==    by 0x10A083: free_inside_token (t_token_utils.c:135)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4b16570 is 0 bytes inside a block of size 18 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FBC: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x10D9A7: ft_freejoin (ft_freejoin.c:40)
+==1341140==    by 0x109B52: process_word (parsing.c:92)
+==1341140==    by 0x10BBD8: tokenizer (read_line.c:83)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== Syscall param write(buf) points to unaddressable byte(s)
+==1341140==    at 0x49C1297: write (write.c:26)
+==1341140==    by 0x10A097: free_inside_token (t_token_utils.c:135)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4b16570 is 0 bytes inside a block of size 18 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FBC: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x10D9A7: ft_freejoin (ft_freejoin.c:40)
+==1341140==    by 0x109B52: process_word (parsing.c:92)
+==1341140==    by 0x10BBD8: tokenizer (read_line.c:83)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0B7: free_inside_token (t_token_utils.c:139)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70b0 is 32 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0C3: free_inside_token (t_token_utils.c:140)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0C7: free_inside_token (t_token_utils.c:140)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0D3: free_inside_token (t_token_utils.c:141)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0D7: free_inside_token (t_token_utils.c:141)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A0E1: free_inside_token (t_token_utils.c:141)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4b16570 is 0 bytes inside a block of size 18 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FBC: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x10D9A7: ft_freejoin (ft_freejoin.c:40)
+==1341140==    by 0x109B52: process_word (parsing.c:92)
+==1341140==    by 0x10BBD8: tokenizer (read_line.c:83)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0E6: free_inside_token (t_token_utils.c:142)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A0EA: free_inside_token (t_token_utils.c:142)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7168 is 8 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A10B: free_inside_token (t_token_utils.c:144)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A116: free_inside_token (t_token_utils.c:144)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A11B: free_inside_token (t_token_utils.c:145)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad70a0 is 16 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A126: free_inside_token (t_token_utils.c:145)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad71b0 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A001: free_token (t_token_utils.c:122)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109CDC: init_token (t_token_utils.c:41)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A12B: free_inside_token (t_token_utils.c:146)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A137: free_inside_token (t_token_utils.c:147)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10D404: ft_free_mtx (ft_free_mtx.c:22)
+==1341140==    by 0x10A141: free_inside_token (t_token_utils.c:147)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7100 is 0 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A141: free_inside_token (t_token_utils.c:147)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7100 is 0 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A14D: free_inside_token (t_token_utils.c:148)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1097CD: main (main.c:119)
+==1341140==  Address 0x4ad70b0 is 32 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1099E7: process_token (parsing.c:71)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid write of size 8
+==1341140==    at 0x1099F3: process_token (parsing.c:71)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1099FA: process_token (parsing.c:72)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1099FE: process_token (parsing.c:72)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109A2B: process_token (parsing.c:74)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109A2F: process_token (parsing.c:74)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10B8B5: ft_checkwordarg (read_line.c:30)
+==1341140==    by 0x10BADF: tokenizer (read_line.c:68)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10B8B9: ft_checkwordarg (read_line.c:30)
+==1341140==    by 0x10BADF: tokenizer (read_line.c:68)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10BAE7: tokenizer (read_line.c:69)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10BAEB: tokenizer (read_line.c:69)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC02: process_builtin (process_builtin.c:18)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC06: process_builtin (process_builtin.c:18)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC41: process_builtin (process_builtin.c:20)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC45: process_builtin (process_builtin.c:20)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC80: process_builtin (process_builtin.c:22)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10CC84: process_builtin (process_builtin.c:22)
+==1341140==    by 0x10BB82: tokenizer (read_line.c:79)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109F92: free_token (t_token_utils.c:116)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70b0 is 32 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109F9E: free_token (t_token_utils.c:117)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FA2: free_token (t_token_utils.c:117)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FAE: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FB2: free_token (t_token_utils.c:118)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FC1: free_token (t_token_utils.c:119)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FC5: free_token (t_token_utils.c:119)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7168 is 8 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FE6: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a8 is 24 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7160 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109FF1: free_token (t_token_utils.c:121)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C7D: init_token (t_token_utils.c:31)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x109FF6: free_token (t_token_utils.c:122)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad70a0 is 16 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A001: free_token (t_token_utils.c:122)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad71b0 is 0 bytes inside a block of size 16 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A001: free_token (t_token_utils.c:122)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109CDC: init_token (t_token_utils.c:41)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A006: free_token (t_token_utils.c:123)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A012: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10D404: ft_free_mtx (ft_free_mtx.c:22)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7100 is 0 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7100 is 0 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid free() / delete / delete[] / realloc()
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x1096C0: checker (main.c:87)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid write of size 8
+==1341140==    at 0x1096CF: checker (main.c:87)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140==  Address 0x4ad7100 is 0 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10B9FE: ft_checkwordarg (read_line.c:49)
+==1341140==    by 0x10BADF: tokenizer (read_line.c:68)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7090 is 0 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10BA05: ft_checkwordarg (read_line.c:49)
+==1341140==    by 0x10BADF: tokenizer (read_line.c:68)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7108 is 8 bytes inside a block of size 24 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D417: ft_free_mtx (ft_free_mtx.c:29)
+==1341140==    by 0x10A01C: free_token (t_token_utils.c:124)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x109C48: init_token (t_token_utils.c:25)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid read of size 8
+==1341140==    at 0x10A53D: process_operator (operators.c:98)
+==1341140==    by 0x10BC20: tokenizer (read_line.c:85)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x4ad7098 is 8 bytes inside a block of size 40 free'd
+==1341140==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10A028: free_token (t_token_utils.c:125)
+==1341140==    by 0x10BC8B: tokenizer (read_line.c:90)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Block was alloc'd at
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x109756: main (main.c:104)
+==1341140== 
+==1341140== Invalid write of size 1
+==1341140==    at 0x10A544: process_operator (operators.c:98)
+==1341140==    by 0x10BC20: tokenizer (read_line.c:85)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==1341140== 
+==1341140== 
+==1341140== Process terminating with default action of signal 11 (SIGSEGV)
+==1341140==  Access not within mapped region at address 0x0
+==1341140==    at 0x10A544: process_operator (operators.c:98)
+==1341140==    by 0x10BC20: tokenizer (read_line.c:85)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140==  If you believe this happened as a result of a stack
+==1341140==  overflow in your program's main thread (unlikely but
+==1341140==  possible), you can try to increase the size of the
+==1341140==  main thread stack using the --main-stacksize= flag.
+==1341140==  The main thread stack size used in this run was 8388608.
+==1341140== 
+==1341140== HEAP SUMMARY:
+==1341140==     in use at exit: 205,548 bytes in 245 blocks
+==1341140==   total heap usage: 559 allocs, 323 frees, 232,885 bytes allocated
+==1341140== 
+==1341140== 3 bytes in 1 blocks are definitely lost in loss record 1 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10CF48: ft_calloc (ft_calloc.c:19)
+==1341140==    by 0x1098C8: extract_token (parsing.c:39)
+==1341140==    by 0x1099F2: process_token (parsing.c:71)
+==1341140==    by 0x10BAC6: tokenizer (read_line.c:67)
+==1341140==    by 0x10BD55: read_line_from_user (read_line.c:114)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== 13 bytes in 1 blocks are definitely lost in loss record 7 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D71F: ft_strjoin (ft_strjoin.c:40)
+==1341140==    by 0x109696: checker (main.c:83)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140== 
+==1341140== 13 bytes in 1 blocks are definitely lost in loss record 8 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10D4E5: ft_strdup (ft_strdup.c:21)
+==1341140==    by 0x1096CE: checker (main.c:87)
+==1341140==    by 0x1097A5: main (main.c:116)
+==1341140== 
+==1341140== 96 (40 direct, 56 indirect) bytes in 1 blocks are definitely lost in loss record 30 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x10A165: free_inside_token (t_token_utils.c:151)
+==1341140==    by 0x1097C8: main (main.c:117)
+==1341140== 
+==1341140== 117 bytes in 3 blocks are definitely lost in loss record 32 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x10B60D: replace_home_with_symbol (promt.c:72)
+==1341140==    by 0x10B710: get_pwd_with_home_replacement (promt.c:97)
+==1341140==    by 0x10B783: get_promt (promt.c:113)
+==1341140==    by 0x10BD12: read_line_from_user (read_line.c:110)
+==1341140==    by 0x109780: main (main.c:111)
+==1341140== 
+==1341140== 192 (80 direct, 112 indirect) bytes in 2 blocks are definitely lost in loss record 36 of 76
+==1341140==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1341140==    by 0x109C22: init_token (t_token_utils.c:22)
+==1341140==    by 0x10A234: inside_token_free (t_token_utils.c:172)
+==1341140==    by 0x1097FA: main (main.c:123)
+==1341140== 
+==1341140== LEAK SUMMARY:
+==1341140==    definitely lost: 266 bytes in 9 blocks
+==1341140==    indirectly lost: 168 bytes in 9 blocks
+==1341140==      possibly lost: 0 bytes in 0 blocks
+==1341140==    still reachable: 205,114 bytes in 227 blocks
+==1341140==         suppressed: 0 bytes in 0 blocks
+==1341140== Reachable blocks (those to which a pointer was found) are not shown.
+==1341140== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1341140== 
+==1341140== For lists of detected and suppressed errors, rerun with: -s
+==1341140== ERROR SUMMARY: 559 errors from 72 contexts (suppressed: 0 from 0)

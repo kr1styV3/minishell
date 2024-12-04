@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/26 17:51:00 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:37:36 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "builtins.h"
 #include "executor.h"
 #include "read_line.h"
+#include "t_token.h"
 
 volatile sig_atomic_t should_exit = 0;
 
@@ -79,14 +80,11 @@ int	checker(t_token *token, char **envp)
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, token->token);
+		path = ft_strjoin(part_path, token->parsed->token);
 		free(part_path);
 		if (access(path, X_OK) == 0)
 		{
-			if (token->token != NULL)
-				free(token->token);
-			if (token->args != NULL)
-				token->args[0] = ft_strdup(path);
+			token->arg[0] = ft_strdup(path);
 			ft_free_mtx(paths);
 			return (0);
 		}
@@ -99,29 +97,31 @@ int	checker(t_token *token, char **envp)
 
 int main(int ac, char **av, char **envp)
 {
+	t_token		**head;
 	t_token		*token;
-	t_token		*tmp;
 
-	token = init_token();
+	head = (t_token **)malloc(sizeof(t_token *));
+	*head = init_token();
 	// setup_signal_handling();
 	(void)ac;
 	(void)av;
 	while (!should_exit)
 	{
-		read_line_from_user(token, envp);
-		return_to_head(token);
-		tmp = token;
-		while (tmp)
+		token = *head;
+		read_line_from_user(&token, envp);
+		if (token->exec == true)
 		{
-			if (tmp->token)
+			while (token)
 			{
-				if (checker(tmp, envp) == 1)
-					free_inside_token(token, "minishell: command not found: ", tmp->token);
+				if (token->parsed->token)
+				{
+					if (checker(token, envp) == 1)
+						free_inside_token(token, "minishell: command not found: ", token->parsed->token);
+				}
+				token = token->next;
 			}
-			tmp = tmp->next;
+			execute(token, envp);
 		}
-		print_tokens(token);
-		execute(token, envp);
 		inside_token_free(token);
 	}
 	return 0;

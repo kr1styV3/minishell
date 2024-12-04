@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/26 17:54:27 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:30:50 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int process_variable(t_token *token, char *str, int string_position, char **env)
             return (free_tokens_line(str, token, "missing '}'"), -1);
         }
 
-        token->word = ft_getenv(variable, env);
+        token->parsed->word = ft_getenv(variable, env);
         len = ft_strlen(variable) + 2; // '{' and '}'
         free(variable);
     }
@@ -129,9 +129,9 @@ int process_variable(t_token *token, char *str, int string_position, char **env)
         ft_strtrim(command_output, " ");
         // Append command_output to output
 
-        token->word = ft_strdup(command_output);
+        token->parsed->word = ft_strdup(command_output);
         free(command_output);
-        if (!token->word)
+        if (!token->parsed->word)
             return (free_tokens_line(str, token, "malloc error"), -1);
     }
     else if (str[string_position] == '?')
@@ -144,7 +144,7 @@ int process_variable(t_token *token, char *str, int string_position, char **env)
         variable = extract_until_not_alfanum(&str[string_position]);
         if (!variable)
             return (free_tokens_line(str, token, "malloc error"), -1);
-        token->word = ft_getenv(variable, env);
+        token->parsed->word = ft_getenv(variable, env);
         len = ft_strlen(variable);
         free(variable);
     }
