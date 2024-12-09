@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:31:31 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:19:04 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,29 +74,27 @@ int process_token(t_token **token, char *str, int string_position, t_state *stat
 		return (free_tokens_line(str, *token, "memory allocation"), -1);  // Memory allocation error.
 	word_len = ft_strlen((*token)->parsed->token);  // Skip whitespaces after token.
 	*state = SKIP_WHITESPACE;
-	word_len += skip_whitespaces(&str[string_position + word_len], state);
-
 	return (word_len);  // Return the length of the token processed.
 }
 
-int	process_word(t_token *token, char *str, int string_position, t_state *state, char **env)
+int	process_word(t_token **token, char *str, int string_position, t_state *state, char **env)
 {
 	char quote;
 	int len = 0;  // Either ' or ".
 
 	quote = str[string_position];
-	token->parsed->word = extract_word(&str[string_position + 1], quote);  // Extract everything inside the quotes.
-	if (!token->parsed->word)
-		return (free_tokens_line(str, token, "memory allocation"), -1); // Memory allocation error.
+	(*token)->parsed->word = extract_word(&str[string_position + 1], quote);  // Extract everything inside the quotes.
+	if (!(*token)->parsed->word)
+		return (free_tokens_line(str, *token, "memory allocation"), -1); // Memory allocation error.
 	*state = SKIP_WHITESPACE;
-	if (token->parsed->token)
+	if ((*token)->parsed->token)
 	{
-		token->parsed->token = ft_freejoin(token->parsed->token, token->parsed->word);
-		len = ft_strlen(token->parsed->word) + 2;
-		free(token->parsed->word);
-		token->parsed->word = NULL;
+		(*token)->parsed->token = ft_freejoin((*token)->parsed->token, (*token)->parsed->word);
+		len = ft_strlen((*token)->parsed->word) + 2;
+		free((*token)->parsed->word);
+		(*token)->parsed->word = NULL;
 	}
-	if (ft_isbuiltin(token->parsed->token))
+	if (ft_isbuiltin((*token)->parsed->token))
 	{
 		int j = 0;
 		while (str[string_position + 1 + j] != ' ')

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:37:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:16:14 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void setup_signal_handling()
     sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-int	checker(t_token *token, char **envp)
+int	checker(t_token **token, char **envp)
 {
 	char	*path;
 	char	**paths;
@@ -80,11 +80,11 @@ int	checker(t_token *token, char **envp)
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, token->parsed->token);
+		path = ft_strjoin(part_path, (*token)->parsed->token);
 		free(part_path);
 		if (access(path, X_OK) == 0)
 		{
-			token->arg[0] = ft_strdup(path);
+			(*token)->arg[0] = ft_strdup(path);
 			ft_free_mtx(paths);
 			return (0);
 		}
@@ -115,12 +115,13 @@ int main(int ac, char **av, char **envp)
 			{
 				if (token->parsed->token)
 				{
-					if (checker(token, envp) == 1)
+					if (checker(&token, envp) == 1)
 						free_inside_token(token, "minishell: command not found: ", token->parsed->token);
 				}
 				token = token->next;
 			}
-			execute(token, envp);
+			token = *head;
+			execute(head, envp);
 		}
 		inside_token_free(token);
 	}

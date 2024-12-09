@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:39:35 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:18:13 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,23 @@
 
 #define OPERATORS "<>|&-"
 
-#define CHECKWORDARG "<>|&-\'\" "
+#define CHECKWORDARG " "
 
-int	ft_checkwordarg(t_token *token, char *str, int i)
+int	ft_checkwordarg(t_token **token, char *str, int i)
 {
 	int		len = 0;
 	char	quote;
 
-	if (ft_isbuiltin(token->parsed->token))
+	if (ft_isbuiltin((*token)->parsed->token))
 		return (0);
-	if (!ft_strchr(CHECKWORDARG, str[i]))
+	if (!ft_strchr(CHECKWORDARG, str[i]) && str[i] != '\0')
 	{
 		while (!ft_strchr(CHECKWORDARG, str[i + len]) && str[i + len] != 0)
 		{
 			len++;
 		}
-		token->arg[1] = ft_substr(str, i, len);
+		(*token)->arg = ft_recalloc((*token)->arg, 2 * sizeof(char *), 3 * sizeof(char *));
+		(*token)->arg[1] = ft_substr(str, i, len);
 	}
 	if (str[i] == '\"' || str[i] == '\'')
 	{
@@ -43,10 +44,11 @@ int	ft_checkwordarg(t_token *token, char *str, int i)
 		quote = str[i];
 		while (str[i + len] != quote)
 			len++;
-		token->arg[1] = ft_substr(str, i + 1, len -1);
+		(*token)->arg = ft_recalloc((*token)->arg, 2 * sizeof(char *), 3 * sizeof(char *));
+		(*token)->arg[1] = ft_substr(str, i + 1, len -1);
 		len++;
 	}
-	printf("what i parsed is : %s \n", token->arg[1]);
+	printf("what i parsed is : %s \n", (*token)->arg[1]);
 	return (len);
 }
 
@@ -65,7 +67,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
-			string_position += ft_checkwordarg(token, str, string_position);
+			string_position += ft_checkwordarg(&token, str, string_position);
 			if (ft_isbuiltin(token->parsed->token))
 				state = IN_BUILTIN;
 			if (str[string_position] == 34 || str[string_position] == 39)  // Quote found.
@@ -78,13 +80,13 @@ void	tokenizer(char *str, t_token *token, char **env)
 		if (state == IN_BUILTIN)
 			string_position += process_builtin(&token, str, string_position, &state, env);
 		if (state == IN_VARIABLE)
-			string_position += process_variable(token, str, string_position + 1, env) + 1;
+			string_position += process_variable(&token, str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
-			string_position += process_word(token, str, string_position, &state, env);
+			string_position += process_word(&token, str, string_position, &state, env);
 		if (state == IN_OPERATOR || ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(token, str, string_position, &state);
+			string_position += process_operator(&token, str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(token, str, string_position, &state);
+			string_position += process_operator(&token, str, string_position, &state);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;

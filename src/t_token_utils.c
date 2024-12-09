@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:09:57 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:06:03 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token	*init_token(void)
 	if (!token)
 		ft_error("Failed to allocate memory for token.");
 	token->exec = true;
-	token->arg = ft_calloc(3, sizeof(char *));
+	token->arg = ft_calloc(2, sizeof(char *));
 	if (!token->arg)
 	{
 		free(token);

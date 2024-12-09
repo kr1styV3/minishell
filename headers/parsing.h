@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:31:06 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:33:11 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,7 @@ int process_token(t_token **token, char *str, int string_position, t_state *stat
  * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_word(t_token *token, char *str, int string_position, t_state *state, char **env);
-/**
- * @brief Processes an operator character from the input string.
- *
- * This function processes operator characters such as |, <, >, and stores them
- * in the provided `t_token` structure.
- *
- * @param token A pointer to the `t_token` structure where the operator will be stored.
- * @param str The input string containing the operator.
- * @param state The state of the parser to change to SKIP_WHITESPACE.
- * @return The number of characters processed (e.g., 2 for ">>" or 1 for other operators).
- */
-int process_operator(t_token *token, char *str, int string_position, t_state *state);
+int process_word(t_token **token, char *str, int string_position, t_state *state, char **env);
 
 // operators.c
 /**
@@ -148,7 +136,7 @@ int input_from_file(t_token *token, char *str, int string_position);
  * @param state Pointer to the state machine's current state.
  * @return int The length of the processed string or 0 if the operator doesn't modify the length.
  */
-int process_operator(t_token *token, char *str, int string_position, t_state *state);
+int process_operator(t_token **token, char *str, int string_position, t_state *state);
 
 // flags.c
 

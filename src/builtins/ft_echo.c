@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 13:55:11 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:36:03 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, char **
             return NULL;
 
         // Process the variable after '$'
-        int var_length = process_variable(token, str, string_position + 1, env);
+        int var_length = process_variable(&token, str, string_position + 1, env);
         if (var_length == -1)
         {
             free(preceding);
@@ -173,7 +173,7 @@ int ft_echo(t_token *token, char *str, int i, char **env)
             if (str[i + len] == '$')
             {
                 // Process variable
-                int var_len = process_variable(token, str, i + len + 1, env);
+                int var_len = process_variable(&token, str, i + len + 1, env);
                 if (var_len == -1)
                 {
                     free(output);

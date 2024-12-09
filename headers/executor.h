@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/26 16:59:17 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:40:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ typedef enum e_exec_state
 	EXEC_END
 }	t_exec_state;
 
-void execute(t_token *token_list, char **env);
+void execute(t_token **token_list, char **env);
 
 #endif
