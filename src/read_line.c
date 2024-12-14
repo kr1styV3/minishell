@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:18:13 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:13:53 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 
 	if (ft_isbuiltin((*token)->parsed->token))
 		return (0);
-	if (!ft_strchr(CHECKWORDARG, str[i]) && str[i] != '\0')
+	if (str[i] == ' ' && str[i] != '\0')
 	{
-		while (!ft_strchr(CHECKWORDARG, str[i + len]) && str[i + len] != 0)
+		int ws = skip_whitespaces(&str[i], NULL);
+		while (str[i + ws + len] != ' ' && str[i + len] != 0)
 		{
 			len++;
 		}
 		(*token)->arg = ft_recalloc((*token)->arg, 2 * sizeof(char *), 3 * sizeof(char *));
-		(*token)->arg[1] = ft_substr(str, i, len);
+		(*token)->arg[1] = ft_substr(str, i + ws, len);
+		len += ws;
 	}
 	if (str[i] == '\"' || str[i] == '\'')
 	{
