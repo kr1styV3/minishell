@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/14 17:13:53 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:13:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	}
 	if (str[i] == '\"' || str[i] == '\'')
 	{
+		// find space = part token part arg; no space ig word yeah
 		len = 1;
 		quote = str[i];
 		while (str[i + len] != quote)
@@ -52,6 +53,19 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	}
 	printf("what i parsed is : %s \n", (*token)->arg[1]);
 	return (len);
+}
+
+int	check_var(char *str, char *line, int i)
+{
+	int	j;
+
+	j= 0;
+	while (!ft_strchr(&str[j], '='))
+		j++;
+	if (str[j] == '=')
+	{
+		
+	}
 }
 
 void	tokenizer(char *str, t_token *token, char **env)
@@ -69,6 +83,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
+				string_position += check_var(token->parsed->token, str, string_position);
 			string_position += ft_checkwordarg(&token, str, string_position);
 			if (ft_isbuiltin(token->parsed->token))
 				state = IN_BUILTIN;
@@ -89,6 +104,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 			string_position += process_operator(&token, str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
 			string_position += process_operator(&token, str, string_position, &state);
+		printf("token : %s", token->parsed->token);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;

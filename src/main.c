@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:16:14 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:27:46 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int main(int ac, char **av, char **envp)
 {
 	t_token		**head;
 	t_token		*token;
+	bool		exec;
 
 	head = (t_token **)malloc(sizeof(t_token *));
 	*head = init_token();
@@ -107,6 +108,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	while (!should_exit)
 	{
+		exec = true;
 		token = *head;
 		read_line_from_user(&token, envp);
 		if (token->exec == true)
@@ -116,12 +118,16 @@ int main(int ac, char **av, char **envp)
 				if (token->parsed->token)
 				{
 					if (checker(&token, envp) == 1)
-						free_inside_token(token, "minishell: command not found: ", token->parsed->token);
+					{
+						free_inside_token("minishell: command not found: ", token->parsed->token);
+						exec = false;
+					}
 				}
 				token = token->next;
 			}
 			token = *head;
-			execute(head, envp);
+			if (exec == true)
+				execute(head, envp);
 		}
 		inside_token_free(token);
 	}

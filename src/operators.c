@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 16:32:00 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:56:16 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,15 @@ int process_operator(t_token **token, char *str, int string_position, t_state *s
 	else if (str[string_position] == '<')  // "<" operator
 		length = input_from_file(*token, str, string_position + 1) + 1;  // Initialize file path for input redirection
 	else if (str[string_position] == '|')
+	{
+		(*token)->operator->operator = '|';
 		return (length); // Set operator type
+	}
 	else if (str[string_position] == '&')
+	{
+		(*token)->operator->operator = '&';
 		return (length); //Set background execution flag
+	}
 	else if (str[string_position] == '-')
 		length = parse_flags(*token, str, string_position);  // Parse flags
 	*state = SKIP_WHITESPACE;  // Default case

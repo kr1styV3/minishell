@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:06:03 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:26:46 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,28 +128,11 @@ void	free_token(t_token *token)
 	}
 }
 
-void	free_inside_token(t_token *token, char *msg, char *cmd)
+void	free_inside_token(char *msg, char *cmd)
 {
-	t_token	*tmp;
-
 	write(2, msg, ft_strlen(msg));
 	write(2, cmd, ft_strlen(cmd));
 	write(1, "\n", 1);
-	while (token)
-	{
-		tmp = token->next;
-		if (token->parsed->token)
-			free(token->parsed->token);
-		if (token->parsed->word)
-			free(token->parsed->word);
-		free(token->parsed);
-		free(token->operator);
-		if (token->arg)
-			ft_free_mtx(token->arg);
-		free(token);
-		token = tmp;
-	}
-	token = init_token();
 }
 
 void	inside_token_free(t_token *token)
