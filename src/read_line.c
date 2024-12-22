@@ -6,12 +6,12 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/19 20:13:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:11:33 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "env_variables.h"
+#include "../headers/env_variables.h"
 #include "promt.h"
 #include "read_line.h"
 #include "t_token.h"
@@ -55,18 +55,6 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	return (len);
 }
 
-int	check_var(char *str, char *line, int i)
-{
-	int	j;
-
-	j= 0;
-	while (!ft_strchr(&str[j], '='))
-		j++;
-	if (str[j] == '=')
-	{
-		
-	}
-}
 
 void	tokenizer(char *str, t_token *token, char **env)
 {
@@ -83,7 +71,8 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
-				string_position += check_var(token->parsed->token, str, string_position);
+			if (check_var(token->parsed->token, str, string_position, env) == 0){
+				token->exec = false; break;}
 			string_position += ft_checkwordarg(&token, str, string_position);
 			if (ft_isbuiltin(token->parsed->token))
 				state = IN_BUILTIN;
