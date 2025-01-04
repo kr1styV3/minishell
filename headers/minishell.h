@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/10 15:04:12 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 11:15:42 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void return_to_head(t_token *token);
  * @param msg The error message to print before freeing the tokens.
  * @param cmd The command related to the error, to be printed after `msg`.
  */
-void free_inside_token(t_token *token, char *msg, char *cmd);
+void free_inside_token( char *msg, char *cmd);
 
 # endif

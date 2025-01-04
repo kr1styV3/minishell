@@ -1,0 +1,28 @@
+echo 'Hello, World!'
+pwd
+ls -la
+echo 'Testing output redirection' > test_output.txt
+cat < test_output.txt
+echo 'Appending to file' >> test_output.txt
+cat test_output.txt
+grep 'Testing' < test_output.txt > grep_output.txt
+cat grep_output.txt
+ls -la | grep 'test_output.txt'
+cat test_output.txt | wc -l
+echo -e 'Line 1\nLine 2\nLine 3' | wc -l
+sleep 1 &
+echo 'This should appear before sleep finishes'
+echo $HOME
+echo "Double quotes test"
+echo 'Single quotes test'
+echo Backslashes \\ test
+cat << EOF
+This is a test of heredoc
+EOF
+echo $(echo 'Nested command')
+MYVAR='Test variable'
+echo $MYVAR
+invalid_command
+ls nonexistentfile
+rm test_output.txt grep_output.txt
+exit
