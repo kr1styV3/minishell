@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:21:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:08:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token *init_token(void)
     token->operator = (t_operator *)malloc(sizeof(t_operator));
     if (!token->operator)
         return free(token->parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
-
+	token->last_exit_status = -1;
     token->next = NULL;
     return token;
 }
@@ -61,7 +61,6 @@ t_token	*reinit_token(t_token *prev_token)
     token->operator = (t_operator *)malloc(sizeof(t_operator));
     if (!token->operator)
         return free(token->parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
-
 	prev_token->next = token;
 	return (token);
 }
@@ -105,6 +104,12 @@ void	free_token(t_token *token)
 		free(token->operator);
 		if (token->arg)
 			ft_free_mtx(token->arg);
+		// if (token->operator->fd_append_output > 0)
+		// 	close(token->operator->fd_append_output);
+		// if (token->operator->fd_overwrite_output > 0)
+		// 	close(token->operator->fd_overwrite_output);
+		// if (token->operator->fd_input > 0)
+		// 	close(token->operator->fd_input);
 		free(token);
 		token = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/18 16:45:24 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:10:09 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,7 @@
 #include "../headers/executor.h"
 #include "../headers/t_token.h" // Include the updated header
 
-#define MAX_COMMANDS 1024  // Adjust as needed
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <fcntl.h>    // For file control operations
-#include <stdbool.h>  // For bool type
-#include "../headers/t_token.h"
-
-// Adjust as needed
-#define MAX_COMMANDS 1024
+#define MAX_COMMANDS 1024  // Adjust as neededq
 
 /* Function to set up redirections */
 void setup_redirections(t_token *current)
@@ -71,13 +59,14 @@ void setup_redirections(t_token *current)
  * `job_end` is the last command in the pipeline.
  * `background` indicates if the whole pipeline should run in background.
  */
-void execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background)
+int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background)
 {
     int pipe_fd[2];
     int prev_fd = -1;
     pid_t pid;
     pid_t child_pids[MAX_COMMANDS];
     int child_count = 0;
+    int status = 0;
 
     t_token *current = job_start;
 
@@ -128,7 +117,7 @@ void execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool bac
 
             execve(current->arg[0], current->arg, env);
             perror("execve failed");
-            exit(EXIT_FAILURE);
+            should_exit = 1;
         }
         else
         {
@@ -165,7 +154,7 @@ void execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool bac
     {
         for (int i = 0; i < child_count; i++)
         {
-            waitpid(child_pids[i], NULL, 0);
+            waitpid(child_pids[i], &status, 0);
         }
     }
     else
@@ -177,12 +166,14 @@ void execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool bac
         }
         printf("\n");
     }
+    return status;
 }
 
 /* Main execution function */
-void execute(t_token **token_list, char **env)
+int execute(t_token **token_list, char **env)
 {
     t_token *current = *token_list;
+    int     status = 0;
 
     while (current != NULL)
     {
@@ -203,7 +194,7 @@ void execute(t_token **token_list, char **env)
         }
 
         // Execute the pipeline from job_start to job_end
-        execute_pipeline(job_start, job_end, env, background);
+        status = execute_pipeline(job_start, job_end, env, background);
 
         // Move to the next command after job_end
         if (job_end->next)
@@ -211,4 +202,5 @@ void execute(t_token **token_list, char **env)
         else
             current = NULL;
     }
+    return status;
 }

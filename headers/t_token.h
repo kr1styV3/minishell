@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/22 19:33:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:06:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_token
 	bool				exec;
 	bool				free;
 	char				**arg;
-	int					last_exit_status;
+	unsigned int		last_exit_status;
 	struct s_operator	*operator;
 	struct s_parse		*parsed;
 	struct s_token		*next;

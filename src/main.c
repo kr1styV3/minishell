@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:22:41 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:13:29 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int main(int ac, char **av, char **envp)
 {
 	t_token		**head;
 	t_token		*token;
+	int status = -1;
 
 	head = (t_token **)malloc(sizeof(t_token *));
 	// setup_signal_handling();
@@ -116,7 +117,9 @@ int main(int ac, char **av, char **envp)
 	{
 		*head = init_token();
 		token = *head;
-		read_line_from_user(&token, envp);
+		printf("last exitn status: %d\n", status);
+		token->last_exit_status = status;
+		read_line_from_user(&(*head), envp);
 		if (token->exec == true || should_exit)
 		{
 			while (token)
@@ -129,13 +132,13 @@ int main(int ac, char **av, char **envp)
 						token->exec = false;
 					}
 				}
-				for (int i = 0; token->arg[i]; i++)
-					print_with_visible_whitespace(token->arg[i]);
+				// for (int i = 0; token->arg[i]; i++)
+				// 	print_with_visible_whitespace(token->arg[i]);
 				token = token->next;
 			}
 			token = *head;
 			if (token->exec == true)
-				execute(head, envp);
+				status = execute(head, envp);
 		}
 		if (should_exit == 2)
 			should_exit = 0;

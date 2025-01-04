@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:16:31 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:37:13 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 
 	if (ft_isbuiltin((*token)->parsed->token))
 		return (0);
-	if (str[i] == ' ' && str[i] != '\0')
+	if (str[i] == ' ' && str[i] != '\0' && !ft_strchr(OPERATORS, str[i + 1]))
 	{
 		int ws = skip_whitespaces(&str[i], NULL);
 		while (str[i + ws + len] != ' ' && str[i + len] != 0)
@@ -51,6 +51,8 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 		(*token)->arg[1] = ft_substr(str, i + 1, len -1);
 		len++;
 	}
+	if (str[i + len] == ' ' && str[i + len + 1])
+		len += skip_whitespaces(&str[i + len], NULL);
 	printf("what i parsed is : %s \n", (*token)->arg[1]);
 	return (len);
 }
@@ -98,7 +100,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 			string_position += process_operator(&token, str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
 			string_position += process_operator(&token, str, string_position, &state);
-		printf("token : %s", token->parsed->token);
+		// printf("token : %s", token->parsed->token);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;
@@ -125,6 +127,7 @@ void read_line_from_user(t_token **token, char **env)
 	char	*read_line;
 	char	*promt;
 
+	read_line = NULL;
 	promt = get_promt(env);
 	read_line = readline(promt);
 	while ((!read_line && !should_exit) || !ft_strlen(read_line))
@@ -135,4 +138,5 @@ void read_line_from_user(t_token **token, char **env)
 	add_history(read_line);
 	tokenizer(read_line, *token, env);
 	free(read_line);
+	read_line = NULL;
 }
