@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:16:14 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:48:55 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@
 #include "executor.h"
 #include "read_line.h"
 #include "t_token.h"
-
+#include "../my_libft/headers/libft.h"
 volatile sig_atomic_t should_exit = 0;
 
 // Signal handler for SIGINT (Ctrl-C)
 void handle_sigint(int sig)
 {
 	(void)sig;
-	rl_on_new_line();            // Tell Readline to start a new line
-    rl_replace_line("", 0);      // Clear the current input
-    rl_redisplay();       // Ensure prompt is displayed immediately
+	should_exit = 2;
 }
 
 // Signal handler for SIGTERM (Ctrl-D)
@@ -94,22 +92,32 @@ int	checker(t_token **token, char **envp)
 	ft_free_mtx(paths);
 	return (1);
 }
-
+void print_with_visible_whitespace(const char *str) {
+    for (; *str; str++) {
+        if (isspace((unsigned char)*str)) {
+            // For example, print a dot instead of whitespace
+            write(1,".", 1);
+        } else {
+            write(1, &(*str), 1);
+        }
+    }
+	write(1, "\n", 1);
+}
 int main(int ac, char **av, char **envp)
 {
 	t_token		**head;
 	t_token		*token;
 
 	head = (t_token **)malloc(sizeof(t_token *));
-	*head = init_token();
 	// setup_signal_handling();
 	(void)ac;
 	(void)av;
 	while (!should_exit)
 	{
+		*head = init_token();
 		token = *head;
 		read_line_from_user(&token, envp);
-		if (token->exec == true)
+		if (token->exec == true || should_exit)
 		{
 			while (token)
 			{
@@ -118,12 +126,19 @@ int main(int ac, char **av, char **envp)
 					if (checker(&token, envp) == 1)
 						free_inside_token(token, "minishell: command not found: ", token->parsed->token);
 				}
+				for (int i = 0; token->arg[i]; i++)
+					print_with_visible_whitespace(token->arg[i]);
 				token = token->next;
 			}
 			token = *head;
 			execute(head, envp);
 		}
+		if (should_exit == 2)
+			should_exit = 0;
 		inside_token_free(token);
 	}
+	free(*head);
+	free(head);
+	rl_clear_history();
 	return 0;
 }

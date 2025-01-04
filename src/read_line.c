@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:18:13 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:45:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@
 
 int	ft_checkwordarg(t_token **token, char *str, int i)
 {
-	int		len = 0;
+	int		len = 1;
 	char	quote;
 
 	if (ft_isbuiltin((*token)->parsed->token))
 		return (0);
-	if (!ft_strchr(CHECKWORDARG, str[i]) && str[i] != '\0')
+	if (!ft_strchr(CHECKWORDARG, str[i + len]) && str[i] != '\0')
 	{
 		while (!ft_strchr(CHECKWORDARG, str[i + len]) && str[i + len] != 0)
 		{
 			len++;
 		}
 		(*token)->arg = ft_recalloc((*token)->arg, 2 * sizeof(char *), 3 * sizeof(char *));
-		(*token)->arg[1] = ft_substr(str, i, len);
+		(*token)->arg[1] = ft_substr(str, i + 1, len - 1);
 	}
 	if (str[i] == '\"' || str[i] == '\'')
 	{
@@ -63,6 +63,11 @@ void	tokenizer(char *str, t_token *token, char **env)
 	{
 		if (state == SKIP_WHITESPACE)
 			string_position += skip_whitespaces(&str[string_position], &state);
+		if (ft_strchr(OPERATORS, str[string_position]))
+		{
+			string_position += process_operator(&token, str, string_position, &state);
+			string_position += skip_whitespaces(&str[string_position], &state);
+		}  // Operator found.
 		if (state == NORMAL)
 		{
 			if (ft_isalnum(str[string_position]))
@@ -96,6 +101,10 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			return ;
 		}
+		else if (should_exit)
+		{
+			return ;
+		}
 		else
 		{
 			token->next = reinit_token(token);
@@ -111,7 +120,11 @@ void read_line_from_user(t_token **token, char **env)
 
 	promt = get_promt(env);
 	read_line = readline(promt);
+	while ((!read_line && !should_exit) || !ft_strlen(read_line))
+		read_line = readline(promt);
 	free(promt);
+	if (!read_line || should_exit)
+		return ;
 	add_history(read_line);
 	tokenizer(read_line, *token, env);
 	free(read_line);

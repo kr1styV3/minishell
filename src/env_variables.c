@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 11:30:50 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:16:28 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char *execute_and_capture_output(char *command, char **env)
     int pipefd[2];
     pid_t pid;
     int status;
-    char *temp;
+    char *temp = NULL;
     char *temp2;
 
     if (pipe(pipefd) == -1)
@@ -56,7 +56,7 @@ char *execute_and_capture_output(char *command, char **env)
             free_token(token);
             exit(EXIT_FAILURE);
         }
-        execute(token, env); // Execute the command
+        execute(&token, env); // Execute the command
         free_token(token);
         exit(EXIT_SUCCESS);
     }

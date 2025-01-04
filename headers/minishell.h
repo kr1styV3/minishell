@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 13:01:01 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:04:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include "t_token.h"
+
+extern volatile sig_atomic_t should_exit;
 
 // t_token_utils.c
 void inside_token_free(t_token *token);

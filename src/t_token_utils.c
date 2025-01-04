@@ -6,80 +6,62 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:06:03 by chrlomba         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:04:40 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 #include "t_token.h"
 
-t_token	*init_token(void)
+t_token *init_token(void)
 {
-	t_token	*token;
-	t_parse *parse;
-	t_operator	*op;
+    t_token *token = (t_token *)malloc(sizeof(t_token));
+    if (!token)
+        ft_error("Failed to allocate memory for token.");
 
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		ft_error("Failed to allocate memory for token.");
-	token->exec = true;
-	token->arg = ft_calloc(2, sizeof(char *));
-	if (!token->arg)
-	{
-		free(token);
-		ft_error("Failed to allocate memory for args.");
-	}
-	parse = (t_parse *)malloc(sizeof(t_parse));
-	if (!parse)
-	{
-		free(token->arg);
-		free(token);
-		ft_error("Failed to allocate memory for t_parse.");
-	}
-	parse->token = NULL;
-	parse->word = NULL;
-	token->parsed = parse;
-	op = (t_operator *)malloc (sizeof(t_operator));
-	if (!op)
-	{
-		free(token->arg);
-		free(token->parsed);
-		free(token);
-		ft_error("Failed to allocate memory for t_operator.");
-	}
-	token->operator = op;
-	token->next = NULL;
-	return (token);
+    token->exec = true;
+    token->arg = ft_calloc(2, sizeof(char *));
+    if (!token->arg)
+        return free(token), ft_error("Failed to allocate memory for args."), NULL;
+
+    token->parsed = (t_parse *)malloc(sizeof(t_parse));
+    if (!token->parsed)
+        return free(token->arg), free(token), ft_error("Failed to allocate memory for t_parse."), NULL;
+
+    token->parsed->token = NULL;
+    token->parsed->word = NULL;
+
+    token->operator = (t_operator *)malloc(sizeof(t_operator));
+    if (!token->operator)
+        return free(token->parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
+
+    token->next = NULL;
+    return token;
 }
+
 
 t_token	*reinit_token(t_token *prev_token)
 {
-	t_token	*token;
+    t_token *token = (t_token *)malloc(sizeof(t_token));
+    if (!token)
+        ft_error("Failed to allocate memory for token.");
 
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		free_tokens_line(NULL, prev_token, "Failed to allocate memory for token.");
-	token->arg = ft_calloc(3, sizeof(char *));
-	if (!token->arg)
-	{
-		free(token);
-		free_tokens_line(NULL, prev_token, "Failed to allocate memory for args.");
-	}
-	token->parsed = (t_parse *)malloc(sizeof(t_parse));
-	if (!token->parsed)
-	{
-		free(token->arg);
-		free(token);
-		free_tokens_line(NULL, prev_token, "Failed to allocate memory for t_parse.");
-	}
-	token->operator = (t_operator *)malloc (sizeof(t_parse));
-	if (!token->operator)
-	{
-		free(token->arg);
-		free(token->parsed);
-		free(token);
-		free_tokens_line(NULL, prev_token, "Failed to allocate memory for t_operator.");
-	}
+    token->exec = true;
+    token->arg = ft_calloc(2, sizeof(char *));
+    if (!token->arg)
+        return free(token), ft_error("Failed to allocate memory for args."), NULL;
+
+    token->parsed = (t_parse *)malloc(sizeof(t_parse));
+    if (!token->parsed)
+        return free(token->arg), free(token), ft_error("Failed to allocate memory for t_parse."), NULL;
+
+    token->parsed->token = NULL;
+    token->parsed->word = NULL;
+
+    token->operator = (t_operator *)malloc(sizeof(t_operator));
+    if (!token->operator)
+        return free(token->parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
+
 	prev_token->next = token;
 	return (token);
 }
@@ -170,5 +152,4 @@ void	inside_token_free(t_token *token)
 		free(token);
 		token = tmp;
 	}
-	token = init_token();
 }
