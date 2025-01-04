@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:15:32 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 11:22:41 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int main(int ac, char **av, char **envp)
 					if (checker(&token, envp) == 1)
 					{
 						free_inside_token("minishell: command not found: ", token->parsed->token);
-						token->exec = true;
+						token->exec = false;
 					}
 				}
 				for (int i = 0; token->arg[i]; i++)
@@ -139,9 +139,8 @@ int main(int ac, char **av, char **envp)
 		}
 		if (should_exit == 2)
 			should_exit = 0;
-		inside_token_free(token);
+		free_token(*head);
 	}
-	free(*head);
 	free(head);
 	rl_clear_history();
 	return 0;

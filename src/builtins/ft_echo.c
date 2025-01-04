@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/06 16:36:03 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/04 11:46:31 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../../headers/env_variables.h"
 #include "t_token.h"
 
+#define OPERATORS "<>|&-"
 
 char	*extract_until_not_alfanum(char *str)
 {
@@ -214,11 +215,23 @@ int ft_echo(t_token *token, char *str, int i, char **env)
             }
         }
     }
-
-    // Print the final output
-    ft_putstr_fd(output, 1);
-    if (!flag)
-        ft_putchar_fd('\n', 1);
-    free(output);
+    if (ft_strchr(OPERATORS, str[i + len + 1]))
+    {
+       int operator_len = process_operator(&token, str, i + len + 1, NULL);
+       if (token->operator->fd_append_output > 0)
+            ft_putstr_fd(output, token->operator->fd_append_output);
+        else if (token->operator->fd_overwrite_output > 0)
+            ft_putstr_fd(output, token->operator->fd_overwrite_output);
+        else if (token->operator->fd_input > 0)
+            ft_putstr_fd(output, token->operator->fd_input);
+        len += operator_len + 1;
+    }
+    else
+    {
+        ft_putstr_fd(output, 1);
+        if (!flag)
+            ft_putchar_fd('\n', 1);
+        free(output);
+    }
     return len;
 }
