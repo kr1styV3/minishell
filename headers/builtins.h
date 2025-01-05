@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:40:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:52:56 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ int ft_export(char **env);
  * @param token Pointer to the token structure.
  * @param str Input string containing the command.
  * @param i Position in the input string to start processing.
+ * @param env Array of environment variables.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_unset(t_token *token, char *str, int i);
+int ft_unset(t_token *token, char *str, int i, char **env);
 
 /**
  * @brief Display the current environment variables (env).

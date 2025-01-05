@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 14:37:13 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:19:10 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,13 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	{
 		int ws = skip_whitespaces(&str[i], NULL);
 		while (str[i + ws + len] != ' ' && str[i + len] != 0)
-		{
 			len++;
-		}
 		(*token)->arg = ft_recalloc((*token)->arg, 2 * sizeof(char *), 3 * sizeof(char *));
 		(*token)->arg[1] = ft_substr(str, i + ws, len);
 		len += ws;
 	}
 	if (str[i] == '\"' || str[i] == '\'')
 	{
-		// find space = part token part arg; no space ig word yeah
 		len = 1;
 		quote = str[i];
 		while (str[i + len] != quote)
@@ -53,7 +50,6 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	}
 	if (str[i + len] == ' ' && str[i + len + 1])
 		len += skip_whitespaces(&str[i + len], NULL);
-	printf("what i parsed is : %s \n", (*token)->arg[1]);
 	return (len);
 }
 
@@ -73,19 +69,25 @@ void	tokenizer(char *str, t_token *token, char **env)
 		{
 			string_position += process_operator(&token, str, string_position, &state);
 			string_position += skip_whitespaces(&str[string_position], &state);
-		}  // Operator found.
+		}
 		if (state == NORMAL)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
-			if (check_var(token->parsed->token, str, string_position, env) == 0){
-				token->exec = false; break;}
-			string_position += ft_checkwordarg(&token, str, string_position);
+			printf("%p\n", token->parsed);
+			if (check_var(&token, str, &string_position, env) == 0)
+			{
+				token->env_work = true;
+				if (str[string_position + 1])
+					env = (char **)token->env_ptr;
+				else
+					token->exec = false;
+			}
 			if (ft_isbuiltin(token->parsed->token))
 				state = IN_BUILTIN;
-			if (str[string_position] == 34 || str[string_position] == 39)  // Quote found.
+			if (str[string_position] == 34 || str[string_position] == 39)
 				state = IN_WORD;
-			if (ft_strchr(OPERATORS, str[string_position]))  // Operator found.
+			if (ft_strchr(OPERATORS, str[string_position]))
 				state = IN_OPERATOR;
 			if (str[string_position] == '$' && !IN_BUILTIN)
 				state = IN_VARIABLE;
@@ -100,7 +102,6 @@ void	tokenizer(char *str, t_token *token, char **env)
 			string_position += process_operator(&token, str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
 			string_position += process_operator(&token, str, string_position, &state);
-		// printf("token : %s", token->parsed->token);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;
@@ -125,14 +126,15 @@ void	tokenizer(char *str, t_token *token, char **env)
 void read_line_from_user(t_token **token, char **env)
 {
 	char	*read_line;
-	char	*promt;
+	char	*promt= "minishell$ ";
 
 	read_line = NULL;
-	promt = get_promt(env);
+	// promt = get_promt(env);
+
 	read_line = readline(promt);
 	while ((!read_line && !should_exit) || !ft_strlen(read_line))
 		read_line = readline(promt);
-	free(promt);
+	// free(promt);
 	if (!read_line || should_exit)
 		return ;
 	add_history(read_line);

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 15:13:29 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:17:05 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,41 @@
 #include "../my_libft/headers/libft.h"
 volatile sig_atomic_t should_exit = 0;
 
-// Signal handler for SIGINT (Ctrl-C)
 void handle_sigint(int sig)
 {
 	(void)sig;
 	should_exit = 2;
 }
 
-// Signal handler for SIGTERM (Ctrl-D)
 void handle_sigterm(int sig)
 {
 	(void)sig;
-    should_exit = 1;  // Set flag to exit the shell
+	should_exit = 1;
 }
 
-// Signal handler for SIGQUIT (Ctrl-\) - No action needed
 void handle_sigquit(int sig)
 {
 	(void)sig;
-    // Do nothing
 }
 
-// Function to set up signal handling
 void setup_signal_handling()
 {
-    struct sigaction sa_int, sa_term, sa_quit;
+	struct sigaction sa_int;
+	struct sigaction sa_term;
+	struct sigaction sa_quit;
 
-    // Set up SIGINT handler (Ctrl-C)
-    sa_int.sa_handler = handle_sigint;
-    sigemptyset(&sa_int.sa_mask);
-    sa_int.sa_flags = 0;  // No special flags
-    sigaction(SIGINT, &sa_int, NULL);
-
-    // Set up SIGTERM handler (Ctrl-D)
-    sa_term.sa_handler = handle_sigterm;
-    sigemptyset(&sa_term.sa_mask);
-    sa_term.sa_flags = 0;  // No special flags
-    sigaction(SIGTERM, &sa_term, NULL);
-
-    // Set up SIGQUIT handler (Ctrl-\) - Do nothing
-    sa_quit.sa_handler = handle_sigquit;
-    sigemptyset(&sa_quit.sa_mask);
-    sa_quit.sa_flags = 0;  // No special flags
-    sigaction(SIGQUIT, &sa_quit, NULL);
+	sa_int.sa_handler = handle_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = 0;
+	sigaction(SIGINT, &sa_int, NULL);
+	sa_term.sa_handler = handle_sigterm;
+	sigemptyset(&sa_term.sa_mask);
+	sa_term.sa_flags = 0;
+	sigaction(SIGTERM, &sa_term, NULL);
+	sa_quit.sa_handler = handle_sigquit;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
 int	checker(t_token **token, char **envp)
@@ -92,24 +84,39 @@ int	checker(t_token **token, char **envp)
 	ft_free_mtx(paths);
 	return (1);
 }
-void print_with_visible_whitespace(const char *str) {
-    for (; *str; str++) {
-        if (isspace((unsigned char)*str)) {
-            // For example, print a dot instead of whitespace
-            write(1,".", 1);
-        } else {
-            write(1, &(*str), 1);
-        }
-    }
-	write(1, "\n", 1);
+
+char	**env_copy(char **_env)
+{
+	char	**env;
+	int		i;
+
+	i = 0;
+	while (_env[i])
+		i++;
+	env = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!env)
+		ft_error("Failed to allocate memory for env.");
+	i = 0;
+	while (_env[i])
+	{
+		env[i] = ft_strdup(_env[i]);
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
+
 int main(int ac, char **av, char **envp)
 {
 	t_token		**head;
 	t_token		*token;
+	char		**_env_ptr;
 	int status = -1;
 
+	_env_ptr = env_copy(envp);
 	head = (t_token **)malloc(sizeof(t_token *));
+	if (!head)
+		ft_error("Failed to allocate memory for token.");
 	// setup_signal_handling();
 	(void)ac;
 	(void)av;
@@ -119,7 +126,11 @@ int main(int ac, char **av, char **envp)
 		token = *head;
 		printf("last exitn status: %d\n", status);
 		token->last_exit_status = status;
-		read_line_from_user(&(*head), envp);
+		read_line_from_user(&(*head), _env_ptr);
+		if ((*head)->env_work == true)
+		{
+			_env_ptr = (char **)((*head)->env_ptr);
+		}
 		if (token->exec == true || should_exit)
 		{
 			while (token)
@@ -132,8 +143,6 @@ int main(int ac, char **av, char **envp)
 						token->exec = false;
 					}
 				}
-				// for (int i = 0; token->arg[i]; i++)
-				// 	print_with_visible_whitespace(token->arg[i]);
 				token = token->next;
 			}
 			token = *head;

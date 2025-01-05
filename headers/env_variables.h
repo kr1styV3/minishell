@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:55:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/22 21:08:43 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:44:52 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**env_add_entry(char **env, const char *new_entry);
  *   and either replaces or adds "VAR=value" in *env_ptr.
  * Returns 0 on success, -1 on error.
  */
-int		check_var(char *str, char *line, int i, char **env_ptr);
+int		check_var(t_token **token, char *line, int *i, char **env_ptr);
 
 
 #endif

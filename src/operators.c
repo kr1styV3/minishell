@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:39:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:16:53 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,23 @@ int	check_overwrite_fd(t_token *token, char *str, int string_position)
 	return (length);
 }
 
-// int	here_doc(t_token *token, char *str, int string_position)
-// {
-// 	int length;
-// 	char *delimiter;
-// 	char *line;
+int	here_doc_init(t_token *token, char *str, int i)
+{
+	int		length;
+	char	*delimiter;
 
-// 	length = skip_whitespaces(&str[string_position], NULL);
-// 	delimiter = extract_token(&str[string_position + length]);
-// 	if (!delimiter)
-// 		return (free_tokens_line(str, token, "malloc error"), -1);
-// 	length += ft_strlen(delimiter);
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!line)
-// 			return (free_tokens_line(str, token, "Failed to read line"), -1);
-// 		if (ft_strcmp(line, delimiter) == 0)
-// 		{
-// 			free(line);
-// 			break ;
-// 		}
-// 		token->here_doc = ft_freejoin(token->here_doc, line);
-// 		if (!token->here_doc)
-// 			return (free_tokens_line(str, token, "malloc error"), -1);
-// 	}
-// 	return (length);
-// }
+	length = skip_whitespaces(&str[i], NULL);
+	delimiter = extract_token(&str[i + length]);
+	if (!delimiter)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	length += ft_strlen(delimiter);
+	token->here_doc = true;
+	token->eof = ft_strdup(delimiter);
+	if (!token->eof)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	free(delimiter);
+	return (length);
+}
 
 int	input_from_file(t_token *token, char *str, int string_position)
 {
@@ -100,8 +90,8 @@ int process_operator(t_token **token, char *str, int string_position, t_state *s
 		length = check_append_fd(*token, str, string_position + 2) + 2;  // Check if the operator is ">>" and set the file descriptor.
 	else if (str[string_position] == '>')  // ">" operator
 		length = check_overwrite_fd(*token, str, string_position + 1) + 1;// Initialize file path for output redirection
-	// else if (str[string_position] == '<' && str[string_position + 1] == '<')  // "<<" operator
-	// 	length = here_doc(*token, str, string_position + 2) + 2;  // Check if the operator is "<<" and set the file descriptor.
+	else if (str[string_position] == '<' && str[string_position + 1] == '<')  // "<<" operator
+		 length = here_doc_init(*token, str, string_position + 2) + 2;  // Initialize here-doc delimiter
 	else if (str[string_position] == '<')  // "<" operator
 		length = input_from_file(*token, str, string_position + 1) + 1;  // Initialize file path for input redirection
 	else if (str[string_position] == '|')

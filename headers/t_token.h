@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 15:06:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:30:46 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ typedef struct s_parse
 
 typedef struct s_token
 {
+	void				*env_ptr;
+	bool				env_work;
 	bool				exec;
 	bool				free;
+	bool				here_doc;
+	char				*eof;
 	char				**arg;
 	unsigned int		last_exit_status;
 	struct s_operator	*operator;

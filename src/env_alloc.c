@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:24:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/22 21:08:30 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:45:26 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char *extract_value(const char *line, int *p_i)
         return NULL;
     }
     /* Copy the substring into `val` */
-    memcpy(val, &line[start], length);
+    ft_memcpy(val, &line[start], length);
     val[length] = '\0';
 
     /* Update the caller's index */
@@ -138,19 +138,13 @@ int env_replace_entry(char **env, int idx, const char *new_entry)
     char *tmp;
 
     if (env == NULL)
-    {
         return -1;
-    }
     if (idx < 0)
-    {
         return -1;
-    }
     free(env[idx]);
     tmp = strdup(new_entry);
     if (tmp == NULL)
-    {
         return -1;
-    }
     env[idx] = tmp;
     return 0;
 }
@@ -201,7 +195,7 @@ char **env_add_entry(char **env, const char *new_entry)
 	i = 0;
 	while (i < count)
 	{
-		new_env[i] = env[i];
+		new_env[i] = ft_strdup(env[i]);
 		if (new_env[i] == NULL)
 			return(ft_free_mtx(new_env), NULL);
 		i++;
@@ -212,10 +206,17 @@ char **env_add_entry(char **env, const char *new_entry)
 	new_env[i] = copy;
 	i++;
 	new_env[i] = NULL;
-	env = NULL;
+    ft_free_mtx(env);
 	return new_env;
 }
 
+int var_cleanup(char *full_entry, char *var_value, char *str)
+{
+    write(2, str, ft_strlen(str));
+    free(full_entry);
+    free(var_value);
+    return -1;
+}
 
 /* ---------------------------------------------------------
    check_var:
@@ -226,65 +227,40 @@ char **env_add_entry(char **env, const char *new_entry)
    - Because we may reallocate env, we accept `char ***env_ptr`.
 	 We'll do `*env_ptr = new_env` if we expand it.
    --------------------------------------------------------- */
-int check_var(char *str, char *line, int i, char **env_ptr)
+int check_var(t_token **token, char *line, int *i, char **env_ptr)
 {
 	char *var_value;
 	char *full_entry;
 	size_t total_len;
 	int existing_idx;
-	char **new_env;
 
-	/* Extract the value from line (e.g., "lalal") at index i */
-	var_value = extract_value(line, &i);
+	var_value = extract_value(line, i);
 	if (var_value == NULL)
-	{
 		return -1;
-	}
-
-	/*
-	 * Build "NAME=VALUE"
-	 * e.g., if str = "gigi" and var_value = "lalal",
-	 * then full_entry = "gigi=lalal"
-	 */
-	total_len = strlen(str) + 1 + strlen(var_value) + 1; /* +1 for '=' and +1 for '\0' */
+	total_len = strlen((*token)->parsed->token) + 1 + strlen(var_value) + 1; /* +1 for '=' and +1 for '\0' */
 	full_entry = (char *)malloc(total_len);
 	if (full_entry == NULL)
 	{
 		free(var_value);
 		return -1;
 	}
-	sprintf(full_entry, "%s%s", str, var_value);
-
-	/* Check if str (the variable name) already exists in (*env_ptr) */
-	existing_idx = env_find_var(env_ptr, str);
+	char *tmp = ft_strjoin((*token)->parsed->token, "=");
+    full_entry = ft_freejoin(tmp, var_value);
+	existing_idx = env_find_var(env_ptr, (*token)->parsed->token);
 	if (existing_idx >= 0)
 	{
-		/* If found, replace in place */
 		if (env_replace_entry(env_ptr, existing_idx, full_entry) < 0)
 		{
-			fprintf(stderr, "Failed to replace env entry\n");
-			/* Minimal error handling here */
+			return var_cleanup(full_entry, var_value, "Failed to replace env entry\n");
 		}
 	}
 	else
 	{
-		/* If not found, add a new entry (realloc env) */
-		new_env = env_add_entry(env_ptr, full_entry);
-		if (new_env == NULL)
-		{
-			fprintf(stderr, "Failed to reallocate env\n");
-			/* Minimal error handling */
-			free(full_entry);
-			free(var_value);
-			return -1;
-		}
-		/* Update the caller's env pointer */
-		env_ptr = new_env;
+		(*token)->env_ptr = (void *)env_add_entry(env_ptr, full_entry);
+		if ((*token)->env_ptr == NULL)
+			return var_cleanup(full_entry, var_value, "Failed to add env entry\n");
 	}
-
-	/* Clean up temporary strings */
 	free(full_entry);
 	free(var_value);
-
 	return 0; /* success */
 }

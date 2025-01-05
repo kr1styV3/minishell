@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 17:19:04 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:03:19 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ int skip_whitespaces(char *str, t_state *state)
 	return (string_position);
 }
 
-	char *extract_token(char *str)
-	{
-		int string_position;
-		char *token;
+char *extract_token(char *str)
+{
+	int string_position;
+	char *token;
 
-		string_position = 0;
-		while (str[string_position] && ft_isalnum(str[string_position]))
-			string_position++;
-		token = ft_calloc(string_position + 1, sizeof(char));
-		if (!token)
-			return (NULL);
-		ft_strncpy(token, str, string_position);
-		return (token);
-	}
+	string_position = 0;
+	while (str[string_position] && ft_isalnum(str[string_position]))
+		string_position++;
+	token = ft_calloc(string_position + 1, sizeof(char));
+	if (!token)
+		return (NULL);
+	ft_strncpy(token, str, string_position);
+	return (token);
+}
 
 char *extract_word(char *str, char quote)
 {
