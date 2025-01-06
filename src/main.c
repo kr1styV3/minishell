@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 19:17:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:01:42 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	checker(t_token **token, char **envp)
 		if (access(path, X_OK) == 0)
 		{
 			(*token)->arg[0] = ft_strdup(path);
+			free(path);
 			ft_free_mtx(paths);
 			return (0);
 		}

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:24:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 18:45:26 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:41:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,12 @@ int env_find_var(char **env, const char *var_name)
         return -1;
     }
 
-    name_len = strlen(var_name);
+    name_len = ft_strlen(var_name);
 
     while (env[i] != NULL)
     {
         /* We look for "var_name=" as a prefix */
-        if (strncmp(env[i], var_name, name_len) == 0 && env[i][name_len + 1] == '=')
+        if (ft_strncmp(env[i], var_name, name_len - 1) == 0 && env[i][name_len] == '=')
         {
             return i; /* found */
         }
@@ -223,10 +223,7 @@ int var_cleanup(char *full_entry, char *var_value, char *str)
    - `str` might be something like "gigi="
    - we read `line` at index `i` to get the new value (e.g., "lalal")
    - combine to "gigi=lalal"
-   - see if "gigi" already in (*env_ptr); if yes, replace, else add.
-   - Because we may reallocate env, we accept `char ***env_ptr`.
-	 We'll do `*env_ptr = new_env` if we expand it.
-   --------------------------------------------------------- */
+   - see if "gigi" already in (*envgigi=cazzzzzooooo--------------------------- */
 int check_var(t_token **token, char *line, int *i, char **env_ptr)
 {
 	char *var_value;
@@ -253,6 +250,7 @@ int check_var(t_token **token, char *line, int *i, char **env_ptr)
 		{
 			return var_cleanup(full_entry, var_value, "Failed to replace env entry\n");
 		}
+        (*token)->env_ptr = (void *)env_ptr;
 	}
 	else
 	{
