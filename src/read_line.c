@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 19:19:10 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:57:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	tokenizer(char *str, t_token *token, char **env)
 		}
 		if (state == IN_BUILTIN)
 			string_position += process_builtin(&token, str, string_position, &state, env);
+		if (token->env_work == true)
+			env = (char **)token->env_ptr;
 		if (state == IN_VARIABLE)
 			string_position += process_variable(&token, str, string_position + 1, env) + 1;
 		if (state == IN_WORD)

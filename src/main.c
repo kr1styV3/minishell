@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/06 18:01:42 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:58:04 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int main(int ac, char **av, char **envp)
 			should_exit = 0;
 		free_token(*head);
 	}
+	ft_free_mtx(_env_ptr);
 	free(head);
 	rl_clear_history();
 	return 0;

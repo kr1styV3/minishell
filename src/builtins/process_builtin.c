@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:06:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 13:52:35 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:52:40 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int process_builtin(t_token **token, char *str, int i, t_state *state, char **en
     if (!ft_strncmp((*token)->parsed->token, "pwd", 3))
         return (ft_pwd());
     if (!ft_strncmp((*token)->parsed->token, "export", 6))
-        return (ft_export(env));
+        return (ft_export(*token, env, str, i));
     if (!ft_strncmp((*token)->parsed->token, "unset", 5))
         return (ft_unset(*token, str, i, env));
     if (!ft_strncmp((*token)->parsed->token, "env", 3))

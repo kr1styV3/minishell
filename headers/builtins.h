@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 13:52:56 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:53:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,16 @@ int ft_cd(t_token *token, char *str, int i, char **env);
 int ft_pwd(void);
 
 /**
- * @brief Display the list of environment variables (export).
+ * @brief Display the list of environment variables (export) or sets a new variable
  *
  * This function prints the current environment variables to the standard output.
  *
  * @param env Array of environment variables.
+ * @param str line read
+ * @param i line position
  * @return int 0 on success.
  */
-int ft_export(char **env);
+int ft_export(t_token *token, char **env, char *str, int _i);
 
 /**
  * @brief Unset an environment variable by its name (unset).
