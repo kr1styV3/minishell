@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_token.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/07 12:14:34 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:57:11 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,26 @@ typedef struct s_parse
 	char	*word;
 }	t_parse;
 
+typedef struct s_env_list
+{
+	char				*value;
+	struct s_env_list	*next;
+}	t_env_list;
+
 typedef struct s_token
 {
-	void				*env_ptr;
 	bool				env_work;
 	bool				exec;
 	bool				free;
 	bool				here_doc;
+	char				*echo;
+	bool		pipe;
 	char				*eof;
 	char				**arg;
 	unsigned int		last_exit_status;
 	struct s_operator	*operator;
 	struct s_parse		*parsed;
+	struct s_env_list	*env_ptr;
 	struct s_token		*next;
 }	t_token;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/07 12:57:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:58:01 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 }
 
 
-void	tokenizer(char *str, t_token *token, char **env)
+void	tokenizer(char *str, t_token *token, t_env_list *env)
 {
 	int string_position;
 	t_state state;
@@ -125,7 +125,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 	}
 }
 
-void read_line_from_user(t_token **token, char **env)
+void read_line_from_user(t_token **token, t_env_list *env)
 {
 	char	*read_line;
 	char	*promt= "minishell$ ";

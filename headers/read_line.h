@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:52:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/04 14:37:39 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:57:00 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	tokenizer(char *str, t_token *token, char **env);
  * @param token The token to be filled with the user input.
  * @return This function does not return; it writes directly to the token.
  */
-void	read_line_from_user(t_token **token, char **env);
+void	read_line_from_user(t_token **token, t_env_list *env);
 
 #endif
