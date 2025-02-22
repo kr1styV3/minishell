@@ -6,28 +6,28 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:06:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 13:52:35 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:34:21 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/builtins.h"
-int process_builtin(t_token **token, char *str, int i, t_state *state, char **env)
+int process_builtin(t_parse **parsed, char *str, int i, t_state *state, char **env)
 {
     *state = FREE_TOKEN;
 
-    if (!ft_strncmp((*token)->parsed->token, "echo", 4))
+    if (!ft_strncmp((*parsed)->token, "echo", 4))
         return (ft_echo(*token, str, i, env));
-    if (!ft_strncmp((*token)->parsed->token, "cd", 2))
+    if (!ft_strncmp((*parsed)->token, "cd", 2))
         return (ft_cd(*token, str, i, env));
-    if (!ft_strncmp((*token)->parsed->token, "pwd", 3))
+    if (!ft_strncmp((*parsed)->token, "pwd", 3))
         return (ft_pwd());
-    if (!ft_strncmp((*token)->parsed->token, "export", 6))
+    if (!ft_strncmp((*parsed)->token, "export", 6))
         return (ft_export(env));
-    if (!ft_strncmp((*token)->parsed->token, "unset", 5))
+    if (!ft_strncmp((*parsed)->token, "unset", 5))
         return (ft_unset(*token, str, i, env));
-    if (!ft_strncmp((*token)->parsed->token, "env", 3))
+    if (!ft_strncmp((*parsed)->token, "env", 3))
         return (ft_env(env));
-    if (!ft_strncmp((*token)->parsed->token, "exit", 4))
+    if (!ft_strncmp((*parsed)->token, "exit", 4))
         return (ft_exit(*token, str));
     return (0);
 }

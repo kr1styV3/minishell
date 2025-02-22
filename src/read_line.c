@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 19:19:10 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:33:15 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 }
 
 
-void	tokenizer(char *str, t_token *token, char **env)
+void	tokenizer(char *str, t_mini *mini, char **env)
 {
 	int string_position;
 	t_state state;
@@ -67,23 +67,22 @@ void	tokenizer(char *str, t_token *token, char **env)
 			string_position += skip_whitespaces(&str[string_position], &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
 		{
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 			string_position += skip_whitespaces(&str[string_position], &state);
 		}
 		if (state == NORMAL)
 		{
 			if (ft_isalnum(str[string_position]))
-				string_position += process_token(&token, str, string_position, &state);
-			printf("%p\n", token->parsed);
-			if (check_var(&token, str, &string_position, env) == 0)
+				string_position += process_token(&(mini->parsed), str, string_position, &state);
+			if (check_var(&(mini->token), str, &string_position, env) == 0)
 			{
-				token->env_work = true;
+				mini->env->env_work = true;
 				if (str[string_position + 1])
-					env = (char **)token->env_ptr;
+					env = (char **)mini->env->env_ptr;
 				else
-					token->exec = false;
+					mini->exec = false;
 			}
-			if (ft_isbuiltin(token->parsed->token))
+			if (ft_isbuiltin(mini->parsed->token))
 				state = IN_BUILTIN;
 			if (str[string_position] == 34 || str[string_position] == 39)
 				state = IN_WORD;
@@ -93,15 +92,15 @@ void	tokenizer(char *str, t_token *token, char **env)
 				state = IN_VARIABLE;
 		}
 		if (state == IN_BUILTIN)
-			string_position += process_builtin(&token, str, string_position, &state, env);
+			string_position += process_builtin(&(mini->parsed), str, string_position, &state, env);
 		if (state == IN_VARIABLE)
-			string_position += process_variable(&token, str, string_position + 1, env) + 1;
+			string_position += process_variable(&(mini->token), str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
-			string_position += process_word(&token, str, string_position, &state, env);
+			string_position += process_word(&(mini->token), str, string_position, &state, env);
 		if (state == IN_OPERATOR || ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;
@@ -123,7 +122,7 @@ void	tokenizer(char *str, t_token *token, char **env)
 	}
 }
 
-void read_line_from_user(t_token **token, char **env)
+void read_line_from_user(t_mini **mini, char **env)
 {
 	char	*read_line;
 	char	*promt= "minishell$ ";
@@ -138,7 +137,7 @@ void read_line_from_user(t_token **token, char **env)
 	if (!read_line || should_exit)
 		return ;
 	add_history(read_line);
-	tokenizer(read_line, *token, env);
+	tokenizer(read_line, *mini, env);
 	free(read_line);
 	read_line = NULL;
 }
