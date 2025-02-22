@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/04 11:46:31 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:54:36 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,10 @@ int ft_echo(t_token *token, char *str, int i, char **env)
     }
     else
     {
-        ft_putstr_fd(output, 1);
+        token->echo = ft_strdup(output);
+        token->pipe = true;
         if (!flag)
-            ft_putchar_fd('\n', 1);
+            token->echo = ft_freejoin(token->echo, "\n");
         free(output);
     }
     return len;

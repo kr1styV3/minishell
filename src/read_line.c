@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 22:33:15 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:38:07 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 }
 
 
-void	tokenizer(char *str, t_mini *mini, char **env)
+void	tokenizer(char *str, t_token *token, t_env_list *env)
 {
 	int string_position;
 	t_state state;
@@ -92,7 +92,9 @@ void	tokenizer(char *str, t_mini *mini, char **env)
 				state = IN_VARIABLE;
 		}
 		if (state == IN_BUILTIN)
-			string_position += process_builtin(&(mini->parsed), str, string_position, &state, env);
+			string_position += process_builtin(&token, str, string_position, &state, env);
+		if (token->env_work == true)
+			env = (char **)token->env_ptr;
 		if (state == IN_VARIABLE)
 			string_position += process_variable(&(mini->token), str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
@@ -122,7 +124,7 @@ void	tokenizer(char *str, t_mini *mini, char **env)
 	}
 }
 
-void read_line_from_user(t_mini **mini, char **env)
+void read_line_from_user(t_token **token, t_env_list *env)
 {
 	char	*read_line;
 	char	*promt= "minishell$ ";

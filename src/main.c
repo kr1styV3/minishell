@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 22:29:28 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:41:07 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	checker(t_token **token, char **envp)
 		if (access(path, X_OK) == 0)
 		{
 			(*token)->arg[0] = ft_strdup(path);
+			free(path);
 			ft_free_mtx(paths);
 			return (0);
 		}
@@ -85,25 +86,31 @@ int	checker(t_token **token, char **envp)
 	return (1);
 }
 
-char	**env_copy(char **_env)
+t_env_list	*env_list(char **envp)
 {
-	char	**env;
-	int		i;
+	t_env_list	*env_ptr;
+	t_env_list	*tmp;
+	int			i;
 
 	i = 0;
-	while (_env[i])
-		i++;
-	env = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!env)
-		ft_error("Failed to allocate memory for env.");
-	i = 0;
-	while (_env[i])
+	env_ptr = (t_env_list *)malloc(sizeof(t_env_list));
+	if (!env_ptr)
+		ft_error("Failed to allocate memory for env_ptr.");
+	env_ptr->value = ft_strdup(envp[i]);
+	env_ptr->next = NULL;
+	tmp = env_ptr;
+	i++;
+	while (envp[i])
 	{
-		env[i] = ft_strdup(_env[i]);
+		tmp->next = (t_env_list *)malloc(sizeof(t_env_list));
+		if (!tmp->next)
+			ft_error("Failed to allocate memory for env_ptr.");
+		tmp = tmp->next;
+		tmp->value = ft_strdup(envp[i]);
+		tmp->next = NULL;
 		i++;
 	}
-	env[i] = NULL;
-	return (env);
+	return (env_ptr);
 }
 
 t_mini	*t_mini_setup(void)
@@ -141,26 +148,28 @@ int main(int ac, char **av, char **envp)
 {
 	t_mini		*mini;
 	t_token		*token;
-	char		**_env_ptr;
+	t_env_list	*_env_ptr;
 	int status = -1;
 
 	_env_ptr = env_copy(envp);
-	mini = t_mini_setup();
+	head = (t_token **)malloc(sizeof(t_token *));
+	if (!head)
+		ft_error("Failed to allocate memory for token.");
 	// setup_signal_handling();
 	(void)ac;
 	(void)av;
 	while (!should_exit)
 	{
-		token = init_token();
-		mini->token = token;
+		*head = init_token();
+		token = *head;
 		printf("last exitn status: %d\n", status);
-		mini->last_exit_status = status;
-		read_line_from_user(&mini, _env_ptr);
-		if (mini->env->env_work == true)
+		token->last_exit_status = status;
+		read_line_from_user(&(*head), _env_ptr);
+		if ((*head)->env_work == true)
 		{
-			_env_ptr = (char **)(mini->env->env_ptr);
+			_env_ptr = (char **)((*head)->env_ptr);
 		}
-		if (mini->exec == true || should_exit)
+		if (token->exec == true || should_exit)
 		{
 			while (token)
 			{

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 22:12:24 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:40:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef struct s_parse
 	char	*word;
 }	t_parse;
 
+typedef struct s_env_list
+{
+	char				*value;
+	struct s_env_list	*next;
+}	t_env_list;
+
 typedef struct s_doc
 {
 	char	*eof;
@@ -41,20 +47,17 @@ typedef struct s_env
 }	t_env;
 typedef struct s_token
 {
+	bool				env_work;
+	bool				exec;
 	bool				free;
+	bool				here_doc;
+	char				*echo;
+	bool		pipe;
+	char				*eof;
 	char				**arg;
 	struct s_token		*next;
 }	t_token;
 
-typedef struct s_mini
-{
-	bool				exec;
-	unsigned int		last_exit_status;
-	struct s_env		*env;
-	struct s_doc		*doc;
-	struct s_operator	*operator;
-	struct s_parse		*parsed;
-	struct t_token		*token;
-}	t_mini;
+
 
 #endif

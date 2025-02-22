@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_token_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 21:54:54 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:54:13 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ t_token *init_token(void)
 	t_parse *parsed;
 	t_operator *operator;
 
+
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		ft_error("Failed to allocate memory for token.");
 	token->exec = true;
+	token->pipe = false;
 	token->arg = ft_calloc(2, sizeof(char *));
 	if (!token->arg)
 		return free(token), ft_error("Failed to allocate memory for args."), NULL;
@@ -38,7 +40,9 @@ t_token *init_token(void)
 	operator->fd_overwrite_output = -1;
 	operator->fd_append_output = -1;
 	operator->operator = 0;
-
+	token->eof = NULL;
+	token->env_work = false;
+	token->env_ptr = NULL;
 	token->last_exit_status = -1;
 	token->here_doc = false;
 	token->parsed = parsed;
