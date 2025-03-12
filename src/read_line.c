@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:21:58 by chrlomba         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/03/12 15:05:21 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parsing.h"
 #include "../headers/env_variables.h"
@@ -67,7 +68,7 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 			string_position += skip_whitespaces(&str[string_position], &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
 		{
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 			string_position += skip_whitespaces(&str[string_position], &state);
 		}
 		if (state == NORMAL)
@@ -75,12 +76,15 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
 			printf("%p\n", token->parsed);
-			if (check_var(&token, str, &string_position, &env) == 0)
+			if (check_var(&token, str, &string_position, env) == 0)
 			{
 				token->env_work = true;
+				if (str[string_position + 1])
+					env = (char **)token->env_ptr;
+				else
 					token->exec = false;
 			}
-			if (ft_isbuiltin(token->parsed->token))
+			if (ft_isbuiltin(mini->parsed->token))
 				state = IN_BUILTIN;
 			if (str[string_position] == 34 || str[string_position] == 39)
 				state = IN_WORD;
@@ -92,13 +96,13 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 		if (state == IN_BUILTIN)
 			string_position += process_builtin(&token, str, string_position, &state, env);
 		if (state == IN_VARIABLE)
-			string_position += process_variable(&token, str, string_position + 1, env) + 1;
+			string_position += process_variable(&(mini->token), str, string_position + 1, env) + 1;
 		if (state == IN_WORD)
-			string_position += process_word(&token, str, string_position, &state, env);
+			string_position += process_word(&(mini->token), str, string_position, &state, env);
 		if (state == IN_OPERATOR || ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 		if (ft_strchr(OPERATORS, str[string_position]))
-			string_position += process_operator(&token, str, string_position, &state);
+			string_position += process_operator(&(mini->token), str, string_position, &state);
 		if (str[string_position] == '\0' && state == FREE_TOKEN)
 		{
 			token->exec = false;
@@ -135,7 +139,7 @@ void read_line_from_user(t_token **token, t_env_list *env)
 	if (!read_line || should_exit)
 		return ;
 	add_history(read_line);
-	tokenizer(read_line, *token, env);
+	tokenizer(read_line, *mini, env);
 	free(read_line);
 	read_line = NULL;
 }

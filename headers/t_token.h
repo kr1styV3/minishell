@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_token.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/02/15 09:57:11 by coca             ###   ########.fr       */
+/*   Updated: 2025/02/22 17:40:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
+typedef struct s_doc
+{
+	char	*eof;
+	bool	here_doc;
+
+}	t_doc;
+
+typedef struct s_env
+{
+	void	*env_ptr;
+	bool	env_work;
+}	t_env;
 typedef struct s_token
 {
 	bool				env_work;
@@ -43,11 +55,9 @@ typedef struct s_token
 	bool		pipe;
 	char				*eof;
 	char				**arg;
-	unsigned int		last_exit_status;
-	struct s_operator	*operator;
-	struct s_parse		*parsed;
-	struct s_env_list	*env_ptr;
 	struct s_token		*next;
 }	t_token;
+
+
 
 #endif

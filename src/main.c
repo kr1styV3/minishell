@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:35:41 by chrlomba         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/03/12 15:04:59 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include "parsing.h"
@@ -114,14 +115,45 @@ t_env_list	*env_list(char **envp)
 	return (env_ptr);
 }
 
+t_mini	*t_mini_setup(void)
+{
+	t_mini	*mini;
+
+	mini = (t_mini *)malloc(sizeof(t_mini));
+	if (!mini)
+		ft_error("Failed to allocate memory for mini.");
+	mini->exec = true;
+	mini->last_exit_status = -1;
+	mini->env = (t_env *)malloc(sizeof(t_env));
+	if (!mini->env)
+		ft_error("Failed to allocate memory for env.");
+	mini->env->env_ptr = NULL;
+	mini->env->env_work = false;
+	mini->doc = (t_doc *)malloc(sizeof(t_doc));
+	if (!mini->doc)
+		ft_error("Failed to allocate memory for doc.");
+	mini->doc->eof = NULL;
+	mini->doc->here_doc = false;
+	mini->operator = (t_operator *)malloc(sizeof(t_operator));
+	if (!mini->operator)
+		ft_error("Failed to allocate memory for operator.");
+	mini->parsed = (t_parse *)malloc(sizeof(t_parse));
+	if (!mini->parsed)
+		ft_error("Failed to allocate memory for parsed.");
+	mini->parsed->token = NULL;
+	mini->parsed->word = NULL;
+	mini->token = NULL;
+	return (mini);
+}
+
 int main(int ac, char **av, char **envp)
 {
-	t_token		**head;
+	t_mini		*mini;
 	t_token		*token;
 	t_env_list	*_env_ptr;
 	int status = -1;
 
-	_env_ptr = env_list(envp);
+	_env_ptr = env_copy(envp);
 	head = (t_token **)malloc(sizeof(t_token *));
 	if (!head)
 		ft_error("Failed to allocate memory for token.");
@@ -132,33 +164,36 @@ int main(int ac, char **av, char **envp)
 	{
 		*head = init_token();
 		token = *head;
-		token->env_ptr = _env_ptr;
 		printf("last exitn status: %d\n", status);
 		token->last_exit_status = status;
 		read_line_from_user(&(*head), _env_ptr);
+		if ((*head)->env_work == true)
+		{
+			_env_ptr = (char **)((*head)->env_ptr);
+		}
 		if (token->exec == true || should_exit)
 		{
 			while (token)
 			{
-				if (token->parsed->token)
+				if (mini->parsed->token)
 				{
 					if (checker(&token, _env_ptr) == 1)
 					{
-						free_inside_token("minishell: command not found: ", token->parsed->token);
-						token->exec = false;
+						free_inside_token("minishell: command not found: ", mini->parsed->token);
+						mini->exec = false;
 					}
 				}
 				token = token->next;
 			}
 			token = *head;
 			if (token->exec == true)
-				status = execute(head, _env_ptr);
+				status = execute(head, envp);
 		}
 		if (should_exit == 2)
 			should_exit = 0;
-		free_token(*head);
+		free_token(token);
 	}
 	free(head);
-	rl_clear_history();x
+	rl_clear_history();
 	return 0;
 }
