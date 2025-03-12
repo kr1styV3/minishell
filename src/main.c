@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:26:55 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/02/15 09:56:28 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/11 16:35:41 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "read_line.h"
 #include "t_token.h"
 #include "../my_libft/headers/libft.h"
+#include "env_variables.h"
 volatile sig_atomic_t should_exit = 0;
 
 void handle_sigint(int sig)
@@ -56,7 +57,7 @@ void setup_signal_handling()
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-int	checker(t_token **token, char **envp)
+int	checker(t_token **token, t_env_list *envp)
 {
 	char	*path;
 	char	**paths;
@@ -141,7 +142,7 @@ int main(int ac, char **av, char **envp)
 			{
 				if (token->parsed->token)
 				{
-					if (checker(&token, envp) == 1)
+					if (checker(&token, _env_ptr) == 1)
 					{
 						free_inside_token("minishell: command not found: ", token->parsed->token);
 						token->exec = false;
@@ -151,13 +152,13 @@ int main(int ac, char **av, char **envp)
 			}
 			token = *head;
 			if (token->exec == true)
-				status = execute(head, envp);
+				status = execute(head, _env_ptr);
 		}
 		if (should_exit == 2)
 			should_exit = 0;
 		free_token(*head);
 	}
 	free(head);
-	rl_clear_history();
+	rl_clear_history();x
 	return 0;
 }

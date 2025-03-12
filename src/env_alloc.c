@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_alloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:24:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/02/15 09:44:46 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/10 14:39:12 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,89 +98,82 @@ char *extract_value(const char *line, int *p_i)
 
     Returns the pointer to the node if found, or NULL if not found.
     --------------------------------------------------------- */
+
 t_env_list *env_find_var(t_env_list *env, const char *var_name)
 {
-     t_env_list *current;
+    t_env_list *current;
+    size_t key_len;
 
-     if (env == NULL || var_name == NULL)
-     {
-          return NULL;
-     }
-
-     current = env;
-     while (current != NULL)
-     {
-          if (strcmp(current->key, var_name) == 0)
-          {
-                return current; /* found */
-          }
-          current = current->next;
-     }
-     return NULL; /* not found */
+    if (!env || !var_name)
+        return NULL;
+    key_len = strlen(var_name);
+    current = env;
+    while (current)
+    {
+        /* Check if the entry starts with var_name and is immediately followed by '=' */
+        if (ft_strncmp(current->value, var_name, key_len) == 0 &&
+            current->value[key_len] == '=')
+        {
+            return current;  /* Found it */
+        }
+        current = current->next;
+    }
+    return NULL;
 }
+
 
 /* ---------------------------------------------------------
     Replace an existing env entry with new_entry.
     We free the old value, then strdup the new one.
     --------------------------------------------------------- */
-int env_replace_entry(t_env_list *env, const char *key, const char *new_value)
+int env_replace_entry(t_env_list *env, const char *key, const char *full_entry)
 {
-     t_env_list *var;
+    t_env_list *var;
 
-     var = env_find_var(env, key);
-     if (var == NULL)
-     {
-          return -1;
-     }
-     free(var->value);
-     var->value = strdup(new_value);
-     if (var->value == NULL)
-     {
-          return -1;
-     }
-     return 0;
+    var = env_find_var(env, key);
+    if (!var)
+        return -1;
+    free(var->value);
+    var->value = strdup(full_entry);
+    if (!var->value)
+        return -1;
+    return 0;
 }
+
 
 /* ---------------------------------------------------------
     Add a new entry to the env list.
     Returns 0 on success, -1 on failure.
     --------------------------------------------------------- */
-int env_add_entry(t_env_list **env, const char *key, const char *value)
+int env_add_entry(t_env_list **env, const char *full_entry)
 {
-     t_env_list *new_entry;
-     t_env_list *current;
+    t_env_list *new_entry;
+    t_env_list *current;
 
-     new_entry = (t_env_list *)malloc(sizeof(t_env_list));
-     if (new_entry == NULL)
-     {
-          return -1;
-     }
-     new_entry->key = strdup(key);
-     new_entry->value = strdup(value);
-     new_entry->next = NULL;
-     if (new_entry->key == NULL || new_entry->value == NULL)
-     {
-          free(new_entry->key);
-          free(new_entry->value);
-          free(new_entry);
-          return -1;
-     }
-
-     if (*env == NULL)
-     {
-          *env = new_entry;
-     }
-     else
-     {
-          current = *env;
-          while (current->next != NULL)
-          {
-                current = current->next;
-          }
-          current->next = new_entry;
-     }
-     return 0;
+    new_entry = (t_env_list *)malloc(sizeof(t_env_list));
+    if (!new_entry)
+        return -1;
+    new_entry->value = strdup(full_entry);
+    new_entry->next = NULL;
+    if (!new_entry->value)
+    {
+        free(new_entry);
+        return -1;
+    }
+    if (*env == NULL)
+    {
+        *env = new_entry;
+    }
+    else
+    {
+        current = *env;
+        while (current->next)
+            current = current->next;
+        current->next = new_entry;
+    }
+    return 0;
 }
+
 
 int var_cleanup(char *full_entry, char *var_value, char *str)
 {
@@ -198,39 +191,39 @@ int var_cleanup(char *full_entry, char *var_value, char *str)
     - see if "gigi" already in (*envgigi=cazzzzzooooo--------------------------- */
 int check_var(t_token **token, char *line, int *i, t_env_list **env)
 {
-     char *var_value;
-     char *full_entry;
-     size_t total_len;
-     t_env_list *existing_var;
+    char *var_value;
+    char *full_entry;
+    size_t total_len;
+    t_env_list *existing_var;
 
-     var_value = extract_value(line, i);
-     if (var_value == NULL)
-          return -1;
-     total_len = strlen((*token)->parsed->token) + 1 + strlen(var_value) + 1; /* +1 for '=' and +1 for '\0' */
-     full_entry = (char *)malloc(total_len);
-     if (full_entry == NULL)
-     {
-          free(var_value);
-          return -1;
-     }
-     char *tmp = ft_strjoin((*token)->parsed->token, "=");
-     full_entry = ft_freejoin(tmp, var_value);
-     existing_var = env_find_var(*env, (*token)->parsed->token);
-     if (existing_var != NULL)
-     {
-          if (env_replace_entry(*env, (*token)->parsed->token, var_value) < 0)
-          {
-                return var_cleanup(full_entry, var_value, "Failed to replace env entry\n");
-          }
-          (*token)->env_ptr = (void *)*env;
-     }
-     else
-     {
-          if (env_add_entry(env, (*token)->parsed->token, var_value) < 0)
-                return var_cleanup(full_entry, var_value, "Failed to add env entry\n");
-          (*token)->env_ptr = (void *)*env;
-     }
-     free(full_entry);
-     free(var_value);
-     return 0; /* success */
+    var_value = extract_value(line, i);
+    if (!var_value)
+        return -1;
+    total_len = strlen((*token)->parsed->token) + 1 + strlen(var_value) + 1; /* key + '=' + value + '\0' */
+    full_entry = (char *)malloc(total_len);
+    if (!full_entry)
+    {
+        free(var_value);
+        return -1;
+    }
+    char *tmp = ft_strjoin((*token)->parsed->token, "=");
+    full_entry = ft_freejoin(tmp, var_value);
+
+    existing_var = env_find_var(*env, (*token)->parsed->token);
+    if (existing_var)
+    {
+        if (env_replace_entry(*env, (*token)->parsed->token, full_entry) < 0)
+            return var_cleanup(full_entry, var_value, "Failed to replace env entry\n");
+        (*token)->env_ptr = (void *)*env;
+    }
+    else
+    {
+        if (env_add_entry(env, full_entry) < 0)
+            return var_cleanup(full_entry, var_value, "Failed to add env entry\n");
+        (*token)->env_ptr = (void *)*env;
+    }
+    free(full_entry);
+    free(var_value);
+    return 0; /* success */
 }
+

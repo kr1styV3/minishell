@@ -6,12 +6,12 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:06:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/07 12:52:40 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:20:59 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/builtins.h"
-int process_builtin(t_token **token, char *str, int i, t_state *state, char **env)
+int process_builtin(t_token **token, char *str, int i, t_state *state, t_env_list *env)
 {
     *state = FREE_TOKEN;
 
@@ -22,9 +22,9 @@ int process_builtin(t_token **token, char *str, int i, t_state *state, char **en
     if (!ft_strncmp((*token)->parsed->token, "pwd", 3))
         return (ft_pwd());
     if (!ft_strncmp((*token)->parsed->token, "export", 6))
-        return (ft_export(*token, env, str, i));
+        return (ft_export(*token, &env, str, i));
     if (!ft_strncmp((*token)->parsed->token, "unset", 5))
-        return (ft_unset(*token, str, i, env));
+        return (ft_unset(*token, str, i, &env));
     if (!ft_strncmp((*token)->parsed->token, "env", 3))
         return (ft_env(env));
     if (!ft_strncmp((*token)->parsed->token, "exit", 4))

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/07 12:53:12 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:20:06 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *extract_until_not_alfanum(char *str);
  * @param i Position in the input string to start processing.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_echo(t_token *token, char *str, int i, char **env);
+int ft_echo(t_token *token, char *str, int i, t_env_list *env);
 
 /**
  * @brief Extract the path from a given string, stopping at the first space.
@@ -48,18 +48,6 @@ int ft_echo(t_token *token, char *str, int i, char **env);
  * @return char* A newly allocated string containing the extracted path, or NULL on failure.
  */
 char *extract_path(char *str);
-
-/**
- * @brief Retrieve the value of an environment variable by its name.
- *
- * This function searches the environment variables for the given name and returns
- * the corresponding value.
- *
- * @param name Name of the environment variable.
- * @param env Array of environment variables.
- * @return char* A newly allocated string containing the value of the environment variable, or NULL if not found.
- */
-char *ft_getenv(char *name, char **env);
 
 /**
  * @brief Change the current working directory (cd).
@@ -73,7 +61,7 @@ char *ft_getenv(char *name, char **env);
  * @param env Array of environment variables.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_cd(t_token *token, char *str, int i, char **env);
+int ft_cd(t_token *token, char *str, int i, t_env_list *env);
 
 /**
  * @brief Print the current working directory (pwd).
@@ -94,7 +82,7 @@ int ft_pwd(void);
  * @param i line position
  * @return int 0 on success.
  */
-int ft_export(t_token *token, char **env, char *str, int _i);
+int ft_export(t_token *token, t_env_list **env, char *str, int _i);
 
 /**
  * @brief Unset an environment variable by its name (unset).
@@ -107,7 +95,7 @@ int ft_export(t_token *token, char **env, char *str, int _i);
  * @param env Array of environment variables.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_unset(t_token *token, char *str, int i, char **env);
+int ft_unset(t_token *token, char *str, int i, t_env_list **env);
 
 /**
  * @brief Display the current environment variables (env).
@@ -117,7 +105,7 @@ int ft_unset(t_token *token, char *str, int i, char **env);
  * @param env Array of environment variables.
  * @return int 0 on success.
  */
-int ft_env(char **env);
+int ft_env(t_env_list *env);
 
 /**
  * @brief Exit the shell (exit).
@@ -143,7 +131,7 @@ int ft_exit(t_token *token, char *str);
  * @param env Array of environment variables.
  * @return int Length of the processed string, or 0 if no built-in command is found.
  */
-int process_builtin(t_token **token, char *str, int i, t_state *state, char **env);
+int process_builtin(t_token **token, char *str, int i, t_state *state, t_env_list *env);
 
 /**
  * @brief Check if a command is a built-in.

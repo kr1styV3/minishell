@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 22:04:01 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:05:16 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,10 +190,11 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
 
 
 /* Main execution function */
-int execute(t_token **token_list, char **env)
+int execute(t_token **token_list, char **env, t_env_list *env_list)
 {
     t_token *current = *token_list;
     int     status = -1;
+    (void)env_list;
 
     while (current != NULL)
     {

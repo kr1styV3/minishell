@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:55:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 18:44:52 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:21:21 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 # include "minishell.h"
 
-
-int process_variable(t_token **token, char *str, int string_position, char **env);
-char *execute_and_capture_output(char *command, char **env);
+char    *execute_and_capture_output(char *command, t_env_list *env);
+int     process_variable(t_token **token, char *str, int string_position, t_env_list *env);
 
 
 /*
@@ -31,33 +30,33 @@ char	*extract_value(const char *line, int *p_i);
  * Searches for var_name in env, looking for the pattern "var_name=" as a prefix.
  * Returns the index where it is found, or -1 if not found.
  */
-int		env_find_var(char **env, const char *var_name);
+t_env_list *env_find_var(t_env_list *env, const char *var_name);
+
+
+/* Retrieves the value for the given key from the environment list.
+** Returns a newly allocated string containing the value (i.e., the part after '='),
+** or an empty string if not found.
+*/
+char    *ft_getenv(const char *key, t_env_list *env);
+
+/* Replaces an existing environment variable entry.
+** 'key' is the variable name and 'full_entry' is the new "KEY=value" string.
+** Returns 0 on success or -1 on failure.
+*/
+int     env_replace_entry(t_env_list *env, const char *key, const char *full_entry);
+
+/* Adds a new environment variable entry to the list.
+** 'full_entry' should be in the format "KEY=value".
+** Returns 0 on success or -1 on failure.
+*/
+int     env_add_entry(t_env_list **env, const char *full_entry);
 
 /*
- * Replaces an existing env entry at position idx with new_entry.
- * Frees the old string and strdup’s the new one.
- * Returns 0 on success, -1 on failure.
- */
-int		env_replace_entry(char **env, int idx, const char *new_entry);
-
-/*
- * Reallocates env to add new_entry, which is duplicated with strdup.
- * Returns the new pointer to env on success, or NULL on failure.
- * The resulting env is always NULL-terminated.
- */
-char	**env_add_entry(char **env, const char *new_entry);
-
-/*
- * Given:
- *   - str like "VAR=",
- *   - line containing the new value (possibly quoted),
- *   - index i where the value begins,
- *   - triple-pointer env_ptr so we can reallocate env if needed,
- *   check_var parses out VAR, extracts the value from line,
- *   and either replaces or adds "VAR=value" in *env_ptr.
- * Returns 0 on success, -1 on error.
- */
-int		check_var(t_token **token, char *line, int *i, char **env_ptr);
-
+** check_var():
+** Processes an input string to extract a variable and update the environment list.
+** It uses token information to determine the key and then either adds or replaces
+** the entry in the environment list.
+*/
+int     check_var(t_token **token, char *line, int *i, t_env_list **env);
 
 #endif

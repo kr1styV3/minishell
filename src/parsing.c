@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 19:03:19 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:36:02 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int process_token(t_token **token, char *str, int string_position, t_state *stat
 	return (word_len);  // Return the length of the token processed.
 }
 
-int	process_word(t_token **token, char *str, int string_position, t_state *state, char **env)
+int	process_word(t_token **token, char *str, int string_position, t_state *state, t_env_list *env)
 {
 	char quote;
 	int len = 0;  // Either ' or ".

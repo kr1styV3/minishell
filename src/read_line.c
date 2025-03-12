@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:24:50 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/02/15 09:58:01 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/11 16:21:58 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,9 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
 			printf("%p\n", token->parsed);
-			if (check_var(&token, str, &string_position, env) == 0)
+			if (check_var(&token, str, &string_position, &env) == 0)
 			{
 				token->env_work = true;
-				if (str[string_position + 1])
-					env = (char **)token->env_ptr;
-				else
 					token->exec = false;
 			}
 			if (ft_isbuiltin(token->parsed->token))
@@ -94,8 +91,6 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 		}
 		if (state == IN_BUILTIN)
 			string_position += process_builtin(&token, str, string_position, &state, env);
-		if (token->env_work == true)
-			env = (char **)token->env_ptr;
 		if (state == IN_VARIABLE)
 			string_position += process_variable(&token, str, string_position + 1, env) + 1;
 		if (state == IN_WORD)

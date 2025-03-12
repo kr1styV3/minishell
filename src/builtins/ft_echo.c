@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/15 09:54:36 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/10 14:53:08 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*extract_until_not_alfanum(char *str)
 	return (word);
 }
 
-char *extract_word_with_dollasign(char *str, char quote, t_token *token, char **env)
+char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_list *env)
 {
     int string_position = 0;
     char *word = NULL;
@@ -113,7 +113,7 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, char **
     return word;
 }
 
-int ft_echo(t_token *token, char *str, int i, char **env)
+int ft_echo(t_token *token, char *str, int i, t_env_list *env)
 {
     int len = skip_whitespaces(&str[i], NULL);
     bool flag = false;

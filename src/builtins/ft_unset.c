@@ -6,42 +6,58 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:09:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 13:55:11 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:19:09 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
 
-static char **ft_unsetenv(char *name, char **env)
-{
-	int		i;
-	int		j;
-	char	**new_env;
 
-	i = 0;
-	j = 0;
-	while (env[i])
-		i++;
-	new_env = (char **)malloc(sizeof(char *) * i);
-	if (!new_env)
-		return (NULL);
-	i = 0;
-	while (env[i])
+/*
+** ft_unsetenv:
+** Iterates over the environment list and removes the node whose value starts
+** with the provided name followed immediately by '='.
+** Returns 0 on success (even if not found) or -1 if the env pointer is NULL.
+*/
+static int	ft_unsetenv(const char *name, t_env_list **env)
+{
+	t_env_list	*curr;
+	t_env_list	*prev;
+	size_t		len;
+
+	if (!env || !*env)
+		return (-1);
+	len = ft_strlen(name);
+	curr = *env;
+	prev = NULL;
+	while (curr)
 	{
-		if (ft_strncmp(env[i], name, ft_strlen(name)))
+		/* Check if the current node's value starts with name and '=' follows */
+		if (ft_strncmp(curr->value, name, len) == 0 && curr->value[len] == '=')
 		{
-			new_env[j] = ft_strdup(env[i]);
-			j++;
+			if (prev)
+				prev->next = curr->next;
+			else
+				*env = curr->next;
+			free(curr->value);
+			free(curr);
+			return (0);
 		}
-		i++;
+		prev = curr;
+		curr = curr->next;
 	}
-	new_env[j] = NULL;
-	ft_free_mtx(env);
-	return (new_env);
+	return (0);
 }
 
-int	ft_unset(t_token *token, char *str, int i, char **env)
+/*
+** ft_unset:
+** Parses the input string starting at index i to extract the variable name,
+** then calls ft_unsetenv to remove the corresponding variable from the env list.
+** Updates token->env_ptr with the new environment pointer.
+** Returns the number of characters processed, or -1 on error.
+*/
+int	ft_unset(t_token *token, char *str, int i, t_env_list **env)
 {
 	int		len;
 	char	*name;
@@ -51,9 +67,9 @@ int	ft_unset(t_token *token, char *str, int i, char **env)
 	if (!name)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	len += ft_strlen(name);
-	env = ft_unsetenv(name, env);
-	if (!env)
-		return (free_tokens_line(str, token, "env realloc error"), -1);
+	if (ft_unsetenv(name, env) != 0)
+		return (free_tokens_line(str, token, "failed to unset env\n"), -1);
 	free(name);
+	token->env_ptr = (void *)*env;
 	return (len);
 }

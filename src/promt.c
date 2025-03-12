@@ -6,13 +6,14 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/05 11:50:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:20:53 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
+#include "env_variables.h"
 #include "../my_libft/headers/my_va_list.h"
 
 #include "../my_libft/headers/my_va_list.h"
@@ -82,7 +83,7 @@ char *replace_home_with_symbol(const char *pwd, const char *home)
 	return (new_pwd);
 }
 
-char *get_pwd_with_home_replacement(char **env)
+char *get_pwd_with_home_replacement(t_env_list *env)
 {
 	char *pwd;
 	char *home;
@@ -96,7 +97,7 @@ char *get_pwd_with_home_replacement(char **env)
 	return shortened_pwd;
 }
 
-char *get_promt(char **env)
+char *get_promt(t_env_list *env)
 {
 	char *promt;
 	char *user;

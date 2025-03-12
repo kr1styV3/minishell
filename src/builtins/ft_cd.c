@@ -6,12 +6,13 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:12:05 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/12/06 16:34:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:22:30 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
+#include "../../headers/env_variables.h"
 
 char	*extract_path(char *str)
 {
@@ -27,31 +28,8 @@ char	*extract_path(char *str)
 	return (path);
 }
 
-char	*ft_getenv(char *name, char **env)
-{
-	int		i;
-	int		j;
-	char	*value;
 
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] == name[j])
-			j++;
-		if (env[i][j] == '=' && !name[j])
-		{
-			value = ft_strdup(&env[i][j + 1]);
-			if (!value)
-				return (NULL);
-			return (value);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-int	ft_cd(t_token *token, char *str, int i, char **env)
+int	ft_cd(t_token *token, char *str, int i, t_env_list *env)
 {
 	int		len;
 	char	*path;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:52:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/02/15 09:57:00 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/10 14:40:46 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param token The token to be filled.
  * @return This function does not return; it writes directly to the token.
  */
-void	tokenizer(char *str, t_token *token, char **env);
+void	tokenizer(char *str, t_token *token, t_env_list *env);
 
 /**
  * @brief Reads a line from the user
