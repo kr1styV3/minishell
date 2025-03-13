@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:09:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:19:09 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/12 07:34:48 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ int	ft_unset(t_token *token, char *str, int i, t_env_list **env)
 	if (ft_unsetenv(name, env) != 0)
 		return (free_tokens_line(str, token, "failed to unset env\n"), -1);
 	free(name);
-	token->env_ptr = (void *)*env;
 	return (len);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:05:16 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 06:08:24 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int handle_here_doc(t_token *current)
     while (1)
     {
         line = readline(HERE_DOC_PROMT);
-        if (ft_strcmp(line, current->eof) == 0)
+        if (ft_strcmp(line, current->doc->eof) == 0)
             break;
         line = ft_strjoin(line, "\n");
         if (write(pipe_fd[1], line, ft_strlen(line)) == -1)
@@ -86,9 +86,7 @@ int handle_here_doc(t_token *current)
     return pipe_fd[0]; // Return read end of the pipe
 }
 
-/*
- * Function to execute a pipeline (one or more commands).
- */
+
 int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background)
 {
     int pipe_fd[2];
@@ -97,13 +95,58 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
     pid_t child_pids[MAX_COMMANDS];
     int child_count = 0;
     int status = 0;
-
     t_token *current = job_start;
 
     while (current != job_end->next)
     {
-        bool is_piped = (current != job_end && current->operator && current->operator->operator == '|');
+        // Check if the current command is a builtin with output.
+        bool is_builtin_output = false;
+        if (current->arg && current->arg[0])
+        {
+            if (ft_strcmp(current->arg[0], "echo") == 0 ||
+                ft_strcmp(current->arg[0], "env") == 0 ||
+                ft_strcmp(current->arg[0], "export") == 0 ||
+                ft_strcmp(current->arg[0], "pwd") == 0)
+            {
+                is_builtin_output = true;
+            }
+        }
 
+        // Determine whether the current command is piped.
+        bool is_piped = (current != job_end && current->operator &&
+                         current->operator->operator == '|');
+
+        // If it's a builtin with output, print its output in the main process.
+        if (is_builtin_output)
+        {
+            int out_fd = STDOUT_FILENO;
+            // If the command is piped, create a pipe and write to its write end.
+            if (is_piped)
+            {
+                if (pipe(pipe_fd) == -1)
+                {
+                    perror("pipe failed");
+                    should_exit = 1;
+                }
+                out_fd = pipe_fd[1];
+            }
+            ft_putstr_fd(current->arg[1], out_fd);
+            // If we created a pipe, close its write end and pass along the read end.
+            if (is_piped)
+            {
+                close(pipe_fd[1]);
+                prev_fd = pipe_fd[0];
+            }
+            else if (prev_fd != -1)
+            {
+                close(prev_fd);
+                prev_fd = -1;
+            }
+            current = current->next;
+            continue;
+        }
+
+        // For non-builtins, set up piping if needed.
         if (is_piped)
         {
             if (pipe(pipe_fd) == -1)
@@ -121,6 +164,7 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
         }
         else if (pid == 0)
         {
+            // If there is a previous pipe, redirect STDIN from it.
             if (prev_fd != -1)
             {
                 if (dup2(prev_fd, STDIN_FILENO) == -1)
@@ -130,6 +174,7 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
                 }
                 close(prev_fd);
             }
+            // If the current command is piped, redirect STDOUT to the pipe.
             if (is_piped)
             {
                 close(pipe_fd[0]);
@@ -140,8 +185,8 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
                 }
                 close(pipe_fd[1]);
             }
-
-            if (current->here_doc)
+            // Handle here_doc if present.
+            if (current->doc->here_doc)
             {
                 int here_doc_fd = handle_here_doc(current);
                 if (dup2(here_doc_fd, STDIN_FILENO) == -1)
@@ -151,19 +196,17 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
                 }
                 close(here_doc_fd);
             }
-
             setup_redirections(current);
-
             execve(current->arg[0], current->arg, env);
             perror("execve failed");
             should_exit = 1;
+            exit(EXIT_FAILURE);
         }
         else
         {
             child_pids[child_count++] = pid;
             if (prev_fd != -1)
                 close(prev_fd);
-
             if (is_piped)
             {
                 close(pipe_fd[1]);
@@ -174,11 +217,10 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
                 prev_fd = -1;
             }
         }
-
         current = current->next;
     }
 
-    // Wait for all children to finish
+    // Wait for all children to finish if not running in background.
     for (int i = 0; i < child_count; i++)
     {
         if (!background)
@@ -187,6 +229,7 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
 
     return status;
 }
+
 
 
 /* Main execution function */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/12 15:04:59 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 04:44:46 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,41 +114,65 @@ t_env_list	*env_list(char **envp)
 	}
 	return (env_ptr);
 }
-
-t_mini	*t_mini_setup(void)
+t_env_list *env_copy(char **envp)
 {
-	t_mini	*mini;
+    t_env_list *head = NULL;
+    t_env_list *current = NULL;
+    t_env_list *new_node;
+    int i = 0;
 
-	mini = (t_mini *)malloc(sizeof(t_mini));
-	if (!mini)
-		ft_error("Failed to allocate memory for mini.");
-	mini->exec = true;
-	mini->last_exit_status = -1;
-	mini->env = (t_env *)malloc(sizeof(t_env));
-	if (!mini->env)
-		ft_error("Failed to allocate memory for env.");
-	mini->env->env_ptr = NULL;
-	mini->env->env_work = false;
-	mini->doc = (t_doc *)malloc(sizeof(t_doc));
-	if (!mini->doc)
-		ft_error("Failed to allocate memory for doc.");
-	mini->doc->eof = NULL;
-	mini->doc->here_doc = false;
-	mini->operator = (t_operator *)malloc(sizeof(t_operator));
-	if (!mini->operator)
-		ft_error("Failed to allocate memory for operator.");
-	mini->parsed = (t_parse *)malloc(sizeof(t_parse));
-	if (!mini->parsed)
-		ft_error("Failed to allocate memory for parsed.");
-	mini->parsed->token = NULL;
-	mini->parsed->word = NULL;
-	mini->token = NULL;
-	return (mini);
+    if (!envp)
+        return (NULL);
+    while (envp[i])
+    {
+        new_node = (t_env_list *)malloc(sizeof(t_env_list));
+        if (!new_node)
+        {
+            // Free the already allocated list on error
+            t_env_list *temp;
+            while (head)
+            {
+                temp = head;
+                head = head->next;
+                free(temp->value);
+                free(temp);
+            }
+            return (NULL);
+        }
+        new_node->value = ft_strdup(envp[i]);
+        if (!new_node->value)
+        {
+            free(new_node);
+            t_env_list *temp;
+            while (head)
+            {
+                temp = head;
+                head = head->next;
+                free(temp->value);
+                free(temp);
+            }
+            return (NULL);
+        }
+        new_node->next = NULL;
+        if (!head)
+        {
+            head = new_node;
+            current = new_node;
+        }
+        else
+        {
+            current->next = new_node;
+            current = new_node;
+        }
+        i++;
+    }
+    return (head);
 }
+
 
 int main(int ac, char **av, char **envp)
 {
-	t_mini		*mini;
+	t_token		**head;
 	t_token		*token;
 	t_env_list	*_env_ptr;
 	int status = -1;
@@ -167,27 +191,24 @@ int main(int ac, char **av, char **envp)
 		printf("last exitn status: %d\n", status);
 		token->last_exit_status = status;
 		read_line_from_user(&(*head), _env_ptr);
-		if ((*head)->env_work == true)
-		{
-			_env_ptr = (char **)((*head)->env_ptr);
-		}
 		if (token->exec == true || should_exit)
 		{
 			while (token)
 			{
-				if (mini->parsed->token)
+				if (token->parsed->token)
 				{
-					if (checker(&token, _env_ptr) == 1)
+					if (checker(&token, _env_ptr) == 1 && !token->checker)
 					{
-						free_inside_token("minishell: command not found: ", mini->parsed->token);
-						mini->exec = false;
+						free_inside_token("minishell: command not found: ", token->parsed->token);
+						token->exec = false;
 					}
+					printf("%s\n", token->arg[1]);
 				}
 				token = token->next;
 			}
 			token = *head;
 			if (token->exec == true)
-				status = execute(head, envp);
+				status = execute(head, envp, _env_ptr);
 		}
 		if (should_exit == 2)
 			should_exit = 0;

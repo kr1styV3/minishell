@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 11:16:53 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 04:22:38 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #include "../headers/parsing.h"
 #include "t_token.h"
 
+
+
 int	check_append_fd(t_token *token, char *str, int string_position)
 {
 	int length;
 	char *file;
 
 	length = skip_whitespaces(&str[string_position], NULL);
-	file = extract_token(&str[string_position + length]);
+	file = extract_file_token(&str[string_position + length]);
 	if (!file)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	length += ft_strlen(file);
@@ -36,7 +38,7 @@ int	check_overwrite_fd(t_token *token, char *str, int string_position)
 	char *file;
 
 	length = skip_whitespaces(&str[string_position], NULL);
-	file = extract_token(&str[string_position + length]);
+	file = extract_file_token(&str[string_position + length]);
 	if (!file)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	length += ft_strlen(file);
@@ -52,13 +54,13 @@ int	here_doc_init(t_token *token, char *str, int i)
 	char	*delimiter;
 
 	length = skip_whitespaces(&str[i], NULL);
-	delimiter = extract_token(&str[i + length]);
+	delimiter = extract_file_token(&str[i + length]);
 	if (!delimiter)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	length += ft_strlen(delimiter);
-	token->here_doc = true;
-	token->eof = ft_strdup(delimiter);
-	if (!token->eof)
+	token->doc->here_doc = true;
+	token->doc->eof = ft_strdup(delimiter);
+	if (!token->doc->eof)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	free(delimiter);
 	return (length);
@@ -70,7 +72,7 @@ int	input_from_file(t_token *token, char *str, int string_position)
 	char	*file;
 
 	length = skip_whitespaces(&str[string_position], NULL);
-	file = extract_token(&str[string_position + length]);
+	file = extract_file_token(&str[string_position + length]);
 	if (!file)
 		return (free_tokens_line(str, token, "malloc error"), -1);
 	length += ft_strlen(file);

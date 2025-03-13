@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/10 14:53:08 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 04:41:46 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,24 +215,16 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
             }
         }
     }
-    if (ft_strchr(OPERATORS, str[i + len + 1]))
-    {
-       int operator_len = process_operator(&token, str, i + len + 1, NULL);
-       if (token->operator->fd_append_output > 0)
-            ft_putstr_fd(output, token->operator->fd_append_output);
-        else if (token->operator->fd_overwrite_output > 0)
-            ft_putstr_fd(output, token->operator->fd_overwrite_output);
-        else if (token->operator->fd_input > 0)
-            ft_putstr_fd(output, token->operator->fd_input);
-        len += operator_len + 1;
-    }
-    else
-    {
-        token->echo = ft_strdup(output);
-        token->pipe = true;
+        token->arg[0] = ft_strdup("echo");
+        if (token->arg[0])
+            free_tokens_line(str, token, "malloc error for internal processes");
+        token->arg[1] = ft_strdup(output);
         if (!flag)
-            token->echo = ft_freejoin(token->echo, "\n");
+            token->arg[1] = ft_freejoin(token->arg[1], "\n");
+        if (!token->arg[1])
+            return (free_tokens_line(str, token, "malloc error for internal processes"), -1);
+        token->arg[2] = NULL;
+        token->checker = false;
         free(output);
-    }
     return len;
 }

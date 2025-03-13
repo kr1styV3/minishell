@@ -136,6 +136,7 @@ int ft_export(t_token *token, t_env_list **env, char *str, int _i)
     int     len;
     char    *var_name;
     char    *var_value;
+    char    *line;
 
     len = skip_whitespaces(&str[_i], NULL);
     if (ft_isalnum(str[_i + len]))
@@ -156,7 +157,6 @@ int ft_export(t_token *token, t_env_list **env, char *str, int _i)
                 return (export_cleanup(var_name, NULL, "malloc error\n"));
             if (export_update(env, var_name, var_value) < 0)
                 return (export_cleanup(var_name, var_value, "failed to update env variable\n"));
-            token->env_ptr = (void *)*env;
             token->env_work = true;
             len += ft_strlen(var_value) + 1;
             free(var_value);
@@ -165,13 +165,33 @@ int ft_export(t_token *token, t_env_list **env, char *str, int _i)
     }
     else
     {
-        /* If no variable provided, print the environment */
         t_env_list *tmp = *env;
+        line = ft_strdup(tmp->value);
+        if (!line)
+            return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+        tmp=tmp->next;
         while (tmp)
         {
-            ft_putendl_fd(tmp->value, 1);
+            line = ft_freejoin(line, "\n");
+            if (!line)
+                return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+            line = ft_freejoin(line, tmp->value);
+            if (!line)
+                return (free_tokens_line(str, token, "malloc error for internal process"), -1);
             tmp = tmp->next;
         }
+        line = ft_freejoin(line, "\n");
+        if (!line)
+            return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+        token->arg[0] = ft_strdup("export");
+        if (!token->arg[0])
+            return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+        token->arg[1] = ft_strdup(line);
+        if (!token->arg[1])
+            return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+        token->arg[2] = NULL;
+        token->checker = false;
+        free(line);
     }
     return (len);
 }

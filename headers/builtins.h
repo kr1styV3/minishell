@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:20:06 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 05:05:00 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int ft_cd(t_token *token, char *str, int i, t_env_list *env);
  *
  * @return int 0 on success, or -1 if an error occurs.
  */
-int ft_pwd(void);
+int ft_pwd(t_token *token);
 
 /**
  * @brief Display the list of environment variables (export) or sets a new variable
@@ -105,7 +105,7 @@ int ft_unset(t_token *token, char *str, int i, t_env_list **env);
  * @param env Array of environment variables.
  * @return int 0 on success.
  */
-int ft_env(t_env_list *env);
+int ft_env(t_token *token, t_env_list *env);
 
 /**
  * @brief Exit the shell (exit).

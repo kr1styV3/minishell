@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"get_next_line.h": "c",
-		"t_token.h": "c"
+		"t_token.h": "c",
+		"type_traits": "c"
 	}
 }

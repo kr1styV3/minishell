@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:42:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/05 12:03:50 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:55:28 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int assign_flags_to_token_args(t_token *token, char *flags[], int num_flags)
 	int i;
 
 	i = 0;
-	token->arg = ft_recalloc(token->arg, 2 * sizeof(char *), num_flags + 1);
+	token->arg = ft_recalloc(token->arg, 3 * sizeof(char *), num_flags + 1);
 	if (!token->arg)
 		return (-1);
 	while ( i < num_flags)
@@ -54,6 +54,7 @@ int assign_flags_to_token_args(t_token *token, char *flags[], int num_flags)
 		token->arg[i + 1] = flags[i];
 		i++;
 	}
+	token -> arg[i + 1] = NULL;
 	return (0);
 }
 

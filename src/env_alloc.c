@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_alloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:24:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:39:12 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/12 07:34:20 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,13 +214,11 @@ int check_var(t_token **token, char *line, int *i, t_env_list **env)
     {
         if (env_replace_entry(*env, (*token)->parsed->token, full_entry) < 0)
             return var_cleanup(full_entry, var_value, "Failed to replace env entry\n");
-        (*token)->env_ptr = (void *)*env;
     }
     else
     {
         if (env_add_entry(env, full_entry) < 0)
             return var_cleanup(full_entry, var_value, "Failed to add env entry\n");
-        (*token)->env_ptr = (void *)*env;
     }
     free(full_entry);
     free(var_value);

@@ -3,21 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:08:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:54:34 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 05:10:41 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
 
-int	ft_env(t_env_list *env)
+int	ft_env(t_token *token, t_env_list *env)
 {
-	while (env)
-	{
-		ft_putendl_fd(env->value, 1);
-		env = env->next;
-	}
+	char *line;
+
+	line = ft_strdup(env->value);
+    if (!line)
+        return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+    env=env->next;
+    while (env)
+    {
+        line = ft_freejoin(line, "\n");
+        if (!line)
+            return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+        line = ft_freejoin(line, env->value);
+        if (!line)
+            return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+        env = env->next;
+    }
+    line = ft_freejoin(line, "\n");
+    if (!line)
+        return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+    token->arg[0] = ft_strdup("export");
+    if (!token->arg[0])
+        return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+    token->arg[1] = ft_strdup(line);
+    if (!token->arg[1])
+        return (free_tokens_line(NULL, token, "malloc error for internal process"), -1);
+    token->arg[2] = NULL;
+	token->checker = false;
+    free(line);
 	return (0);
 }

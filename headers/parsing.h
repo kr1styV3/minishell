@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:41:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/13 04:26:51 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "t_token.h"
 
 // parsing.c
+
+char *extract_file_token(char *str);
 /**
  * @brief Skips the whitespaces in the given string.
  * @param str The string from which the whitespaces are skipped.
