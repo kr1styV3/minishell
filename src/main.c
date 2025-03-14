@@ -6,7 +6,7 @@
 /*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/13 04:44:46 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/14 08:14:25 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,15 @@ int main(int ac, char **av, char **envp)
 						free_inside_token("minishell: command not found: ", token->parsed->token);
 						token->exec = false;
 					}
-					printf("%s\n", token->arg[1]);
+					dprintf(STDERR_FILENO, "Executing command: %s\n", token->arg[0]);
+					int i = 0;
+					while (token->arg[i])
+						{
+    						dprintf(STDERR_FILENO, "arg[%d] = '%s'\n", i,token->arg[i]);
+   							 i++;
+						}
+dprintf(STDERR_FILENO, "arg[%d] = (NULL)\n", i);
+
 				}
 				token = token->next;
 			}
@@ -214,6 +222,7 @@ int main(int ac, char **av, char **envp)
 			should_exit = 0;
 		free_token(token);
 	}
+	// free_list_copy(_env_ptr);
 	free(head);
 	rl_clear_history();
 	return 0;

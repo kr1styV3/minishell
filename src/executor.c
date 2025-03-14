@@ -6,7 +6,7 @@
 /*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 06:08:24 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/14 08:21:16 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,12 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
                 }
                 close(here_doc_fd);
             }
+            dprintf(STDERR_FILENO, "Executing command: %s\n", current->arg[0]);
+
+
             setup_redirections(current);
-            execve(current->arg[0], current->arg, env);
+            execve("/usr/bin/env", (char*[]){"/usr/bin/env", NULL}, env);
+
             perror("execve failed");
             should_exit = 1;
             exit(EXIT_FAILURE);
