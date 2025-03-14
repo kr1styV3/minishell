@@ -6,7 +6,7 @@
 /*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 06:35:15 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/14 10:52:21 by coca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_token *init_token(void)
 {
     t_token    *token;
     t_parse    *parsed;
+    t_doc      *doc;
     t_operator *operator;
 
     token = (t_token *)malloc(sizeof(t_token));
@@ -40,15 +41,18 @@ t_token *init_token(void)
     operator = (t_operator *)malloc(sizeof(t_operator));
     if (!operator)
         return free(parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
+    doc = (t_doc *)malloc(sizeof(t_doc));
+    if (!doc)
+        return free(operator), free(parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_doc."), NULL;
+
     operator->fd_input = -1;
     operator->fd_overwrite_output = -1;
     operator->fd_append_output = -1;
     operator->operator = 0;
-
+    token->doc = doc;
     token->parsed = parsed;
     token->operator = operator;
     token->env = NULL;
-    token->doc = NULL;
     token->next = NULL;
     return token;
 }
