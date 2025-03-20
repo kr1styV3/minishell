@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:42:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 03:55:28 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/18 15:41:09 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,25 @@ int handle_allocation_error(char *str, t_token *token, char *error_message)
 	return (-1);
 }
 
-int assign_flags_to_token_args(t_token *token, char *flags[], int num_flags)
+int assign_flags_to_token_args(t_token **token, char *flags[], int num_flags)
 {
 	int i;
 
 	i = 0;
-	token->arg = ft_recalloc(token->arg, 3 * sizeof(char *), num_flags + 1);
-	if (!token->arg)
+	if (num_flags + 1 > 3)
+	{
+		free((*token)->arg);
+		(*token)->arg = ft_calloc(num_flags + 1, sizeof(char *));
+		if (!(*token)->arg)
+			return (-1);
+	}
+	if (!(*token)->arg)
 		return (-1);
 	while ( i < num_flags)
 	{
-		token->arg[i + 1] = flags[i];
+		(*token)->arg[i + 1] = flags[i];
 		i++;
 	}
-	token -> arg[i + 1] = NULL;
 	return (0);
 }
 
@@ -78,7 +83,7 @@ int parse_flags(t_token *token, char *str, int string_position)
 		if (num_flags >= 32)
 			return (handle_allocation_error(str, token, "too many flags"));
 	}
-	if (assign_flags_to_token_args(token, flags, num_flags) != 0)
+	if (assign_flags_to_token_args(&token, flags, num_flags) != 0)
 		return (handle_allocation_error(str, token, "error in loading flags"));
 	return (offset);
 }

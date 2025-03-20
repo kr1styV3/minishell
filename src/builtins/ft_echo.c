@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/13 04:41:46 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/19 16:11:02 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
     else
     {
         // Handle unquoted strings, including those with multiple variables
-        while (str[i + len] && str[i + len] != '\'' && str[i + len] != '\"')
+        while (str[i + len] && str[i + len] != '\'' && str[i + len] != '\"' && str[i + len] != 32)
         {
             if (str[i + len] == '$')
             {
@@ -196,7 +196,7 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
                 // Process literal characters
                 int start = i + len;
                 int j = start;
-                while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"')
+                while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"' && str[j] != 32)
                     j++;
                 int substr_len = j - start;
                 char *substr = ft_substr(str, start, substr_len);
@@ -215,8 +215,9 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
             }
         }
     }
+        token->arg = (char **)ft_calloc(3, sizeof(char *));
         token->arg[0] = ft_strdup("echo");
-        if (token->arg[0])
+        if (!token->arg[0])
             free_tokens_line(str, token, "malloc error for internal processes");
         token->arg[1] = ft_strdup(output);
         if (!flag)

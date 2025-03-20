@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:23 by chrlomba          #+#    #+#             */
-/*   Updated: 2024/11/05 15:06:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:42:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ char *get_pwd_with_home_replacement(char **env);
  *
  * @return A newly allocated string containing the shell prompt. The caller is responsible for freeing the returned string.
  */
-char *get_promt(char **env);
+char *get_promt(t_env_list *env);
 
 # endif

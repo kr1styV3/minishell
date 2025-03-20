@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 04:30:12 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/19 15:35:02 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ int process_token(t_token **token, char *str, int string_position, t_state *stat
 		return (free_tokens_line(str, *token, "memory allocation"), -1);  // Memory allocation error.
 	word_len = ft_strlen((*token)->parsed->token);
 	word_len += skip_whitespaces(&str[string_position + word_len], NULL);
-	if (str[string_position + word_len] == '-')
-		word_len += parse_flags(*token, str, string_position + word_len);  // Skip whitespaces after token.
 	return (word_len);  // Return the length of the token processed.
 }
 

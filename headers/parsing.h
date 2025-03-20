@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 04:26:51 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/18 15:41:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int handle_allocation_error(char *str, t_token *token, char *error_message);
  *
  * @return Returns `0` on successful assignment.
  */
-int assign_flags_to_token_args(t_token *token, char *tmp_flags[], int args_pos);
+int assign_flags_to_token_args(t_token **token, char *tmp_flags[], int args_pos);
 
 /**
  * @brief Parses flags from a string and assigns them to a token structure.

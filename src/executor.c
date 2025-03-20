@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/14 10:52:48 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/19 16:35:52 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ int handle_here_doc(t_token *current)
     return pipe_fd[0]; // Return read end of the pipe
 }
 
+static int get_fd(t_operator *op)
+{
+    if (op->fd_overwrite_output > 0)
+        return (op->fd_overwrite_output);
+    else if (op->fd_append_output > 0)
+        return (op->fd_append_output);
+    else if (op->fd_input > 0)
+        return (op->fd_input);
+    else
+        return (STDOUT_FILENO);
+}
 
 int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background)
 {
@@ -119,7 +130,7 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
         // If it's a builtin with output, print its output in the main process.
         if (is_builtin_output)
         {
-            int out_fd = STDOUT_FILENO;
+            int out_fd = get_fd(current->operator);
             // If the command is piped, create a pipe and write to its write end.
             if (is_piped)
             {

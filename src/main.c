@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/14 08:14:25 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/19 16:28:02 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@
 #include "t_token.h"
 #include "../my_libft/headers/libft.h"
 #include "env_variables.h"
+# include <sys/ioctl.h>
 volatile sig_atomic_t should_exit = 0;
 
 void handle_sigint(int sig)
 {
 	(void)sig;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	should_exit = 2;
 }
 
@@ -36,6 +40,7 @@ void handle_sigterm(int sig)
 void handle_sigquit(int sig)
 {
 	(void)sig;
+	ft_putstr_fd("\b\b  \b\b", STDERR_FILENO);
 }
 
 void setup_signal_handling()
@@ -169,6 +174,26 @@ t_env_list *env_copy(char **envp)
     return (head);
 }
 
+void    print_full_token(t_token *token)
+{
+    int i = 0;
+    printf("my pointer to token is %p\n\n", token);
+    printf("my pointer to parsed is %p\n\n", token->parsed);
+	if (token->arg)
+	{
+
+		while (token->arg[i])
+		{
+			dprintf(STDERR_FILENO, "arg[%d] = '%s'\n", i,token->arg[i]);
+			i++;
+		}
+	}
+    dprintf(STDERR_FILENO, "arg[%d] = (NULL)\n", i);
+    printf("fd_input: %d\n", token->operator->fd_input);
+    printf("fd_overwrite_output: %d\n", token->operator->fd_overwrite_output);
+    printf("fd_append_output: %d\n", token->operator->fd_append_output);
+    printf("operator: %i\n", token->operator->operator);
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -178,39 +203,32 @@ int main(int ac, char **av, char **envp)
 	int status = -1;
 
 	_env_ptr = env_copy(envp);
+	printf("Process ID: %d\n", getpid());
 	head = (t_token **)malloc(sizeof(t_token *));
 	if (!head)
 		ft_error("Failed to allocate memory for token.");
-	// setup_signal_handling();
+	setup_signal_handling();
 	(void)ac;
 	(void)av;
 	while (!should_exit)
 	{
 		*head = init_token();
 		token = *head;
+		print_full_token(token);
 		printf("last exitn status: %d\n", status);
 		token->last_exit_status = status;
-		read_line_from_user(&(*head), _env_ptr);
+		read_line_from_user(&(*head), _env_ptr, envp);
 		if (token->exec == true || should_exit)
 		{
 			while (token)
 			{
-				if (token->parsed->token)
+				if (token->checker == true)
 				{
-					if (checker(&token, _env_ptr) == 1 && !token->checker)
+					if (checker(&token, _env_ptr) == 1)
 					{
 						free_inside_token("minishell: command not found: ", token->parsed->token);
 						token->exec = false;
 					}
-					dprintf(STDERR_FILENO, "Executing command: %s\n", token->arg[0]);
-					int i = 0;
-					while (token->arg[i])
-						{
-    						dprintf(STDERR_FILENO, "arg[%d] = '%s'\n", i,token->arg[i]);
-   							 i++;
-						}
-dprintf(STDERR_FILENO, "arg[%d] = (NULL)\n", i);
-
 				}
 				token = token->next;
 			}
@@ -220,6 +238,8 @@ dprintf(STDERR_FILENO, "arg[%d] = (NULL)\n", i);
 		}
 		if (should_exit == 2)
 			should_exit = 0;
+		print_full_token(token);
+		// check file
 		free_token(token);
 	}
 	// free_list_copy(_env_ptr);

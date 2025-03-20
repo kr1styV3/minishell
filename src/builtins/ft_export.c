@@ -183,6 +183,7 @@ int ft_export(t_token *token, t_env_list **env, char *str, int _i)
         line = ft_freejoin(line, "\n");
         if (!line)
             return (free_tokens_line(str, token, "malloc error for internal process"), -1);
+        token->arg = (char **)ft_calloc(3, sizeof(char *));
         token->arg[0] = ft_strdup("export");
         if (!token->arg[0])
             return (free_tokens_line(str, token, "malloc error for internal process"), -1);
