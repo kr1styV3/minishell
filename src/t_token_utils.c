@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:48:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/19 16:43:15 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:42:04 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_token *init_token(void)
     t_token    *token;
     t_parse    *parsed;
     t_doc      *doc;
+    t_doc       *original_ptr;
     t_operator *operator;
 
     token = (t_token *)malloc(sizeof(t_token));
@@ -26,7 +27,7 @@ t_token *init_token(void)
     token->pipe = false;
     token->env_work = false;
     token->free = false;
-    token->checker = true;
+    token->checker = false;
     token->last_exit_status = -1;
     token->arg = NULL;
 
@@ -39,11 +40,15 @@ t_token *init_token(void)
     operator = (t_operator *)malloc(sizeof(t_operator));
     if (!operator)
         return free(parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_operator."), NULL;
+    original_ptr = (t_doc *)malloc(sizeof(t_doc *));
     doc = (t_doc *)malloc(sizeof(t_doc));
     if (!doc)
         return free(operator), free(parsed), free(token->arg), free(token), ft_error("Failed to allocate memory for t_doc."), NULL;
+    original_ptr = doc;
+    token->op = original_ptr;
     doc->eof = NULL;
     doc->here_doc = false;
+    doc->next = NULL;
     operator->fd_input = -1;
     operator->fd_overwrite_output = -1;
     operator->fd_append_output = -1;
@@ -116,7 +121,9 @@ void	free_tokens_line(char *str, t_token *token, char *error_message)
 void	free_token(t_token *token)
 {
 	t_token	*tmp;
+    t_doc   *doccus;
 
+    doccus = NULL;
 	while (token)
 	{
 		tmp = token->next;
@@ -126,13 +133,25 @@ void	free_token(t_token *token)
 			free(token->parsed->word);
 		free(token->parsed);
 		if (token->arg)
-        ft_free_mtx(token->arg);
+            ft_free_mtx(token->arg);
+        free(token->op);
+        while (token->doc)
+        {
+            if (token->doc->next)
+                doccus = token->doc->next;
+            if (token->doc->eof)
+                free(token->doc->eof);
+            free(token->doc);
+            token->doc = doccus;
+            doccus = NULL;
+        }
+
 		if (token->operator->fd_append_output > 0)
-        close(token->operator->fd_append_output);
+            close(token->operator->fd_append_output);
 		if (token->operator->fd_overwrite_output > 0)
-        close(token->operator->fd_overwrite_output);
+            close(token->operator->fd_overwrite_output);
 		if (token->operator->fd_input > 0)
-        close(token->operator->fd_input);
+            close(token->operator->fd_input);
 		free(token->operator);
 		free(token);
 		token = tmp;

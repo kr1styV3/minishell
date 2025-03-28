@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/20 15:28:42 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:42:40 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static int count_arguments(const char *str, int start)
 }
 
 
-static void fill_arguments(t_token **token, const char *str, int start, int count)
+static void fill_arguments(t_token *token, const char *str, int start, int count)
 {
     int arg_i = 1; // We'll put arguments in arg[1..count]
     int pos   = start;
@@ -144,7 +144,7 @@ static void fill_arguments(t_token **token, const char *str, int start, int coun
             while (str[tmp + len] && str[tmp + len] != quote)
                 len++;
             // store the substring inside quotes
-            (*token)->arg[arg_i] = ft_substr(str, tmp, len);
+            token->arg[arg_i] = ft_substr(str, tmp, len);
 
             // skip the entire quoted area (including closing quote if found)
             // if we found the closing quote, skip it
@@ -164,7 +164,7 @@ static void fill_arguments(t_token **token, const char *str, int start, int coun
                 pos++;
                 len++;
             }
-            (*token)->arg[arg_i] = ft_substr(str, word_start, len);
+            token->arg[arg_i] = ft_substr(str, word_start, len);
         }
         arg_i++;
     }
@@ -176,12 +176,18 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
     int  start_pos = i;
 
     // If the token is a builtin, skip parsing further arguments
-    if (ft_isbuiltin((*token)->parsed->token))
-        return 0;
+	if (ft_isbuiltin((*token)->parsed->token))
+		return 0;
 
-    // 1) Skip any whitespace before we start counting
-    i += skip_whitespaces(&str[i], NULL);
-
+	// 1) Skip any whitespace before we start counting
+	i += skip_whitespaces(&str[i], NULL);
+	if (ft_strchr(OPERATORS, str[i]) && (*token)->parsed->token == NULL)
+	{
+		(*token)->checker = false;
+		return (i - start_pos);
+    }
+    if (str[i] == '\0')
+        return (i - start_pos);
     // 2) Count how many arguments are present from 'i' until an operator or end
     int arg_count = count_arguments(str, i);
 
@@ -200,7 +206,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
     (*token)->arg[0] = NULL;
 
     // 4) Fill arguments into (*token)->arg[1..arg_count]
-    fill_arguments(token, str, i, arg_count);
+    fill_arguments(*token, str, i, arg_count);
 
     // 5) After filling, find out how far we actually moved.
     //    We'll do a quick loop to move 'i' forward the same way fill_arguments did.
@@ -235,7 +241,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 
 
 
-void	tokenizer(char *str, t_token *token, t_env_list *env)
+void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp)
 {
 	int string_position;
 	t_token *next;
@@ -247,23 +253,30 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 	{
 		if (state == SKIP_WHITESPACE)
 			string_position += skip_whitespaces(&str[string_position], &state);
+        if (str[string_position] == '.'){
+            string_position += process_operator(&token, str, string_position, &state);
+            string_position += skip_whitespaces(&str[string_position], &state);
+        }
 		if (ft_strchr(OPERATORS, str[string_position]))
 		{
 			string_position += process_operator(&token, str, string_position, &state);
 			string_position += skip_whitespaces(&str[string_position], &state);
+            if (str[string_position] == '\0')
+                token->checker = false;
 		}
 		if (state == NORMAL)
 		{
 			if (ft_isalnum(str[string_position]))
 				string_position += process_token(&token, str, string_position, &state);
+            if (check_var(&token, str, &string_position, &env) == 0)
+            {
+                token->env_work = true;
+                token->exec = false;
+            }
 			string_position += ft_checkwordarg(&token, str, string_position);
             string_position += skip_whitespaces(&str[string_position], &state);
-			printf("%p\n", token->parsed);
-			if (check_var(&token, str, &string_position, &env) == 0)
-			{
-				token->env_work = true;
-				token->exec = false;
-			}
+            if (!token->arg && token->checker == true && !ft_isbuiltin(token->parsed->token))
+                token->arg = (char **)ft_calloc(2, sizeof(char *));
 			if (str[string_position] == 34 || str[string_position] == 39)
             state = IN_WORD;
 			if (ft_strchr(OPERATORS, str[string_position]))
@@ -275,11 +288,11 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 		}
 		if (state == IN_BUILTIN)
         {
-			string_position += process_builtin(&token, str, string_position, &state, env);
+			string_position += process_builtin(&token, str, string_position, &state, env, envp);
             string_position += skip_whitespaces(&str[string_position], &state);
         }
 		if (state == IN_VARIABLE)
-			string_position += process_variable(&token, str, string_position + 1, env) + 1;
+			string_position += process_variable(&token, str, string_position + 1, env, envp) + 1;
 		if (state == IN_WORD)
 			string_position += process_word(&token, str, string_position, &state, env);
         while (ft_strchr(OPERATORS, str[string_position]))
@@ -313,6 +326,11 @@ void	tokenizer(char *str, t_token *token, t_env_list *env)
 	}
 }
 
+int	check_syntax(char *line)
+{
+
+}
+
 void read_line_from_user(t_token **token, t_env_list *env, char **envp)
 {
 	char	*read_line;
@@ -322,6 +340,8 @@ void read_line_from_user(t_token **token, t_env_list *env, char **envp)
 	(void)envp;
 	promt = get_promt(env);
 	read_line = readline(promt);
+    if (check_syntax(read_line))
+        return ();
 	if (should_exit > 0)
 	{
 		(*token)->exec = false;
@@ -342,7 +362,7 @@ void read_line_from_user(t_token **token, t_env_list *env, char **envp)
 	if (!read_line || should_exit)
 		return ;
 	add_history(read_line);
-	tokenizer(read_line, *token, env);
+	tokenizer(read_line, *token, env, envp);
 	free(read_line);
 	read_line = NULL;
 }

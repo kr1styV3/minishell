@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/13 05:05:00 by coca             ###   ########.fr       */
+/*   Updated: 2025/03/21 18:34:24 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *extract_until_not_alfanum(char *str);
  * @param i Position in the input string to start processing.
  * @return int Length of the processed string, or -1 on error.
  */
-int ft_echo(t_token *token, char *str, int i, t_env_list *env);
+int ft_echo(t_token *token, char *str, int i, t_env_list *env, char **envp);
 
 /**
  * @brief Extract the path from a given string, stopping at the first space.
@@ -131,7 +131,7 @@ int ft_exit(t_token *token, char *str);
  * @param env Array of environment variables.
  * @return int Length of the processed string, or 0 if no built-in command is found.
  */
-int process_builtin(t_token **token, char *str, int i, t_state *state, t_env_list *env);
+int process_builtin(t_token **token, char *str, int i, t_state *state, t_env_list *env, char **envp);
 
 /**
  * @brief Check if a command is a built-in.

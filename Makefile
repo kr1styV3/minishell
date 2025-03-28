@@ -70,7 +70,7 @@ $(LIBFT):
 
 valgrind: $(NAME)
 	@echo "Debugger Mode: Running Valgrind.."
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME)
+	@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --error-limit=no --log-file=valgrind-out.txt ./$(NAME)
 
 clean:
 	@echo "Cleaning object files..."

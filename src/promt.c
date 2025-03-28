@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/11 16:20:53 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:39:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ char *get_promt(t_env_list *env)
 	t_join join;
 
 	user = ft_getenv("USER", env);
-	pwd = get_pwd_with_home_replacement(env);
 	pwd = get_pwd_with_home_replacement(env);
 	get_system_hostname(host_name, 256);
 	join.blue = BLUE;

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/19 15:35:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:12:58 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int process_token(t_token **token, char *str, int string_position, t_state *stat
 		return (free_tokens_line(str, *token, "memory allocation"), -1);  // Memory allocation error.
 	word_len = ft_strlen((*token)->parsed->token);
 	word_len += skip_whitespaces(&str[string_position + word_len], NULL);
+	(*token)->checker = true;
 	return (word_len);  // Return the length of the token processed.
 }
 
@@ -135,7 +136,7 @@ int	process_word(t_token **token, char *str, int string_position, t_state *state
 		int j = 0;
 		while (str[string_position + 1 + j] != ' ')
 			j++;
-		j = process_builtin(token, str, string_position + 1 + j, state, env);
+		j = process_builtin(token, str, string_position + 1 + j, state, env, NULL);
 	}
 	return (len);  // Account for opening and closing quotes.
 }

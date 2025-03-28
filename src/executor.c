@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/19 16:35:52 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:04:34 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 #include <stdbool.h>  // For bool type
 #include "../headers/executor.h"
 #include "../headers/t_token.h" // Include the updated header
+#include "../headers/env_variables.h"
 
 #define MAX_COMMANDS 1024  // Adjust as neededq
-#define HERE_DOC_PROMT "\033[0;35mheredoc> \033[0m"
+#define HERE_DOC_PROMT "\033[0;34mheredoc> \033[0m"
+#define PIPE_DOC_PROMT "\033[0;36mpipe heredoc> \033[0m"
 
 /* Function to set up redirections */
 void setup_redirections(t_token *current)
@@ -54,37 +56,89 @@ void setup_redirections(t_token *current)
     }
 }
 
-/* Function to handle here_doc */
-int handle_here_doc(t_token *current)
+int get_dolpos(char *line)
 {
-    int pipe_fd[2];
-    char    *line;
+    int i;
 
-    line = NULL;
-    if (pipe(pipe_fd) == -1)
+    i = 0;
+    while (line[i] != '\0')
     {
-        perror("pipe failed for here_doc");
-        should_exit = 1;
+        if (line[i] == '$')
+            return (i);
+        i++;
     }
-    while (1)
-    {
-        line = readline(HERE_DOC_PROMT);
-        if (ft_strcmp(line, current->doc->eof) == 0)
-            break;
-        line = ft_strjoin(line, "\n");
-        if (write(pipe_fd[1], line, ft_strlen(line)) == -1)
-        {
-            perror("write failed for here_doc");
-            free(line);
-            should_exit = 1;
-        }
-        free(line);
-        line = NULL;
-    }
-    free(line);
-    close(pipe_fd[1]); // Close write end of the pipe
-    return pipe_fd[0]; // Return read end of the pipe
+    return (-1);
+
 }
+int handle_here_docs(t_token *current, t_env_list *env, char **envp)
+{
+    t_doc *doc = current->op;
+    int final_fd = -1;
+    (void)env;
+    (void)envp;
+    // Process each heredoc in order.
+    while (doc)
+    {
+        // If this is not the last heredoc, just read and discard its input.
+        if (doc->next != NULL)
+        {
+            while (1)
+            {
+                char *input = readline(">");
+                if (!input)
+                    break;
+                if (ft_strcmp(input, doc->eof) == 0)
+                {
+                    free(input);
+                    break;
+                }
+                free(input);
+                input = NULL;
+            }
+        }
+        else
+        {
+            // This is the last heredoc: create a pipe to store its input.
+            int pipe_fd[2];
+            if (pipe(pipe_fd) == -1)
+            {
+                perror("pipe failed for here_doc");
+                should_exit = 1;
+                return -1;
+            }
+            while (1)
+            {
+                char *input = readline(">");
+                if (!input)
+                    break;
+                if (ft_strcmp(input, doc->eof) == 0)
+                {
+                    free(input);
+                    break;
+                }
+                // (Optional: process variable expansion here if needed.)
+                char *line = ft_freejoin(input, "\n");
+                if (write(pipe_fd[1], line, ft_strlen(line)) == -1)
+                {
+                    perror("write failed for here_doc");
+                    free(line);
+                    should_exit = 1;
+                    close(pipe_fd[0]);
+                    close(pipe_fd[1]);
+                    return -1;
+                }
+                free(line);
+            }
+            close(pipe_fd[1]);  // Done writing.
+            final_fd = pipe_fd[0];
+        }
+        doc = doc->next;
+    }
+    free(current->op);
+    return final_fd;
+}
+
+
 
 static int get_fd(t_operator *op)
 {
@@ -98,7 +152,9 @@ static int get_fd(t_operator *op)
         return (STDOUT_FILENO);
 }
 
-int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background)
+// void    pipe_here_doc()
+
+int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool background, t_env_list * envp)
 {
     int pipe_fd[2];
     int prev_fd = -1;
@@ -175,47 +231,57 @@ int execute_pipeline(t_token *job_start, t_token *job_end, char **env, bool back
         }
         else if (pid == 0)
         {
-            // If there is a previous pipe, redirect STDIN from it.
-            if (prev_fd != -1)
+            if (current->doc && current->doc->here_doc)
+            {
+                int here_doc_fd = handle_here_docs(current, envp, env);
+                if (here_doc_fd == -1)
+                {
+                    should_exit = 1;
+                    exit(139);
+                }
+                if (dup2(here_doc_fd, STDIN_FILENO) == -1)
+                {
+                    perror("dup2 failed for here_doc_fd");
+                    close(here_doc_fd);
+                    should_exit = 1;
+                    exit(139);
+                }
+                close(here_doc_fd);
+            }
+            // Otherwise, if there’s a previous pipe, use it for STDIN.
+            else if (prev_fd != -1)
             {
                 if (dup2(prev_fd, STDIN_FILENO) == -1)
                 {
                     perror("dup2 prev_fd failed");
                     should_exit = 1;
+                    exit(1);
                 }
                 close(prev_fd);
             }
-            // If the current command is piped, redirect STDOUT to the pipe.
+
+            // --- Setup STDOUT ---
+            // If the current command is piped, redirect STDOUT to the write end of the pipe.
             if (is_piped)
             {
-                close(pipe_fd[0]);
+                close(pipe_fd[0]); // Close unused read end.
                 if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
                 {
                     perror("dup2 pipe_fd[1] failed");
                     should_exit = 1;
+                    exit(1);
                 }
                 close(pipe_fd[1]);
             }
-            // Handle here_doc if present.
-            if (current->doc->here_doc)
+
+            // Execute the command.
+            if (current->arg)
             {
-                int here_doc_fd = handle_here_doc(current);
-                if (dup2(here_doc_fd, STDIN_FILENO) == -1)
-                {
-                    perror("dup2 here_doc_fd failed");
-                    should_exit = 1;
-                }
-                close(here_doc_fd);
+                setup_redirections(current);
+                execve(current->arg[0], current->arg, env);
             }
-            dprintf(STDERR_FILENO, "Executing command: %s\n", current->arg[0]);
 
-
-            setup_redirections(current);
-            execve(current->arg[0], current->arg, env);
-
-            perror("execve failed");
             should_exit = 1;
-            exit(EXIT_FAILURE);
         }
         else
         {
@@ -273,7 +339,7 @@ int execute(t_token **token_list, char **env, t_env_list *env_list)
         }
 
         // Execute the pipeline from job_start to job_end
-        status = execute_pipeline(job_start, job_end, env, background);
+        status = execute_pipeline(job_start, job_end, env, background, env_list);
 
         // Move to the next command after job_end
         if (job_end->next)

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:52:40 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/17 20:40:47 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:32:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param token The token to be filled.
  * @return This function does not return; it writes directly to the token.
  */
-void	tokenizer(char *str, t_token *token, t_env_list *env);
+void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp);
 
 /**
  * @brief Reads a line from the user

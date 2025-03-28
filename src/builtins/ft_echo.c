@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/19 16:11:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:06:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*extract_until_not_alfanum(char *str)
 	return (word);
 }
 
-char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_list *env)
+char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_list *env, char **envp)
 {
     int string_position = 0;
     char *word = NULL;
@@ -66,7 +66,7 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_l
             return NULL;
 
         // Process the variable after '$'
-        int var_length = process_variable(&token, str, string_position + 1, env);
+        int var_length = process_variable(&token, str, string_position + 1, env, envp);
         if (var_length == -1)
         {
             free(preceding);
@@ -113,7 +113,7 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_l
     return word;
 }
 
-int ft_echo(t_token *token, char *str, int i, t_env_list *env)
+int ft_echo(t_token *token, char *str, int i, t_env_list *env, char **envp)
 {
     int len = skip_whitespaces(&str[i], NULL);
     bool flag = false;
@@ -152,7 +152,7 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
     }
     else if (quote == '\"')
     {
-        word = extract_word_with_dollasign(&str[i + len + 1], quote, token, env);
+        word = extract_word_with_dollasign(&str[i + len + 1], quote, token, env, envp);
         if (!word)
         {
             free(output);
@@ -174,7 +174,7 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
             if (str[i + len] == '$')
             {
                 // Process variable
-                int var_len = process_variable(&token, str, i + len + 1, env);
+                int var_len = process_variable(&token, str, i + len + 1, env, envp);
                 if (var_len == -1)
                 {
                     free(output);
@@ -185,7 +185,7 @@ int ft_echo(t_token *token, char *str, int i, t_env_list *env)
                 {
                     char *temp = ft_strjoin(output, token->parsed->word);
                     free(output);
-                    free (token->parsed->word);
+                    // free (token->parsed->word);
                     if (!temp)
                         return (free_tokens_line(str, token, "malloc error"), -1);
                     output = temp;

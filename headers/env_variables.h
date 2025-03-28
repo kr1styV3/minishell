@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:55:24 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:21:21 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:31:55 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "minishell.h"
 
-char    *execute_and_capture_output(char *command, t_env_list *env);
-int     process_variable(t_token **token, char *str, int string_position, t_env_list *env);
+char    *execute_and_capture_output(char *command, t_env_list *env, char **envp);
+int     process_variable(t_token **token, char *str, int string_position, t_env_list *env, char **envp);
 
 
 /*

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/11 16:28:41 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:29:14 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char *ft_getenv(const char *key, t_env_list *env)
     }
     return (ft_strdup(""));
 }
-
+/*
 static char **env_list_to_array(t_env_list *env)
 {
     int         count = 0;
@@ -113,8 +113,9 @@ static char **env_list_to_array(t_env_list *env)
     env_array[i] = NULL;
     return env_array;
 }
+    */
 
-char *execute_and_capture_output(char *command, t_env_list *env)
+char *execute_and_capture_output(char *command, t_env_list *env, char **envp)
 {
     int     pipefd[2];
     pid_t   pid;
@@ -140,13 +141,18 @@ char *execute_and_capture_output(char *command, t_env_list *env)
         close(pipefd[1]);
 
         t_token *token = init_token(); // Initialize your token structure
-        tokenizer(command, token, env);
-        if (checker(token, env) == 1)
+        tokenizer(command, token, env, envp);
+        if (token->checker)
         {
-            free_token(token);
-            exit(EXIT_FAILURE);
+            if (checker(&token, env) == 1)
+            {
+                ft_putstr_fd("invalid command expansion : ", 2);
+                ft_putstr_fd(token->parsed->token, 2);
+                free_token(token);
+                should_exit = 1;
+                return(NULL);
+            }
         }
-        char **envp = env_list_to_array(env);
         execute(&token, envp, env);
         free_token(token);
         exit(EXIT_SUCCESS);
@@ -184,7 +190,7 @@ char *execute_and_capture_output(char *command, t_env_list *env)
 ** Processes a variable found in the input string and assigns the corresponding
 ** value from your environment list into token->parsed->word.
 ** The function now works with a t_env_list pointer.
-*/int process_variable(t_token **token, char *str, int string_position, t_env_list *env)
+*/int process_variable(t_token **token, char *str, int string_position, t_env_list *env, char **envp)
 {
     char *variable;
     int   len = 0;
@@ -211,13 +217,14 @@ char *execute_and_capture_output(char *command, t_env_list *env)
             return (free_tokens_line(str, *token, "malloc error"), -1);
         len = ft_strlen(command) + 2;  /* accounting for '(' and ')' */
         /* Execute the command and capture its output */
-        char *command_output = execute_and_capture_output(command, env);
+        char *command_output = execute_and_capture_output(command, env, envp);
         free(command);
         if (!command_output)
             return (free_tokens_line(str, *token, "command execution error"), -1);
-        command_output = ft_strtrim(command_output, " ");
-        (*token)->parsed->word = ft_strdup(command_output);
+        char *tmp = ft_strtrim(command_output, " ");
         free(command_output);
+        (*token)->parsed->word = ft_strdup(tmp);
+        free(tmp);
         if (!(*token)->parsed->word)
             return (free_tokens_line(str, *token, "malloc error"), -1);
     }

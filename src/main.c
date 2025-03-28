@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/19 16:28:02 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:54:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void handle_sigterm(int sig)
 void handle_sigquit(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\b\b  \b\b", STDERR_FILENO);
+	ft_putstr_fd("\b \b", STDERR_FILENO);
 }
 
 void setup_signal_handling()
@@ -195,6 +195,21 @@ void    print_full_token(t_token *token)
     printf("operator: %i\n", token->operator->operator);
 }
 
+void	free_list_copy(t_env_list *ptr)
+{
+    t_env_list *temp;
+
+    while (ptr)
+    {
+        temp = ptr->next;
+        if (ptr->value)
+            free(ptr->value);
+        free(ptr);
+        ptr = temp;
+    }
+}
+
+
 int main(int ac, char **av, char **envp)
 {
 	t_token		**head;
@@ -218,7 +233,7 @@ int main(int ac, char **av, char **envp)
 		printf("last exitn status: %d\n", status);
 		token->last_exit_status = status;
 		read_line_from_user(&(*head), _env_ptr, envp);
-		if (token->exec == true || should_exit)
+		if (token->exec == true && !should_exit)
 		{
 			while (token)
 			{
@@ -227,13 +242,13 @@ int main(int ac, char **av, char **envp)
 					if (checker(&token, _env_ptr) == 1)
 					{
 						free_inside_token("minishell: command not found: ", token->parsed->token);
-						token->exec = false;
+						should_exit = 2;
 					}
 				}
 				token = token->next;
 			}
 			token = *head;
-			if (token->exec == true)
+			if (token->exec == true && !should_exit)
 				status = execute(head, envp, _env_ptr);
 		}
 		if (should_exit == 2)
@@ -242,7 +257,9 @@ int main(int ac, char **av, char **envp)
 		// check file
 		free_token(token);
 	}
-	// free_list_copy(_env_ptr);
+	// if (token)
+	// 	free_token(token);
+	free_list_copy(_env_ptr);
 	free(head);
 	rl_clear_history();
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:57:14 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:48:06 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:41:24 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "minishell.h"
 
-int	checker(t_token *token, t_env_list *envp);
+int	checker(t_token **token, t_env_list *envp);
 
 
 #endif
