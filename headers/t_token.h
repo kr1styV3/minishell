@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/27 14:01:28 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:22:18 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_token
 	bool				env_work;
 	bool				exec;
 	bool				free;
-	bool				pipe;
 	bool				checker;
 	unsigned int		last_exit_status;
 	char				**arg;
@@ -59,9 +58,7 @@ typedef struct s_token
 	struct s_parse		*parsed;
 	struct s_env		*env;
 	struct s_doc		*doc;
-	struct s_doc		*op;
+	struct s_doc		**op;
 }						t_token;
-
-
 
 #endif

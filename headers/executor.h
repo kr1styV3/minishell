@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:40:29 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:08:44 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ typedef enum e_exec_state
 	EXEC_END
 }	t_exec_state;
 
-int execute(t_token **token_list, char **env, t_env_list *envp);
+typedef struct s_env_pass
+{
+	t_env_list	*meow;
+	char		**bau_bau;
+}				t_bau_args;
+
+int	execute(t_token **token_list, char **env, t_env_list *envp);
 
 #endif

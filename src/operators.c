@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/27 14:05:56 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:24:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/parsing.h"
 #include "t_token.h"
 
-
+#include "operators_utils.h"
 
 int	check_append_fd(t_token *token, char *str, int string_position)
 {
@@ -75,7 +75,7 @@ int	here_doc_init(t_token *token, char *str, int i)
 	{
 		token->doc->here_doc = true;
 		token->doc->eof = ft_strdup(delimiter);
-		token->op = token->doc;
+		(*token->op) = token->doc;
 	}
 	if (!token->doc->eof)
 		return (free_tokens_line(str, token, "malloc error"), -1);
@@ -100,94 +100,31 @@ int	input_from_file(t_token *token, char *str, int string_position)
 	return (length);
 }
 
-char *extract_bash_file(char *str)
+int	process_operator(t_token **token, char *str, int pos, t_state *state)
 {
-    int i = 0;
-    char *token;
+	int	consumed;
 
-    if (!str)
-        return NULL;
-
-    // If the file name is enclosed in quotes
-    if (str[i] == '\"')
-    {
-        i++; // Skip the opening quote
-        int start = i;
-        while (str[i] && str[i] != '\"')
-            i++;
-        // i now points to the closing quote (or end of string if no closing quote found)
-        token = ft_calloc(i - start + 1, sizeof(char));
-        if (!token)
-            return NULL;
-        ft_strncpy(token, &str[start], i - start);
-        return token;
-    }
-    else
-    {
-        // Allow alnum characters as well as '.', '_', and '-' for file names
-        while (str[i] && (ft_isalnum(str[i]) || str[i] == '.' || str[i] == '/'))
-            i++;
-        token = ft_calloc(i + 1, sizeof(char));
-        if (!token)
-            return NULL;
-        ft_strncpy(token, str, i);
-        return token;
-    }
-}
-
-int	process_file_cmd(t_token *token, char *str, int i)
-{
-	int		length;
-	char	*file;
-
-	length = i;
-	file = extract_bash_file(&str[length]);
-	if (!file)
-		return (free_tokens_line(str, token, "malloc error"), -1);
-	length += ft_strlen(file);
-	if (token->arg == NULL)
-		token->arg = (char **)ft_calloc(2, sizeof(char *));
-	token->arg[0] = ft_strdup(file);
-	if (!token->arg[0])
-		return (free(file), free_tokens_line(str, token, "malloc error"), -1);
-	free(file);
-	token->checker = false;
-	return (length);
-
-}
-
-int process_operator(t_token **token, char *str, int string_position, t_state *state)
-{
-	int length;
-
-	length = 1;
-	// while()
-	(*token)->operator->operator = str[string_position];  // Save the operator (e.g., |, >, <).
-	if (str[string_position] == '>' && str[string_position + 1] == '>')  // ">>" operator
-		length = check_append_fd(*token, str, string_position + 2) + 2;  // Check if the operator is ">>" and set the file descriptor.
-	else if (str[string_position] == '>')  // ">" operator
-		length = check_overwrite_fd(*token, str, string_position + 1) + 1;// Initialize file path for output redirection
-	else if (str[string_position] == '<' && str[string_position + 1] == '<')  // "<<" operator
-		 length = here_doc_init(*token, str, string_position + 2) + 2;  // Initialize here-doc delimiter
-	else if (str[string_position] == '<')  // "<" operator
-		length = input_from_file(*token, str, string_position + 1) + 1;
-	else if (str[string_position] == '.' && str[string_position + 1] == '/')
+	consumed = 0;
+	while (str[pos + consumed] != '\0' && str[pos + consumed] != '|')
 	{
-		length = process_file_cmd(*token, str, string_position);
+		if (str[pos + consumed] == '>' && str[pos + consumed + 1] == '>')
+			consumed += check_append_fd(*token, str, pos + consumed + 2) + 2;
+		else if (str[pos + consumed] == '>')
+			consumed += check_overwrite_fd(*token, str, pos + consumed + 1) + 1;
+		else if (str[pos + consumed] == '<' && str[pos + consumed + 1] == '<')
+			consumed += here_doc_init(*token, str, pos + consumed + 2) + 2;
+		else if (str[pos + consumed] == '<')
+			consumed += input_from_file(*token, str, pos + consumed + 1) + 1;
+		else if (str[pos + consumed] == '.' && str[pos + consumed + 1] == '/')
+			consumed += process_file_cmd(*token, str, pos + consumed);
+		else if (str[pos + consumed] == '-')
+			consumed += parse_flags(*token, str, pos + consumed);
+		else
+			break ;
 	}
-	else if (str[string_position] == '|')
-	{
+	if (str[pos + consumed++] == '|')
 		(*token)->operator->operator = '|';
-		return (length); // Set operator type
-	}
-	else if (str[string_position] == '&')
-	{
-		(*token)->operator->operator = '&';
-		return (length); //Set background execution flag
-	}
-	else if (str[string_position] == '-')
-		length = parse_flags(*token, str, string_position);  // Parse flags
 	if (state)
-		*state = SKIP_WHITESPACE;  // Default case
-	return length;
+		*state = SKIP_WHITESPACE;
+	return (consumed);
 }

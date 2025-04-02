@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/27 14:04:34 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:50:42 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int get_dolpos(char *line)
 }
 int handle_here_docs(t_token *current, t_env_list *env, char **envp)
 {
-    t_doc *doc = current->op;
+    t_doc *doc = (*current->op);
     int final_fd = -1;
     (void)env;
     (void)envp;

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/28 14:42:40 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:00:18 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,43 +326,118 @@ void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp)
 	}
 }
 
-int	check_syntax(char *line)
+static int	check_operator_block(char *line, int *i, int len)
 {
+	char	op;
+	int		count;
 
+	op = line[*i];
+	count = 0;
+	while (*i < len && line[*i] == op)
+	{
+		count++;
+		(*i)++;
+	}
+	if (op == '|' && count > 1)
+		return (1);
+	if ((op == '<' || op == '>') && count > 2)
+		return (1);
+	if (*i < len && (line[*i] == '<' || line[*i] == '>' || line[*i] == '|'))
+		return (1);
+	return (0);
 }
 
-void read_line_from_user(t_token **token, t_env_list *env, char **envp)
-{
-	char	*read_line;
-	char	*promt;
 
-	read_line = NULL;
-	(void)envp;
-	promt = get_promt(env);
-	read_line = readline(promt);
-    if (check_syntax(read_line))
-        return ();
+static int	check_syntax(char *line)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(line);
+	while (i < len)
+	{
+		if (ft_isalnum(line[i]) || line[i] == '_' ||
+			line[i] == '-' || line[i] == ',' ||
+			ft_isspace(line[i]))
+		{
+			i++;
+			continue ;
+		}
+		if (line[i] == '<' || line[i] == '>' || line[i] == '|')
+		{
+			if (check_operator_block(line, &i, len))
+				return (1);
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
+
+static int	handle_read_line_edge_cases(char *line, char *prompt, t_token **token)
+{
+	if (check_syntax(line))
+	{
+		(*token)->exec = false;
+		ft_putendl_fd("basho dice syntax error", 2);
+		free(prompt);
+		free(line);
+		return (1);
+	}
 	if (should_exit > 0)
 	{
 		(*token)->exec = false;
-		free(promt);
-		free(read_line);
-		return;
+		free(prompt);
+		free(line);
+		return (1);
 	}
-	while ((!read_line && !should_exit) || !ft_strlen(read_line))
-		read_line = readline(promt);
-	if (should_exit > 0)
+	return (0);
+}
+
+
+static char	*handle_empty_input(char *line, char *prompt)
+{
+	while ((!line && !should_exit) || !ft_strlen(line))
 	{
-		(*token)->exec = false;
-		free(promt);
-		free(read_line);
-		return;
+		if (line)
+			free(line);
+		line = readline(prompt);
 	}
-	free(promt);
-	if (!read_line || should_exit)
+	return (line);
+}
+
+static void	_void_return_free_(char *to_free)
+{
+	free(to_free);
+	return ;
+}
+
+void	read_line_from_user(t_token **token, t_env_list *env, char **envp)
+{
+	char	*line;
+	char	*prompt;
+
+	line = NULL;
+	prompt = get_promt(env);
+	line = readline(prompt);
+	if (handle_read_line_edge_cases(line, prompt, token))
 		return ;
-	add_history(read_line);
-	tokenizer(read_line, *token, env, envp);
-	free(read_line);
-	read_line = NULL;
+	line = handle_empty_input(line, prompt);
+	if (should_exit > 0)
+	{
+		(*token)->exec = false;
+		free(prompt);
+		free(line);
+		return ;
+	}
+	free(prompt);
+	if (!line || should_exit)
+		return (_void_return_free_(line));
+	add_history(line);
+	tokenizer(line, *token, env, envp);
+	free(line);
+	line = NULL;
 }
+

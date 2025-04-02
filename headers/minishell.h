@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/01/04 11:15:42 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:25:23 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@
 extern volatile sig_atomic_t should_exit;
 
 // t_token_utils.c
-void inside_token_free(t_token *token);
+int	process_file_cmd(t_token *token, char *str, int i);
+char	*extract_bash_file(char *str);
+void	inside_token_free(t_token *token);
+void	setup_signal_handling();
+void	shell_loop(t_token **head, t_env_list *_env_ptr, char **envp, int *status);
+void	free_list_copy(t_env_list *ptr);
+int	checker(t_token **token, t_env_list *envp);
 t_token	*reinit_token(t_token *prev_token);
 /**
  * @brief Initializes the token structure
@@ -75,5 +81,6 @@ void return_to_head(t_token *token);
  * @param cmd The command related to the error, to be printed after `msg`.
  */
 void free_inside_token( char *msg, char *cmd);
+t_env_list	*env_copy(char **envp);
 
 # endif

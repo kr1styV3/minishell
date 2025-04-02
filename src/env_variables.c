@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/28 12:29:14 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:24:01 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 #include "../my_libft/headers/get_next_line.h"
 #include "../my_libft/headers/libft.h"
 #include "../headers/read_line.h"
-#include "pre_executor.h"
 #include "env_variables.h"
 
 /*
