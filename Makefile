@@ -25,7 +25,25 @@ SRC_FILES = $(addprefix src/,main.c \
 	env.c\
 	loop.c\
 	signals.c\
-	exctract_files.c)
+	exctract_files.c\
+	tokenize.c\
+	handle_state.c\
+	here_doc.c\
+	here_doc_helpers.c\
+	arg_check_helpers.c\
+	arg_check.c\
+	arg_len_check.c\
+	check_syntax.c\
+	util_extracting.c\
+	executor_utils.c\
+	executor_redirections.c\
+	executor_pipeline.c\
+	here_doc_init.c\
+	env_exec_capture.c\
+	env_process_variable.c\
+	token_init.c\
+	token_init_utils.c\
+	token_free.c)
 
 BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_echo.c \

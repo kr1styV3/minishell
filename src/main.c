@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/28 15:34:02 by chrlomba         ###   ########.fr       */
+/*   Created: 2025/04/06 20:34:25 by chrlomba          #+#    #+#             */
+/*   Updated: 2025/04/06 20:36:54 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 #include "parsing.h"
@@ -20,9 +19,7 @@
 #include "../my_libft/headers/libft.h"
 #include "env_variables.h"
 
-
-volatile sig_atomic_t should_exit = 0;
-
+volatile sig_atomic_t	g_should_exit = 0;
 
 int	main(int ac, char **av, char **envp)
 {

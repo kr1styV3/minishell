@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/27 16:06:32 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:34:24 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*extract_until_not_alfanum(char *str)
 	char	*word;
 
 	i = 0;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == ' '))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == ' ' || str[i] == '_'))
 		i++;
 	word = ft_substr(str, 0, i);
 	if (!word)

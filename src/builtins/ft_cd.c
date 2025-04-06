@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:12:05 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:22:30 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:04:37 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_cd(t_token *token, char *str, int i, t_env_list *env)
 	path = extract_path(&str[i + len]);
 	if (!path)
 		return (free_tokens_line(str, token, "malloc error"), -1);
-	if (path[0] == '~' || !path[0])
+	if (path[0] == '~' || path[0] == '\0')
 	{
 		free(path);
 		path = ft_strdup(ft_getenv("HOME", env));

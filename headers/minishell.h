@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/02 16:25:23 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:23:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,29 @@
 # include <fcntl.h>
 # include <signal.h>
 # include "t_token.h"
+# include "state.h"
 
 extern volatile sig_atomic_t should_exit;
 
+# define OPERATORS "<>|"
+
 // t_token_utils.c
 int	process_file_cmd(t_token *token, char *str, int i);
+int	get_dolpos(char *line);
+void	update_state_from_char(t_tokenizer_ctx *ctx);
+char	*extract_word(char *str, char quote);
+char	*extract_token(char *str);
+int	here_doc_init(t_token *token, char *str, int i);
+int	count_arguments(const char *str, int start);
+int	check_syntax(char *line);
+int	fill_quoted_argument(t_token *token,
+		const char *str, int pos, int arg_i);
+int	heredoc_expansion(t_token **token, char *line,
+		t_env_list *env_list, char **envp);
+int	get_next_arg_len(const char *str, int *pos);
+int	fill_unquoted_argument(t_token *token,
+		const char *str, int pos, int arg_i);
+int	ft_checkwordarg(t_token **token, char *str, int i);
 char	*extract_bash_file(char *str);
 void	inside_token_free(t_token *token);
 void	setup_signal_handling();

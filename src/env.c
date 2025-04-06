@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:09:06 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/28 15:33:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:06:52 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	fill_env_list(t_env_list **head, char **envp)
 	return (0);
 }
 
-
 t_env_list	*env_copy(char **envp)
 {
 	t_env_list	*head;
@@ -76,7 +75,7 @@ t_env_list	*env_copy(char **envp)
 
 void	free_list_copy(t_env_list *ptr)
 {
-	t_env_list *temp;
+	t_env_list	*temp;
 
 	while (ptr)
 	{

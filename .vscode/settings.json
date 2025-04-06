@@ -3,6 +3,8 @@
 		"get_next_line.h": "c",
 		"t_token.h": "c",
 		"type_traits": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"builtins.h": "c",
+		"executor.h": "c"
 	}
 }

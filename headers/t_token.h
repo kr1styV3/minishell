@@ -6,12 +6,14 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:56:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/01 13:22:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:52:45 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_TOKEN_H
 # define T_TOKEN_H
+
+# include <stdbool.h>
 
 typedef struct s_operator
 {
@@ -60,5 +62,10 @@ typedef struct s_token
 	struct s_doc		*doc;
 	struct s_doc		**op;
 }						t_token;
+
+void	set_token_defaults(t_token *token,
+			t_parse *parsed, t_operator *op, t_doc *doc);
+void	handle_token_error(t_token *token,
+			t_parse *parsed, t_operator *op, t_doc *doc);
 
 #endif
