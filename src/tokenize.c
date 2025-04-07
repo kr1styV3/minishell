@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:05:01 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:55:24 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:07:35 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp)
 		{
 			process_state(&ctx);
 			if ((ctx.state != IN_BUILTIN && token->operator->operator == '|')
-				|| (get_cchar(&ctx) == '\0' || should_exit))
+				|| (get_cchar(&ctx) == '\0' || g_should_exit))
 				return ;
 		}
 		next = init_token();

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:44 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 20:00:22 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:19:10 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "parsing.h"
 #include "env_variables.h"
 #include "builtins.h"
+#include "executor.h"
 #include <stdbool.h>
 
 void	handle_whitespace(t_tokenizer_ctx *ctx)
@@ -40,5 +41,5 @@ void	handle_variable(t_tokenizer_ctx *ctx)
 void	handle_word(t_tokenizer_ctx *ctx)
 {
 	ctx->pos += process_word(&ctx->token, ctx->str, ctx->pos,
-			&ctx->state, ctx->env);
+			ctx->env);
 }

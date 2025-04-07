@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:15:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:09:18 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	handle_child_execution(int *pipefd, char *command,
 			ft_putstr_fd("invalid command expansion : ", 2);
 			ft_putstr_fd(token->parsed->token, 2);
 			free_token(token);
-			should_exit = 1;
+			g_should_exit = 1;
 			exit(EXIT_FAILURE);
 		}
 	}

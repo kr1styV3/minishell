@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:31:53 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/31 20:48:28 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:12:49 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void handle_sigint(int sig)
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	should_exit = 2;
+	g_should_exit = 2;
 }
 
 void handle_sigterm(int sig)
 {
 	(void)sig;
-	should_exit = 1;
+	g_should_exit = 1;
 }
 
 void handle_sigquit(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\b\b  \b\b", STDOUT_FILENO);
+	ft_putstr_fd("\b\b\b   \b\b\b", STDERR_FILENO);
 }
 
 void setup_signal_handling()

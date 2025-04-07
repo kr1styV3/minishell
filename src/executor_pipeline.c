@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:29:22 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 19:38:05 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:32:52 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	run_builtin_output(t_token *current,
 		if (pipe(pipe_fd) == -1)
 		{
 			perror("pipe failed");
-			should_exit = 1;
+			g_should_exit = 1;
 			return (-1);
 		}
 		out_fd = pipe_fd[1];
@@ -114,7 +114,7 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 		if (is_piped && pipe(pipe_fd) == -1)
 		{
 			perror("pipe failed");
-			should_exit = 1;
+			g_should_exit = 1;
 		}
 		child_pids[child_count++] = fork_and_exec(current,
 				prev_fd, pipe_fd, is_piped, env, envp);

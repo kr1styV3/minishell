@@ -5,48 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/04 13:34:24 by chrlomba         ###   ########.fr       */
+/*   Created: 2025/04/07 18:50:32 by chrlomba          #+#    #+#             */
+/*   Updated: 2025/04/07 19:02:42 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
+#include "../../headers/minishell.h"
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
 #include "../../headers/env_variables.h"
 #include "t_token.h"
-
-#define OPERATORS "<>|&-"
-
-char	*extract_until_not_alfanum(char *str)
-{
-	int		i;
-	int		k;
-	char	*word;
-
-	i = 0;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == ' ' || str[i] == '_'))
-		i++;
-	word = ft_substr(str, 0, i);
-	if (!word)
-		return (NULL);
-	i = 0;
-	k = 0;
-	while (word[i])
-	{
-		if (word[i] == ' ')
-		{
-			word[k++] = ' ';
-			while (word[i] == ' ')
-				i++;
-		}
-		else
-			word[k++] = word[i++];
-	}
-	word[k] = '\0';
-	return (word);
-}
 
 char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_list *env, char **envp)
 {
@@ -113,119 +81,237 @@ char *extract_word_with_dollasign(char *str, char quote, t_token *token, t_env_l
     return word;
 }
 
-int ft_echo(t_token *token, char *str, int i, t_env_list *env, char **envp)
+// int ft_echo(t_token *token, char *str, int i, t_env_list *env, char **envp)
+// {
+//     int len = skip_whitespaces(&str[i], NULL);
+//     bool flag = false;
+//     char *word = NULL;
+//     char quote;
+//     char *output = ft_strdup(""); // Initialize an empty string for output
+//     if (!output)
+//         return (free_tokens_line(str, token, "malloc error"), -1);
+
+//     // Handle '-n' flag
+//     if (str[i + len] == '-' && str[i + len + 1] == 'n')
+//     {
+//         flag = true;
+//         len += 2;
+//     }
+
+//     len += skip_whitespaces(&str[i + len], NULL);
+//     quote = str[i + len];
+
+//     // Handle different cases based on the first character after options
+//     if (quote == '\'')
+//     {
+//         word = extract_word(&str[i + len + 1], quote);
+//         if (!word)
+//         {
+//             free(output);
+//             return (free_tokens_line(str, token, "malloc error"), -1);
+//         }
+//         len += ft_strlen(word) + 2; // Account for quotes
+//         char *temp = ft_strjoin(output, word);
+//         free(output);
+//         free(word);
+//         if (!temp)
+//             return (free_tokens_line(str, token, "malloc error"), -1);
+//         output = temp;
+//     }
+//     else if (quote == '\"')
+//     {
+//         word = extract_word_with_dollasign(&str[i + len + 1], quote, token, env, envp);
+//         if (!word)
+//         {
+//             free(output);
+//             return (free_tokens_line(str, token, "malloc error"), -1);
+//         }
+//         len += ft_strlen(word) + 2; // Account for quotes
+//         char *temp = ft_strjoin(output, word);
+//         free(output);
+//         free(word);
+//         if (!temp)
+//             return (free_tokens_line(str, token, "malloc error"), -1);
+//         output = temp;
+//     }
+//     else
+//     {
+//         // Handle unquoted strings, including those with multiple variables
+//         while (str[i + len] && str[i + len] != '\'' && str[i + len] != '\"' && str[i + len] != 32)
+//         {
+//             if (str[i + len] == '$')
+//             {
+//                 // Process variable
+//                 int var_len = process_variable(&token, str, i + len + 1, env, envp);
+//                 if (var_len == -1)
+//                 {
+//                     free(output);
+//                     return (free_tokens_line(str, token, "variable processing error"), -1);
+//                 }
+//                 len += var_len + 1; // +1 for '$'
+//                 if (token->parsed->word)
+//                 {
+//                     char *temp = ft_strjoin(output, token->parsed->word);
+//                     free(output);
+//                     // free (token->parsed->word);
+//                     if (!temp)
+//                         return (free_tokens_line(str, token, "malloc error"), -1);
+//                     output = temp;
+//                 }
+//             }
+//             else
+//             {
+//                 // Process literal characters
+//                 int start = i + len;
+//                 int j = start;
+//                 while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"' && str[j] != 32)
+//                     j++;
+//                 int substr_len = j - start;
+//                 char *substr = ft_substr(str, start, substr_len);
+//                 if (!substr)
+//                 {
+//                     free(output);
+//                     return (free_tokens_line(str, token, "malloc error"), -1);
+//                 }
+//                 len += substr_len;
+//                 char *temp = ft_strjoin(output, substr);
+//                 free(substr);
+//                 free(output);
+//                 if (!temp)
+//                     return (free_tokens_line(str, token, "malloc error"), -1);
+//                 output = temp;
+//             }
+//         }
+//     }
+//         token->arg = (char **)ft_calloc(3, sizeof(char *));
+//         token->arg[0] = ft_strdup("echo");
+//         if (!token->arg[0])
+//             free_tokens_line(str, token, "malloc error for internal processes");
+//         token->arg[1] = ft_strdup(output);
+//         if (!flag)
+//             token->arg[1] = ft_freejoin(token->arg[1], "\n");
+//         if (!token->arg[1])
+//             return (free_tokens_line(str, token, "malloc error for internal processes"), -1);
+//         token->arg[2] = NULL;
+//         token->checker = false;
+//         free(output);
+//     return len;
+// }
+static int	append_to_output(char **output,
+		char *addition, char *str, t_token *token)
 {
-    int len = skip_whitespaces(&str[i], NULL);
-    bool flag = false;
-    char *word = NULL;
-    char quote;
-    char *output = ft_strdup(""); // Initialize an empty string for output
-    if (!output)
-        return (free_tokens_line(str, token, "malloc error"), -1);
+	char	*temp;
 
-    // Handle '-n' flag
-    if (str[i + len] == '-' && str[i + len + 1] == 'n')
-    {
-        flag = true;
-        len += 2;
-    }
+	temp = ft_strjoin(*output, addition);
+	free(*output);
+	if (!temp)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	*output = temp;
+	return (0);
+}
 
-    len += skip_whitespaces(&str[i + len], NULL);
-    quote = str[i + len];
+static int	handle_single_quote(char *str, int i, int len,
+		t_token *token, char **output)
+{
+	char	*word;
 
-    // Handle different cases based on the first character after options
-    if (quote == '\'')
-    {
-        word = extract_word(&str[i + len + 1], quote);
-        if (!word)
-        {
-            free(output);
-            return (free_tokens_line(str, token, "malloc error"), -1);
-        }
-        len += ft_strlen(word) + 2; // Account for quotes
-        char *temp = ft_strjoin(output, word);
-        free(output);
-        free(word);
-        if (!temp)
-            return (free_tokens_line(str, token, "malloc error"), -1);
-        output = temp;
-    }
-    else if (quote == '\"')
-    {
-        word = extract_word_with_dollasign(&str[i + len + 1], quote, token, env, envp);
-        if (!word)
-        {
-            free(output);
-            return (free_tokens_line(str, token, "malloc error"), -1);
-        }
-        len += ft_strlen(word) + 2; // Account for quotes
-        char *temp = ft_strjoin(output, word);
-        free(output);
-        free(word);
-        if (!temp)
-            return (free_tokens_line(str, token, "malloc error"), -1);
-        output = temp;
-    }
-    else
-    {
-        // Handle unquoted strings, including those with multiple variables
-        while (str[i + len] && str[i + len] != '\'' && str[i + len] != '\"' && str[i + len] != 32)
-        {
-            if (str[i + len] == '$')
-            {
-                // Process variable
-                int var_len = process_variable(&token, str, i + len + 1, env, envp);
-                if (var_len == -1)
-                {
-                    free(output);
-                    return (free_tokens_line(str, token, "variable processing error"), -1);
-                }
-                len += var_len + 1; // +1 for '$'
-                if (token->parsed->word)
-                {
-                    char *temp = ft_strjoin(output, token->parsed->word);
-                    free(output);
-                    // free (token->parsed->word);
-                    if (!temp)
-                        return (free_tokens_line(str, token, "malloc error"), -1);
-                    output = temp;
-                }
-            }
-            else
-            {
-                // Process literal characters
-                int start = i + len;
-                int j = start;
-                while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"' && str[j] != 32)
-                    j++;
-                int substr_len = j - start;
-                char *substr = ft_substr(str, start, substr_len);
-                if (!substr)
-                {
-                    free(output);
-                    return (free_tokens_line(str, token, "malloc error"), -1);
-                }
-                len += substr_len;
-                char *temp = ft_strjoin(output, substr);
-                free(substr);
-                free(output);
-                if (!temp)
-                    return (free_tokens_line(str, token, "malloc error"), -1);
-                output = temp;
-            }
-        }
-    }
-        token->arg = (char **)ft_calloc(3, sizeof(char *));
-        token->arg[0] = ft_strdup("echo");
-        if (!token->arg[0])
-            free_tokens_line(str, token, "malloc error for internal processes");
-        token->arg[1] = ft_strdup(output);
-        if (!flag)
-            token->arg[1] = ft_freejoin(token->arg[1], "\n");
-        if (!token->arg[1])
-            return (free_tokens_line(str, token, "malloc error for internal processes"), -1);
-        token->arg[2] = NULL;
-        token->checker = false;
-        free(output);
-    return len;
+	word = extract_word(&str[i + len + 1], '\'');
+	if (!word)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	len += ft_strlen(word) + 2;
+	if (append_to_output(output, word, str, token) == -1)
+	{
+		free(word);
+		return (-1);
+	}
+	free(word);
+	return (len);
+}
+
+static int	handle_double_quote(char *str, int i, int len,
+	t_token *token, char **output,
+	t_env_list *env, char **envp)
+{
+	char	*word;
+
+	word = extract_word_with_dollasign(&str[i + len + 1], '\"', token, env, envp);
+	if (!word)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	len += ft_strlen(word) + 2;
+	if (append_to_output(output, word, str, token) == -1)
+	{
+		free(word);
+		return (-1);
+	}
+	free(word);
+	return (len);
+}
+
+static int	handle_unquoted_echo(char *str, int i, int len,
+	t_token *token, char **output, t_env_list *env, char **envp)
+{
+	int	start, j, substr_len;
+	char	*substr;
+
+	while (str[i + len] && str[i + len] != '\'' &&
+		str[i + len] != '\"' && str[i + len] != ' ')
+	{
+		if (str[i + len] == '$')
+		{
+			int var_len = process_variable(&token, str, i + len + 1, env, envp);
+			if (var_len == -1)
+				return (-1);
+			len += var_len + 1;
+			if (token->parsed->word)
+				if (append_to_output(output, token->parsed->word, str, token) == -1)
+					return (-1);
+		}
+		else
+		{
+			start = i + len;
+			j = start;
+			while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"' && str[j] != ' ')
+				j++;
+			substr_len = j - start;
+			substr = ft_substr(str, start, substr_len);
+			if (!substr || append_to_output(output, substr, str, token) == -1)
+				return (free(substr), -1);
+			free(substr);
+			len += substr_len;
+		}
+	}
+	return (len);
+}
+
+
+int	ft_echo(t_token *token, char *str, int i,
+	t_env_list *env, char **envp)
+{
+	int		len;
+	char	quote;
+	char	*output;
+	bool	flag;
+
+	len = skip_whitespaces(&str[i], NULL);
+	flag = false;
+	output = ft_strdup("");
+	if (!output)
+		return (free_tokens_line(str, token, "malloc error"), -1);
+	if (str[i + len] == '-' && str[i + len + 1] == 'n')
+	{
+		flag = true;
+		len += 2;
+	}
+	len += skip_whitespaces(&str[i + len], NULL);
+	quote = str[i + len];
+	if (quote == '\'')
+		len = handle_single_quote(str, i, len, token, &output);
+	else if (quote == '\"')
+		len = handle_double_quote(str, i, len, token, &output, env, envp);
+	else
+		len = handle_unquoted_echo(str, i, len, token, &output, env, envp);
+	if (len == -1 || build_echo_arguments(token, output, flag, str) == -1)
+		return (free(output), -1);
+	free(output);
+	return (len);
 }

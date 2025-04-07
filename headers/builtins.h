@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/21 18:34:24 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:00:10 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include "minishell.h"
 # include "parsing.h"
 
-
+int	build_echo_arguments(t_token *token,
+	char *output, bool flag, char *str);
 /**
  * @brief Extract a substring from the input until a non-alphanumeric character is found.
  *

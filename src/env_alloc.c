@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_alloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:24:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/12 07:34:20 by coca             ###   ########.fr       */
+/*   Updated: 2025/04/07 20:49:02 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,15 +172,6 @@ int env_add_entry(t_env_list **env, const char *full_entry)
         current->next = new_entry;
     }
     return 0;
-}
-
-
-int var_cleanup(char *full_entry, char *var_value, char *str)
-{
-     write(2, str, ft_strlen(str));
-     free(full_entry);
-     free(var_value);
-     return -1;
 }
 
 /* ---------------------------------------------------------

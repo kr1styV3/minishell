@@ -15,25 +15,23 @@ READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
 SRC_FILES = $(addprefix src/,main.c \
 	parsing.c \
 	t_token_utils.c\
-	operators.c\
+	tokinize_operators.c\
 	executor.c\
 	flags.c\
 	env_variables.c\
 	promt.c\
 	read_line.c\
-	env_alloc.c\
 	env.c\
 	loop.c\
 	signals.c\
-	exctract_files.c\
 	tokenize.c\
-	handle_state.c\
+	tokenize_handle_state.c\
 	here_doc.c\
 	here_doc_helpers.c\
-	arg_check_helpers.c\
-	arg_check.c\
-	arg_len_check.c\
-	check_syntax.c\
+	tokenize_arg_check_helpers.c\
+	tokenize_arg_check.c\
+	tokenize_arg_len_check.c\
+	readline_check_syntax.c\
 	util_extracting.c\
 	executor_utils.c\
 	executor_redirections.c\
@@ -43,7 +41,11 @@ SRC_FILES = $(addprefix src/,main.c \
 	env_process_variable.c\
 	token_init.c\
 	token_init_utils.c\
-	token_free.c)
+	token_free.c\
+	util_exctracting.c\
+	tokenize_checkvar.c\
+	tokenize_checkvar_util.c\
+	util_exctract_files.c)
 
 BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_echo.c \
@@ -52,7 +54,8 @@ BUILTIN_FILES = $(addprefix src/builtins/,ft_cd.c \
 	ft_export.c \
 	ft_pwd.c \
 	ft_unset.c\
-	process_builtin.c)
+	process_builtin.c\
+	echo_utils.c)
 # Define the corresponding object files and place them in $(OBJ_DIR)
 OBJ_FILES = $(SRC_FILES:src/%.c=$(OBJ_DIR)%.o) $(BUILTIN_FILES:src/builtins/%.c=$(OBJ_DIR)%.o)
 # Add -I$(INC_DIR) to your flags to include header files from the includes directory

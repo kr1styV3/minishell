@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:14:48 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 19:17:08 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:28:05 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	process_token(t_token **token,
 }
 
 int	process_word(t_token **token, char *str,
-		int string_position, t_state *state, t_env_list *env)
+		int string_position, t_env_list *env)
 {
 	char	quote;
 	int		len;
@@ -56,7 +56,6 @@ int	process_word(t_token **token, char *str,
 	(*token)->parsed->word = extract_word(&str[string_position + 1], quote);
 	if (!(*token)->parsed->word)
 		return (free_tokens_line(str, *token, "memory allocation"), -1);
-	*state = SKIP_WHITESPACE;
 	if ((*token)->parsed->token)
 	{
 		(*token)->parsed->token = ft_freejoin((*token)->parsed->token,
@@ -70,8 +69,7 @@ int	process_word(t_token **token, char *str,
 		j = 0;
 		while (str[string_position + 1 + j] != ' ')
 			j++;
-		j = process_builtin(token, str,
-				string_position + 1 + j, state, env, NULL);
+		j = process_builtin(token, str, string_position + 1 + j, NULL, env, NULL);
 	}
 	return (len);
 }

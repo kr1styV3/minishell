@@ -5,6 +5,8 @@
 		"type_traits": "c",
 		"minishell.h": "c",
 		"builtins.h": "c",
-		"executor.h": "c"
+		"executor.h": "c",
+		"parsing.h": "c",
+		"env_variables.h": "c"
 	}
 }

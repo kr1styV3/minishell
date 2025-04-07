@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:42:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 19:44:42 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:09:04 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	redirect_append_output(t_token *current)
 		if (dup2(current->operator->fd_append_output, STDOUT_FILENO) == -1)
 		{
 			perror("dup2 fd_append_output failed");
-			should_exit = 1;
+			g_should_exit = 1;
 		}
 		close(current->operator->fd_append_output);
 	}
@@ -39,7 +39,7 @@ static void	redirect_output(t_token *current)
 		if (dup2(current->operator->fd_overwrite_output, STDOUT_FILENO) == -1)
 		{
 			perror("dup2 fd_overwrite_output failed");
-			should_exit = 1;
+			g_should_exit = 1;
 		}
 		close(current->operator->fd_overwrite_output);
 	}
@@ -52,7 +52,7 @@ static void	redirect_input(t_token *current)
 		if (dup2(current->operator->fd_input, STDIN_FILENO) == -1)
 		{
 			perror("dup2 fd_input failed");
-			should_exit = 1;
+			g_should_exit = 1;
 		}
 		close(current->operator->fd_input);
 	}

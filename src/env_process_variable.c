@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:04:17 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:08:37 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:04:29 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	process_braced_variable(t_token **token,
 	free(variable);
 	return (len);
 }
-
 
 static int	process_subshell_variable(t_token **token,
 	char *str, int string_position, t_env_list *env, char **envp)

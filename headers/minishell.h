@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:23:49 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:49:45 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@
 # include "t_token.h"
 # include "state.h"
 
-extern volatile sig_atomic_t should_exit;
+extern volatile sig_atomic_t g_should_exit;
 
 # define OPERATORS "<>|"
 
 // t_token_utils.c
 int	process_file_cmd(t_token *token, char *str, int i);
 int	get_dolpos(char *line);
+char	*extract_until_not_alfanum(char *str);
 void	update_state_from_char(t_tokenizer_ctx *ctx);
+int var_cleanup(char *full_entry, char *var_value, char *str);
+int		skip_assignment_whitespace(const char *line, int i);
 char	*extract_word(char *str, char quote);
 char	*extract_token(char *str);
 int	here_doc_init(t_token *token, char *str, int i);

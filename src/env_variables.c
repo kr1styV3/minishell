@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:06:36 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:17:44 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:09:13 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ static char **env_list_to_array(t_env_list *env)
 //                 ft_putstr_fd("invalid command expansion : ", 2);
 //                 ft_putstr_fd(token->parsed->token, 2);
 //                 free_token(token);
-//                 should_exit = 1;
+//                 g_should_exit = 1;
 //                 return(NULL);
 //             }
 //         }

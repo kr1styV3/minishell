@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:30:26 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:18:00 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:09:00 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	setup_child_io(t_token *current, int prev_fd, int *pipe_fd,
 		if (here_doc_fd == -1 || dup2(here_doc_fd, STDIN_FILENO) == -1)
 		{
 			perror("here_doc setup failed");
-			should_exit = 1;
+			g_should_exit = 1;
 			exit(139);
 		}
 		close(here_doc_fd);
@@ -41,7 +41,7 @@ static void	setup_child_io(t_token *current, int prev_fd, int *pipe_fd,
 		if (dup2(prev_fd, STDIN_FILENO) == -1)
 		{
 			perror("dup2 prev_fd failed");
-			should_exit = 1;
+			g_should_exit = 1;
 			exit(1);
 		}
 		close(prev_fd);
@@ -52,7 +52,7 @@ static void	setup_child_io(t_token *current, int prev_fd, int *pipe_fd,
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 		{
 			perror("dup2 pipe_fd[1] failed");
-			should_exit = 1;
+			g_should_exit = 1;
 			exit(1);
 		}
 		close(pipe_fd[1]);
@@ -68,7 +68,7 @@ pid_t	fork_and_exec(t_token *current, int prev_fd, int *pipe_fd,
 	if (pid == -1)
 	{
 		perror("fork failed");
-		should_exit = 1;
+		g_should_exit = 1;
 		return (-1);
 	}
 	if (pid == 0)
@@ -77,7 +77,7 @@ pid_t	fork_and_exec(t_token *current, int prev_fd, int *pipe_fd,
 		setup_redirections(current);
 		if (current->arg)
 			execve(current->arg[0], current->arg, env);
-		should_exit = 1;
+		g_should_exit = 1;
 		exit(1);
 	}
 	return (pid);

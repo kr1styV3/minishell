@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:58:56 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/01 13:11:13 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:08:35 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static void	handle_execution(t_token **head, t_token *token,
 			{
 				free_inside_token("minishell: command not found: ",
 					token->parsed->token);
-				should_exit = 2;
+				g_should_exit = 2;
 			}
 		}
 		token = token->next;
 	}
 	token = *head;
-	if (token->exec == true && !should_exit)
+	if (token->exec == true && !g_should_exit)
 		*status = execute(head, meow.bau_bau, meow.meow);
 }
 
@@ -73,16 +73,16 @@ void	shell_loop(t_token **head, t_env_list *_env_ptr,
 
 	meow.bau_bau = envp;
 	meow.meow = _env_ptr;
-	while (!should_exit)
+	while (!g_should_exit)
 	{
 		*head = init_token();
 		token = *head;
 		token->last_exit_status = *status;
 		read_line_from_user(head, _env_ptr, envp);
-		if (token->exec == true && !should_exit)
+		if (token->exec == true && !g_should_exit)
 			handle_execution(head, token, meow, status);
-		if (should_exit == 2)
-			should_exit = 0;
+		if (g_should_exit == 2)
+			g_should_exit = 0;
 		free_token(token);
 	}
 }

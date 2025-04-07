@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:04:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 19:40:50 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:08:54 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 //         if (dup2(current->operator->fd_input, STDIN_FILENO) == -1)
 //         {
 //             perror("dup2 fd_input failed");
-//             should_exit = 1;
+//             g_g_should_exit = 1;
 //         }
 //         close(current->operator->fd_input);
 //     }
@@ -39,7 +39,7 @@
 //     {
 //         if (dup2(current->operator->fd_overwr
 //             perror("dup2 fd_overwrite_output failed");
-//             should_exit = 1;
+//             g_should_exit = 1;
 //         }
 //         close(current->operator->fd_overwrite_output);
 //     }
@@ -48,7 +48,7 @@
 //         if (dup2(current->operator->fd_append_output, STDOUT_FILENO) == -1)
 //         {
 //             perror("dup2 fd_append_output failed");
-//             should_exit = 1;
+//             g_should_exit = 1;
 //         }
 //         close(current->operator->fd_append_output);
 //     }
@@ -94,7 +94,7 @@
 //                 if (pipe(pipe_fd) == -1)
 //                 {
 //                     perror("pipe failed");
-//                     should_exit = 1;
+//                     g_should_exit = 1;
 //                 }
 //                 out_fd = pipe_fd[1];
 //             }
@@ -119,7 +119,7 @@
 //             if (pipe(pipe_fd) == -1)
 //             {
 //                 perror("pipe failed");
-//                 should_exit = 1;
+//                 g_should_exit = 1;
 //             }
 //         }
 
@@ -127,7 +127,7 @@
 //         if (pid == -1)
 //         {
 //             perror("fork failed");
-//             should_exit = 1;
+//             g_should_exit = 1;
 //         }
 //         else if (pid == 0)
 //         {
@@ -136,14 +136,14 @@
 //                 int here_doc_fd = handle_here_docs(current, envp, env);
 //                 if (here_doc_fd == -1)
 //                 {
-//                     should_exit = 1;
+//                     g_should_exit = 1;
 //                     exit(139);
 //                 }
 //                 if (dup2(here_doc_fd, STDIN_FILENO) == -1)
 //                 {
 //                     perror("dup2 failed for here_doc_fd");
 //                     close(here_doc_fd);
-//                     should_exit = 1;
+//                     g_should_exit = 1;
 //                     exit(139);
 //                 }
 //                 close(here_doc_fd);
@@ -154,7 +154,7 @@
 //                 if (dup2(prev_fd, STDIN_FILENO) == -1)
 //                 {
 //                     perror("dup2 prev_fd failed");
-//                     should_exit = 1;
+//                     g_should_exit = 1;
 //                     exit(1);
 //                 }
 //                 close(prev_fd);
@@ -166,7 +166,7 @@
 //                 if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 //                 {
 //                     perror("dup2 pipe_fd[1] failed");
-//                     should_exit = 1;
+//                     g_should_exit = 1;
 //                     exit(1);
 //                 }
 //                 close(pipe_fd[1]);
@@ -179,7 +179,7 @@
 //                 execve(current->arg[0], current->arg, env);
 //             }
 
-//             should_exit = 1;
+//             g_should_exit = 1;
 //         }
 //         else
 //         {

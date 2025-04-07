@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:16:18 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 19:28:32 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:15:14 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "t_token.h"
 
 #define DELIMITERS " \t\r\n\a"
-
 
 #define OPERATORSS "<>|"
 
@@ -252,7 +251,7 @@
 // // 		{
 // // 			return ;
 // // 		}
-// // 		else if (should_exit)
+// // 		else if (g_g_should_exit)
 // // 		{
 // // 			return ;
 // // 		}
@@ -277,7 +276,7 @@ static int	handle_read_line_edge_cases(char *line,
 		free(line);
 		return (1);
 	}
-	if (should_exit > 0)
+	if (g_should_exit > 0)
 	{
 		(*token)->exec = false;
 		free(prompt);
@@ -289,7 +288,7 @@ static int	handle_read_line_edge_cases(char *line,
 
 static char	*handle_empty_input(char *line, char *prompt)
 {
-	while ((!line && !should_exit) || !ft_strlen(line))
+	while ((!line && !g_should_exit) || !ft_strlen(line))
 	{
 		if (line)
 			free(line);
@@ -315,7 +314,7 @@ void	read_line_from_user(t_token **token, t_env_list *env, char **envp)
 	if (handle_read_line_edge_cases(line, prompt, token))
 		return ;
 	line = handle_empty_input(line, prompt);
-	if (should_exit > 0)
+	if (g_should_exit > 0)
 	{
 		(*token)->exec = false;
 		free(prompt);
@@ -323,7 +322,7 @@ void	read_line_from_user(t_token **token, t_env_list *env, char **envp)
 		return ;
 	}
 	free(prompt);
-	if (!line || should_exit)
+	if (!line || g_should_exit)
 		return (_void_return_free_(line));
 	add_history(line);
 	tokenizer(line, *token, env, envp);
