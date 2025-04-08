@@ -1,9 +1,208 @@
-headers
-log
-Makefile
-minishell
-my_libft
-readline.supp
-src
-valgrind-out.txt
-ciao
+2137195 execve("/usr/bin/make", ["make", "valgrind"], 0x7ffeb40dbd50 /* 70 vars */) = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(3)                        = 0
+2137195 close(4)                        = 0
+2137196 execve("/bin/sh", ["/bin/sh", "-c", "echo \"Debugger Mode: Running Val"...], 0x560d81728b20 /* 76 vars */) = 0
+2137196 close(3)                        = 0
+2137196 close(3)                        = 0
+2137196 +++ exited with 0 +++
+2137197 execve("/nfs/homes/chrlomba/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/nfs/homes/chrlomba/jdk-11.0.12+7/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/nfs/homes/chrlomba/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/nfs/homes/chrlomba/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/opt/apache-maven-3.9.4/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/usr/local/sbin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/usr/local/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/usr/sbin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = -1 ENOENT (No such file or directory)
+2137197 execve("/usr/bin/valgrind", ["valgrind", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x560d81728b20 /* 76 vars */) = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 execve("/usr/bin/valgrind.bin", ["/usr/bin/valgrind.bin", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x5564d5da1598 /* 79 vars */) = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 execve("/usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux", ["/usr/bin/valgrind.bin", "--suppressions=readline.supp", "--leak-check=full", "--show-leak-kinds=all", "--track-origins=yes", "--verbose", "--error-limit=no", "--log-file=valgrind-out.txt", "./minishell"], 0x564f339384d0 /* 80 vars */) = 0
+2137197 close(3)                        = 0
+2137197 close(4)                        = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 close(3)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 pipe([4, 5])                    = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeffdfe0} ---
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(6)                        = 0
+2137197 close(4)                        = 0
+2137197 close(5)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeffcdc8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeffb538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeffa538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff9538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff8538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff7538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff6538} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff5e10} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff44d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff34d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff24d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff14d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffeff04d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefef4d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefee4d8} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefed488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefec488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefeb488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefea488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefe9488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefe8488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefe7488} ---
+2137197 --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0x1ffefe6488} ---
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 pipe([5, 6])                    = 0
+2137197 pipe([7, 8])                    = 0
+2137197 close(5)                        = 0
+2137197 pipe([5, 9])                    = 0
+2137655 close(1048568)                  = 0
+2137655 close(1048569)                  = 0
+2137655 pipe([7, 8])                    = 0
+2137655 close(7)                        = 0
+2137655 close(8)                        = 0
+2137655 close(1048570)                  = 0
+2137655 close(5)                        = 0
+2137655 dup2(6, 1)                      = 1
+2137655 close(6)                        = 0
+2137197 close(7)                        = 0
+2137655 close(5)                        = 0
+2137655 execve("/usr/bin/cat", ["/usr/bin/cat"], 0x100237dd90 /* 80 vars */ <unfinished ...>
+2137197 close(5)                        = 0
+2137655 <... execve resumed>)           = 0
+2137655 close(5)                        = 0
+2137656 close(1048568)                  = 0
+2137656 close(1048569)                  = 0
+2137656 pipe([9, 10])                   = 0
+2137656 close(9)                        = 0
+2137656 close(10)                       = 0
+2137655 close(5 <unfinished ...>
+2137656 close(1048570 <unfinished ...>
+2137655 <... close resumed>)            = 0
+2137656 <... close resumed>)            = 0
+2137655 close(5)                        = 0
+2137656 dup2(5, 0)                      = 0
+2137656 close(5)                        = 0
+2137656 close(7)                        = 0
+2137656 dup2(8, 1)                      = 1
+2137656 close(8)                        = 0
+2137656 close(5)                        = 0
+2137656 execve("/usr/bin/cat", ["/usr/bin/cat"], 0x1002004b70 /* 80 vars */ <unfinished ...>
+2137657 close(1048568)                  = 0
+2137657 close(1048569)                  = 0
+2137657 pipe([10, 11])                  = 0
+2137657 close(10)                       = 0
+2137657 close(11)                       = 0
+2137657 close(1048570)                  = 0
+2137656 <... execve resumed>)           = 0
+2137656 close(5 <unfinished ...>
+2137657 dup2(7, 0 <unfinished ...>
+2137656 <... close resumed>)            = 0
+2137657 <... dup2 resumed>)             = 0
+2137657 close(7)                        = 0
+2137656 close(5 <unfinished ...>
+2137657 close(5 <unfinished ...>
+2137656 <... close resumed>)            = 0
+2137657 <... close resumed>)            = 0
+2137657 dup2(9, 1)                      = 1
+2137657 close(9)                        = 0
+2137656 close(5)                        = 0
+2137657 close(5)                        = 0
+2137657 execve("/usr/bin/ls", ["/usr/bin/ls"], 0x1002004b70 /* 80 vars */) = 0
+2137658 close(1048568)                  = 0
+2137658 close(1048569)                  = 0
+2137658 pipe([7, 10])                   = 0
+2137658 close(7)                        = 0
+2137658 close(10)                       = 0
+2137658 close(1048570)                  = 0
+2137657 close(5)                        = 0
+2137657 close(5)                        = 0
+2137657 close(5)                        = 0
+2137657 close(5 <unfinished ...>
+2137658 dup2(5, 0 <unfinished ...>
+2137657 <... close resumed>)            = 0
+2137658 <... dup2 resumed>)             = 0
+2137657 close(5)                        = 0
+2137658 close(5)                        = 0
+2137657 close(5)                        = 0
+2137657 close(5 <unfinished ...>
+2137658 dup2(4, 1 <unfinished ...>
+2137657 <... close resumed>)            = 0
+2137658 <... dup2 resumed>)             = 1
+2137657 close(5)                        = 0
+2137658 close(4)                        = 0
+2137657 close(5)                        = 0
+2137657 close(1)                        = 0
+2137657 close(2)                        = 0
+2137658 close(4)                        = 0
+2137657 +++ exited with 0 +++
+2137197 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2137657, si_uid=101621, si_status=0, si_utime=0, si_stime=0} ---
+2137658 execve("/usr/bin/cat", ["/usr/bin/cat", "-e"], 0x100237dd90 /* 80 vars */) = 0
+2137658 close(4)                        = 0
+2137658 close(4)                        = 0
+2137658 close(4)                        = 0
+2137656 --- SIGPIPE {si_signo=SIGPIPE, si_code=SI_USER, si_pid=2137656, si_uid=101621} ---
+2137656 +++ killed by SIGPIPE +++
+2137197 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2137656, si_uid=101621, si_status=SIGPIPE, si_utime=0, si_stime=2} ---
+2137655 --- SIGPIPE {si_signo=SIGPIPE, si_code=SI_USER, si_pid=2137655, si_uid=101621} ---
+2137655 +++ killed by SIGPIPE +++
+2137197 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2137655, si_uid=101621, si_status=SIGPIPE, si_utime=0, si_stime=1} ---
+2137658 --- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
+2137195 --- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
+2137197 --- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
+2137658 +++ killed by SIGINT +++
+2137197 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2137658, si_uid=101621, si_status=SIGINT, si_utime=0, si_stime=0} ---
+2137197 close(4)                        = 0
+2137197 close(4)                        = 0
+2137197 close(1048570)                  = 0
+2137197 +++ exited with 0 +++
+2137195 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=2137195, si_uid=101621} ---
+2137195 +++ killed by SIGINT +++

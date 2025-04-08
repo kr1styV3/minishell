@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:50:32 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 19:02:42 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:00:41 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,6 @@ static int	handle_unquoted_echo(char *str, int i, int len,
 	}
 	return (len);
 }
-
 
 int	ft_echo(t_token *token, char *str, int i,
 	t_env_list *env, char **envp)

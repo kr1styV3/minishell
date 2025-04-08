@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:05:01 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:07:35 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/08 20:53:17 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,9 @@
 
 #define OPERATORS "<>|"
 
-static inline char	get_cchar(t_tokenizer_ctx *ctx)
-{
-	return (ctx->str[ctx->pos]);
-}
-
 static void	handle_normal(t_tokenizer_ctx *ctx)
 {
-	if (ft_isalnum(get_cchar(ctx)))
+	if (ft_isalnum(ctx->str[ctx->pos]))
 		ctx->pos += process_token(&ctx->token, ctx->str, ctx->pos, &ctx->state);
 	if (check_var(&(ctx->token), ctx->str, &ctx->pos, &(ctx->env)) == 0)
 	{
@@ -52,6 +47,8 @@ void	update_state_from_char(t_tokenizer_ctx *ctx)
 		ctx->state = IN_WORD;
 	else if (ft_strchr(OPERATORS, ctx->str[ctx->pos]))
 		ctx->state = IN_OPERATOR;
+	else if (ctx->str[ctx->pos] == '\0')
+		ctx->state = NORMAL;
 	else if (ft_isbuiltin(ctx->token->parsed->token))
 		ctx->state = IN_BUILTIN;
 	else if (ctx->str[ctx->pos] == '$' && ctx->state != IN_BUILTIN)
@@ -79,6 +76,19 @@ static void	process_state(t_tokenizer_ctx *ctx)
 		handle_builtin(ctx);
 }
 
+static t_token	*tokenizer_next_token_alloc(t_token **token)
+{
+	t_token	*next_token;
+
+	next_token = init_token();
+	if (!next_token)
+		return (free_inside_token("failed to allocate memory :",
+				"next_token"), (t_token *) NULL);
+	(*token)->next = next_token;
+	(*token) = (*token)->next;
+	return (next_token);
+}
+
 void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp)
 {
 	t_tokenizer_ctx	ctx;
@@ -91,19 +101,21 @@ void	tokenizer(char *str, t_token *token, t_env_list *env, char **envp)
 	ctx.envp = envp;
 	ctx.state = SKIP_WHITESPACE;
 	ctx.next_token = false;
-	while (get_cchar(&ctx))
+	while (ctx.str[ctx.pos])
 	{
 		while (!ctx.next_token)
 		{
 			process_state(&ctx);
-			if ((ctx.state != IN_BUILTIN && token->operator->operator == '|')
-				|| (get_cchar(&ctx) == '\0' || g_should_exit))
+			if (token->operator->operator == '|')
+				break ;
+			if ((ctx.state != IN_BUILTIN)
+				&& (ctx.str[ctx.pos] == '\0' || g_should_exit))
 				return ;
 		}
-		next = init_token();
-		ctx.token->next = next;
-		ctx.token = ctx.token->next;
-		ctx.state = SKIP_WHITESPACE;
+		next = tokenizer_next_token_alloc(&token);
+		if (!next)
+			token->exec = false;
 		ctx.next_token = false;
+		ctx.token = token;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:29:22 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:32:52 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/08 20:59:46 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ static int	get_fd(t_operator *op)
 		return (STDOUT_FILENO);
 }
 
-static void	wait_for_children(pid_t *pids, int count, int *status)
-{
-	int	i;
+// static void	wait_for_children(pid_t *pids, int count, int *status)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < count)
-	{
-		waitpid(pids[i], status, 0);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < count)
+// 	{
+// 		waitpid(pids[i], status, 0);
+// 		i++;
+// 	}
+// }
 
 static bool	is_builtin_output(t_token *current)
 {
@@ -95,6 +95,7 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 	int		status;
 	int		pipe_fd[2];
 	int		prev_fd;
+	int i = 0;
 	bool	is_piped;
 
 	current = job_start;
@@ -123,6 +124,10 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 		prev_fd = (is_piped) ? pipe_fd[0] : -1;
 		current = current->next;
 	}
-	wait_for_children(child_pids, child_count, &status);
+	while (i < child_count)
+	{
+		waitpid(child_pids[i], &status, 0);
+		i++;
+	}
 	return (status);
 }

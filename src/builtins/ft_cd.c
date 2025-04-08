@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:12:05 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 20:04:37 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:00:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*extract_path(char *str)
 		return (NULL);
 	return (path);
 }
-
 
 int	ft_cd(t_token *token, char *str, int i, t_env_list *env)
 {
