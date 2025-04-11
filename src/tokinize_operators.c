@@ -6,14 +6,13 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 18:49:11 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:15:16 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 #include "../headers/parsing.h"
 #include "t_token.h"
-
 
 int	check_append_fd(t_token *token, char *str, int string_position)
 {
