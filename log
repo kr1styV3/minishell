@@ -1,0 +1,457 @@
+commit d26c3f0985706d35ec9424de48bc05bae4bd014d
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Fri Apr 11 18:37:24 2025 +0200
+
+    local changes
+
+commit 0f8411637c79db8aca07a093803d41ef8a3dff6c
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Apr 8 21:18:44 2025 +0200
+
+    fixed exit need to fix pipeline
+
+commit 2d992fc2a48faa93409b46c3d121dbd8666cf379
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Mon Apr 7 20:54:21 2025 +0200
+
+    almost done btter rename
+
+commit 3b76e7ae8711c5e01e56605a4beee8746b13602e
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Sun Apr 6 20:56:33 2025 +0200
+
+    norminette need finsh built-in norminette
+
+commit 3a9bb8b3a29d6b9596243984edcd8d1a7275f9e2
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Wed Apr 2 16:29:39 2025 +0200
+
+    norminetted begginer parsing, need to finish norm and unsentenv
+
+commit cf8064c605c2f139ea6cc3d8156ba2d77a73cfd2
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Fri Mar 28 14:55:48 2025 +0100
+
+    heredoc memory problem fixed major
+
+commit 09e33ddd8dc91b6531c4f3cf1214664bb0d0ccf1
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Thu Mar 20 15:33:02 2025 +0100
+
+    fixed alot here_doc on pipe broken// imlement pipe heredoc>
+
+commit f30e5c0bb08dd4959308fc853b8eafe03feafc20
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Mar 14 12:46:03 2025 -0700
+
+    fixed
+
+commit 7cd5485e44140ef013db602db15b9d50b8965cf4
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Mar 14 10:08:00 2025 -0700
+
+    did somechange parsing perfect
+
+commit cd5209446033b78ef3f70e928d64260944f2ca61
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Thu Mar 13 06:38:15 2025 -0700
+
+    made work implemented echo exec need to fix general
+
+commit 55e4496dae4d33469ef722a5547d101322584aec
+Merge: 62c333f 760cea3
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Wed Mar 12 15:06:50 2025 +0100
+
+    Merge branch 'main' of github.com:kr1styV3/minishell
+
+commit 62c333f0335cd6a7a0ccb345ebca23420946a47f
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Wed Mar 12 15:04:18 2025 +0100
+
+    fixed state need to change
+
+commit 760cea3d993e905bfc69f14fdc66347f8f553cd6
+Merge: e713fe2 dfca34d
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Feb 22 17:43:28 2025 +0100
+
+    Merge need to implement mini and fix builtins
+
+commit e713fe2ff0a5361b1ace780ad8ccfde746616978
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Feb 22 17:36:16 2025 +0100
+
+    gigio fa la c acca
+
+commit dfca34ddda8a0a7c1beea955bd5afc5e11e1d12f
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Sat Feb 15 09:58:31 2025 -0800
+
+    need to finish env_alloc and echo implemt and conversion ** list
+
+commit 224e252e087d130cd1d3377bfa0a01d3911eb72b
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Jan 7 13:01:49 2025 +0100
+
+    kinda did export need to emptyvar and difference between export and env
+
+commit e1e205c5dc9f18c404bb657fba8f1027817140b0
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Mon Jan 6 19:13:51 2025 +0100
+
+    need fix export; make env a list; general struct called by token
+
+commit 8b99de48c434c580ae77cba74d5840a0b1046b12
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sun Jan 5 22:05:03 2025 +0100
+
+    basically fixed env as a whole;created memory prob
+
+commit 0d8ce1f73c4be8ce0ffdbc08dc6185de34a9737b
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Jan 4 15:18:21 2025 +0100
+
+    works better now need to check leaks
+
+commit 546aa42a6f189962ed3250015faed724186cc1e4
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Jan 4 11:48:08 2025 +0100
+
+    fixed mall err and redirection for builtin
+
+commit 199bb899d662f3dde314802e46ca3bf711483249
+Merge: e85f01b f68a695
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Jan 4 11:18:40 2025 +0100
+
+    Merge branch 'main' of github.com:kr1styV3/minishell
+
+commit e85f01b3af38e6490480fa9ed0b3e5826761c78a
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sat Jan 4 11:06:27 2025 +0100
+
+    idk
+
+commit f68a6956aef3b9bec55962be15541818fd75452d
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Sun Dec 22 21:16:50 2024 +0100
+
+    tried implementing variable assignation
+
+commit f1d8df7720cdee19d26e99148c94780cc0984fbe
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Thu Dec 19 21:26:38 2024 +0100
+
+    done some stuff
+
+commit 468343f8a2d9f39c85236b3a5d3d618e16301f99
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Sat Dec 14 17:21:44 2024 +0100
+
+    done some stuff
+
+commit ae58541c100bd3d177111a5827de72869d5230bc
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Mon Dec 9 15:04:47 2024 +0100
+
+    fixed struct allocation issues, need to: fix executor;
+
+commit 5116b42debc0fa1394a3efeefd1d334f1adb15ed
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Wed Dec 4 14:42:03 2024 +0100
+
+    smh
+
+commit 7a995662b8b92c91294cd8384a2f880d684a199e
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Wed Nov 27 20:16:34 2024 +0100
+
+    did merge algo and implemented better argument parsing need to finish
+
+commit c04038145e7a64410c52e11c6391064b0039f18c
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 15:20:58 2024 +0100
+
+    rebased
+
+commit 96ebdf5bf892b584b04d9102e8ac54db9429aa5d
+Merge: 224c4ab a4becf6
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 15:07:57 2024 +0100
+
+    Merge branch 'one' of github.com:kr1styV3/minishell into one
+
+commit 224c4ab4f55bfc413e1e443055e5ed385b7afcd1
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:53:46 2024 +0100
+
+    ok now rebasing
+
+commit 568320d2a03d65ff53b5090d9e5ca80b32c37608
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:35:11 2024 +0100
+
+    wawa errors
+
+commit d676e24ae99917817851a210da100ceac724cb0e
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:30:38 2024 +0100
+
+    merged stuff to work
+
+commit a4becf6cd1db1ee0e6196115e29a8e25b1e34905
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:53:46 2024 +0100
+
+    ok now rebasing
+
+commit 731561032e69329762081415d65d417057821879
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:35:11 2024 +0100
+
+    wawa errors
+
+commit 6c34406941a1087c762a131ab4522e4ae75c5d44
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:30:38 2024 +0100
+
+    merged stuff to work
+
+commit 1602d2e8176be7e0719be32debcf4de57450b2be
+Merge: d8dc7a0 c4c1ef7
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 14:20:41 2024 +0100
+
+    Merge branch 'main' of github.com:kr1styV3/minishell into main
+
+commit d8dc7a09f8cf3b3288be8430ade949add9f52034
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:09 2024 +0100
+
+    [added gitignore]
+
+commit 5b174f230218f4ea6d8d31ab0ff095128426a924
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:09 2024 +0100
+
+    bella chri
+
+commit e14126d4e0c7d022995ecd7786a30e47bcfe4b9d
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:09 2024 +0100
+
+    hella leaks by handler
+
+commit f3736f3d7e054e9859c057759c53f92a89990529
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:09 2024 +0100
+
+    lldb debugging
+
+commit f7aaa4256048afc4775d83bb28140f6501788e34
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:08 2024 +0100
+
+    norm hashmap functional
+    for readability and scalability
+
+commit 7ca3c2a26dcc348d92cead5f009f1cb1c0b64a1f
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:08 2024 +0100
+
+    added hasmap for readbility and more header files
+
+commit 6796097e63a7cd5e0d5fd9e81b423c42523c0ec2
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:08 2024 +0100
+
+    giogio sistema
+
+commit 1f1644b4bad6b2917e557cf2deb797fb4963d3b2
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:34:08 2024 +0100
+
+    fixed promt and added lldb debugging
+
+commit c4c1ef7a6861e516e8c5880537d7d59ef1232d6b
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:26:58 2024 +0100
+
+    [added gitignore]
+
+commit 18997bd5b3773eefe3885f1e24c6ee13551bf703
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:26:02 2024 +0100
+
+    bella chri
+
+commit 1f53b5ffe33fa1b0e5aeb7e83bf6f6bee1ba840f
+Merge: 2354e00 c1e1547
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:10:56 2024 +0100
+
+    Merge branch 'main' of github.com:kr1styV3/minishell into main
+
+commit 2354e005aa3ad724a9d2135fe72e773c69ded6ce
+Author: kr1sty <ads.lombardi@gmail.com>
+Date:   Tue Nov 5 13:10:47 2024 +0100
+
+    giogio sistema
+
+commit c1e1547ba9f95905a05b3d778d47ad33da5236fa
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 14:45:12 2024 -0700
+
+    lalla
+
+commit a6445025d102ca84cde08729fffb2c6482ae3b0a
+Author: kr1styv3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 14:44:41 2024 -0700
+
+    hella leaks by handler
+
+commit 9887625c371799581644fd6d69bb3177cb41834c
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 18:08:01 2024 +0200
+
+    lldb debugging
+
+commit db06efb447ae261404bc6323a8e4691994bcf9db
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 16:21:44 2024 +0200
+
+    norm hashmap functional
+    for readability and scalability
+
+commit 855939449e51f421ecd961f82ed97df6abadb7af
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 15:37:10 2024 +0200
+
+    added hasmap for readbility and more header files
+
+commit 41d2193449d75391d341ee3905ba88c99f5d190e
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 8 12:56:19 2024 +0200
+
+    fixed promt and added lldb debugging
+
+commit 2b704bf7d1a6995682bc8c9397783068e790285f
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Oct 4 18:45:45 2024 +0300
+
+    gigi
+
+commit c485b832d0638cdeccc687ee11d13be64ad8ed84
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Oct 4 18:44:38 2024 +0300
+
+    reduced promt need to change
+
+commit 2861d0712a11d84d852966c619170e8c1bc3972a
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Oct 4 14:13:48 2024 +0300
+
+    made better promt
+
+commit 7c9753e62fb6012b19270c8d7a2327875b0de1e9
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Fri Oct 4 13:04:57 2024 +0300
+
+    almost done $() need to trim and fix some double free
+
+commit b4b0ed98509c6793f3d4e14356a8f6802512d359
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Thu Oct 3 17:48:20 2024 +0300
+
+    almost done env variables :)
+
+commit 93b01e51ea30294e381e8e39e7e7eef1792428bc
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 1 19:10:53 2024 +0300
+
+    chopped flags function and made recalloc waaaah
+
+commit 7b05d01445a9860141049c36a833fe071d08d6e7
+Author: Kr1styv3 <ads.lombardi@gmail.com>
+Date:   Tue Oct 1 18:35:26 2024 +0300
+
+    fixed some issues, started exec, implemented parsing of flags
+
+commit ba688a94750cd4dda7af4ac97979c21a6a59b823
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Mon Sep 9 20:00:31 2024 +0200
+
+    added animation
+
+commit f3dafccca9e0d64db24bb047e44090a0b7ebe54c
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Mon Sep 9 05:42:17 2024 +0200
+
+    reorganized and added documentation
+
+commit 92407f5d25c0426136390cb31ed133ac1d9c5a5d
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Mon Sep 9 04:52:10 2024 +0200
+
+    added builtins and operators
+
+commit e9b199b4f474481ad88498fc80b8b73ad2306741
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sun Sep 8 18:29:10 2024 +0200
+
+    made in_state machine
+
+commit 96dff00f6c3d3ef8184768bcc7b82cb446035f5f
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sun Sep 8 17:42:30 2024 +0200
+
+    added to header and documentation
+
+commit c33e754f8dd035dc9c826068900ce50b68206c44
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sun Sep 8 17:23:27 2024 +0200
+
+    fixed tokens not showing up need to implement operators
+
+commit 78ddccd2bacbfe85ff56520adf1cd1442b243c53
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Sun Sep 8 17:07:53 2024 +0200
+
+    redid tokenizer
+
+commit 063a9ad2a28fbbcd5c11034c3d2e1c162e17abd6
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Fri Sep 6 20:30:24 2024 +0200
+
+    started redoing implemented a tokens structure
+
+commit 3bbed8e00cc8e6b2a8b2e043d8bff84f5aaea0f9
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Thu Sep 5 19:23:40 2024 +0200
+
+    aggiunto readline fatto non finire pero termina con "end" dobbiamo integrare segnali
+
+commit ba2533951c572195a82fe68eb647e16cca1c3b4b
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Wed Sep 4 19:51:28 2024 +0200
+
+    little adjusments
+
+commit 53b9cf29aeff8559499ec4d14b9d5caaa1e31703
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Sep 3 20:21:46 2024 +0200
+
+    added redirection tokens
+
+commit 4112b52d864ce4e26d914a77ff9dd4f63bb33021
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Tue Sep 3 00:54:03 2024 +0200
+
+    bho facendo dello studio, ancora nulla di concreto, utillizzo fgets perche nel mio computer impossibile installare libreria di readline
+
+commit 4a3de93ae391c7138f8082f214e0db0d7625550b
+Author: kr1styV3 <ads.lombardi@gmail.com>
+Date:   Thu Aug 29 16:55:00 2024 +0200
+
+    1st stuff now need to understand what to do
