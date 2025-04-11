@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 04:54:29 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:19:19 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:53:47 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 
 // parsing.c
 
-char *extract_file_token(char *str);
+char		*extract_file_token(char *str);
 /**
  * @brief Skips the whitespaces in the given string.
  * @param str The string from which the whitespaces are skipped.
  * @param state The state of the parser to change to NORMAL state.
  * @return The number of characters skipped.
  */
-int	skip_whitespaces(char *str, t_state *state);
+int			skip_whitespaces(char *str, t_state *state);
 /**
  * @brief Extracts an alphanumeric token from the string.
  *
@@ -36,7 +36,7 @@ int	skip_whitespaces(char *str, t_state *state);
  * @param str The input string to extract the token from.
  * @return A pointer to the extracted token, or NULL if memory allocation fails.
  */
-char *extract_token(char *str);
+char		*extract_token(char *str);
 /**
  * @brief Extracts a word from a quoted string.
  *
@@ -47,38 +47,44 @@ char *extract_token(char *str);
  * @param quote The quote character used to enclose the word.
  * @return A pointer to the extracted word, or NULL if memory allocation fails.
  */
-char *extract_word(char *str, char quote);
+char		*extract_word(char *str, char quote);
 /**
  * @brief Processes an alphanumeric token from the input string.
  *
  * This function processes an alphanumeric token, extracting it from the input
  * string and storing it in the provided `t_token` structure.
  *
- * @param token A pointer to the `t_token` structure where the token will be stored.
+ * @param token A pointer to the
+ * `t_token` structure where the token will be stored.
  * @param str The input string to extract the token from.
  * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_token(t_token **token, char *str, int string_position, t_state *state);
+int			process_token(t_token **token,
+				char *str, int string_position, t_state *state);
 /**
  * @brief Processes a quoted word from the input string.
  *
  * This function processes a word enclosed in single or double quotes, extracting
  * it and storing it in the provided `t_token` structure.
  *
- * @param token A pointer to the `t_token` structure where the word will be stored.
+ * @param token A pointer to the `t_token` structure where
+ * the word will be stored.
  * @param str The input string starting with a quote.
  * @param state The state of the parser to change to SKIP_WHITESPACE.
  * @return The number of characters processed or -1 if memory allocation fails.
  */
-int process_word(t_token **token, char *str, int string_position, t_env_list *env);
+
+int			process_word(t_token **token, char *str,
+				int string_position, t_bau_args *meow);
 
 // operators.c
 /**
  * @brief Check and set the file descriptor for append output redirection (>>).
  *
  * This function identifies the file for append output redirection, skips leading
- * whitespaces, extracts the file name, and opens the file with appropriate permissions.
+ * whitespaces, extracts the file name,
+ * and opens the file with appropriate permissions.
  * If the file cannot be opened, the function handles the error.
  *
  * @param token Pointer to the token structure where file descriptor is stored.
@@ -86,12 +92,13 @@ int process_word(t_token **token, char *str, int string_position, t_env_list *en
  * @param string_position Position in the input string to start processing.
  * @return int The length of the processed string or -1 if an error occurs.
  */
-int check_append_fd(t_token *token, char *str, int string_position);
+int			check_append_fd(t_token *token, char *str, int string_position);
 /**
  * @brief Check and set the file descriptor for overwrite output redirection (>).
  *
  * This function handles the file for overwrite output redirection, skipping
- * whitespaces, extracting the file name, and opening the file with truncation mode.
+ * whitespaces, extracting the file name, and opening
+ * the file with truncation mode.
  * If the file cannot be opened, it handles the error.
  *
  * @param token Pointer to the token structure where file descriptor is stored.
@@ -99,19 +106,21 @@ int check_append_fd(t_token *token, char *str, int string_position);
  * @param string_position Position in the input string to start processing.
  * @return int The length of the processed string or -1 if an error occurs.
  */
-int check_overwrite_fd(t_token *token, char *str, int string_position);
+int			check_overwrite_fd(t_token *token, char *str, int string_position);
 /**
  * @brief Handle here-document input redirection (<<).
  *
- * This function reads input from the user line-by-line until the delimiter is encountered.
- * It concatenates the lines into a buffer that can be used as input for a command.
+ * This function reads input from the user line-by-line
+ * until the delimiter is encountered.
+ * It concatenates the lines into a buffer that can be
+ * used as input for a command.
  *
  * @param token Pointer to the token structure where here-doc input is stored.
  * @param str Input string containing the command.
  * @param string_position Position in the input string to start processing.
  * @return int The length of the processed string or -1 if an error occurs.
  */
-int here_doc(t_token *token, char *str, int string_position);
+int			here_doc(t_token *token, char *str, int string_position);
 /**
  * @brief Check and set the file descriptor for input redirection (<).
  *
@@ -124,24 +133,29 @@ int here_doc(t_token *token, char *str, int string_position);
  * @param string_position Position in the input string to start processing.
  * @return int The length of the processed string or -1 if an error occurs.
  */
-int input_from_file(t_token *token, char *str, int string_position);
+int			input_from_file(t_token *token, char *str, int string_position);
 /**
  * @brief Process operators like pipes, redirections, and background execution.
  *
- * This function identifies and processes various shell operators, such as pipes (|),
- * append redirection (>>), overwrite redirection (>), here-doc (<<), input redirection (<),
- * and background execution (&), setting the appropriate flags and file descriptors.
+ * This function identifies and processes various
+ * shell operators, such as pipes (|),
+ * append redirection (>>), overwrite redirection
+ * (>), here-doc (<<), input redirection (<),
+ * and background execution (&), setting the
+ * appropriate flags and file descriptors.
  *
- * @param token Pointer to the token structure where operator information is stored.
+ * @param token Pointer to the token structure
+ * where operator information is stored.
  * @param str Input string containing the command.
  * @param string_position Position in the input string to start processing.
  * @param state Pointer to the state machine's current state.
- * @return int The length of the processed string or 0 if the operator doesn't modify the length.
+ * @return int The length of the processed
+ * string or 0 if the operator doesn't modify the length.
  */
-int process_operator(t_token **token, char *str, int string_position, t_state *state);
+int			process_operator(t_token **token,
+				char *str, int string_position, t_state *state);
 
 // flags.c
-
 
 /**
  * @brief Extracts the length of the next flag in the string.
@@ -155,7 +169,7 @@ int process_operator(t_token **token, char *str, int string_position, t_state *s
  *
  * @return The length of the next flag.
  */
-int extract_flag_length(const char *str, int start_pos);
+int			extract_flag_length(const char *str, int start_pos);
 
 /**
  * @brief Allocates memory and copies a flag substring from the source string.
@@ -171,21 +185,25 @@ int extract_flag_length(const char *str, int start_pos);
  * @return A pointer to the newly allocated and copied flag string.
  *         Returns `NULL` if memory allocation fails.
  */
-char *allocate_and_copy_flag(const char *str, int start_pos, int length);
+char		*allocate_and_copy_flag(const char *str, int start_pos, int length);
 
 /**
- * @brief Handles memory allocation errors by freeing resources and reporting the error.
+ * @brief Handles memory allocation errors
+ * by freeing resources and reporting the error.
  *
  * This function is invoked when a memory allocation error occurs. It frees
  * the allocated tokens using `free_tokens_line` and returns an error code.
  *
  * @param str The input string being parsed.
- * @param token A pointer to the `t_token` structure containing allocated resources.
- * @param error_message A descriptive error message to be used for logging or reporting.
+ * @param token A pointer to the `t_token` structure
+ * containing allocated resources.
+ * @param error_message A descriptive error message
+ * to be used for logging or reporting.
  *
  * @return Returns `-1` to indicate an error.
  */
-int handle_allocation_error(char *str, t_token *token, char *error_message);
+int			handle_allocation_error(char *str, t_token *token,
+				char *error_message);
 
 /**
  * @brief Assigns temporary flags to the `token->args` array.
@@ -194,13 +212,15 @@ int handle_allocation_error(char *str, t_token *token, char *error_message);
  * the `args` member of the `t_token` structure. It starts assigning from
  * index 1 to accommodate any reserved positions (e.g., program name).
  *
- * @param token A pointer to the `t_token` structure where flags are to be assigned.
+ * @param token A pointer to the `t_token` structure
+ * where flags are to be assigned.
  * @param tmp_flags An array of temporary flag strings.
  * @param args_pos The number of flags parsed and stored in `tmp_flags`.
  *
  * @return Returns `0` on successful assignment.
  */
-int assign_flags_to_token_args(t_token **token, char *tmp_flags[], int args_pos);
+int			assign_flags_to_token_args(t_token **token,
+				char *tmp_flags[], int args_pos);
 
 /**
  * @brief Parses flags from a string and assigns them to a token structure.
@@ -209,13 +229,14 @@ int assign_flags_to_token_args(t_token **token, char *tmp_flags[], int args_pos)
  * at `string_position`, extracting flags, handling memory allocation, and
  * assigning the parsed flags to the `args` member of the provided `t_token`.
  *
- * @param token A pointer to the `t_token` structure to which parsed flags will be assigned.
+ * @param token A pointer to the `t_token`
+ * structure to which parsed flags will be assigned.
  * @param str The input string containing flags to parse.
  * @param string_position The starting position in the string to begin parsing.
  *
  * @return On success, returns the number of characters processed.
  *         On failure, returns `-1`.
  */
-int parse_flags(t_token *token, char *str, int string_position);
+int			parse_flags(t_token *token, char *str, int string_position);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:30:26 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/08 18:50:46 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:29:59 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@
 #include <sys/wait.h>
 #include <fcntl.h>    // For file control operations
 #include <stdbool.h>  // For bool type
-#include "../headers/executor.h"
+#include "minishell.h"
 #include "../headers/t_token.h" // Include the updated header
 #include "../headers/env_variables.h"
 
 static void	setup_child_io(t_token *current, int prev_fd, int *pipe_fd,
-	bool is_piped, char **env, t_env_list *envp)
+	bool is_piped, char **env, t_env_list *envp, int out)
 {
 	int	here_doc_fd;
 
+	(void)out;
 	if (current->doc && current->doc->here_doc)
 	{
 		here_doc_fd = handle_here_docs(current, envp, env);
@@ -60,7 +61,7 @@ static void	setup_child_io(t_token *current, int prev_fd, int *pipe_fd,
 }
 
 pid_t	fork_and_exec(t_token *current, int prev_fd, int *pipe_fd,
-	bool is_piped, char **env, t_env_list *envp)
+	bool is_piped, char **env, t_env_list *envp, int out)
 {
 	pid_t	pid;
 
@@ -73,7 +74,7 @@ pid_t	fork_and_exec(t_token *current, int prev_fd, int *pipe_fd,
 	}
 	if (pid == 0)
 	{
-		setup_child_io(current, prev_fd, pipe_fd, is_piped, env, envp);
+		setup_child_io(current, prev_fd, pipe_fd, is_piped, env, envp, out);
 		setup_redirections(current);
 		if (current->arg)
 			execve(current->arg[0], current->arg, env);

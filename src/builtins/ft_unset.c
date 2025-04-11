@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coca <coca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:09:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/03/12 07:34:48 by coca             ###   ########.fr       */
+/*   Updated: 2025/04/10 12:35:57 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
 #include "../../headers/parsing.h"
-
 
 /*
 ** ft_unsetenv:
@@ -33,7 +32,6 @@ static int	ft_unsetenv(const char *name, t_env_list **env)
 	prev = NULL;
 	while (curr)
 	{
-		/* Check if the current node's value starts with name and '=' follows */
 		if (ft_strncmp(curr->value, name, len) == 0 && curr->value[len] == '=')
 		{
 			if (prev)

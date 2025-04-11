@@ -1,0 +1,9 @@
+headers
+log
+LOG
+Makefile
+minishell
+my_libft
+readline.supp
+src
+valgrind-out.txt

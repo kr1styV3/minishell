@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_state.c                                     :+:      :+:    :+:   */
+/*   tokenize_handle_state.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:44 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:19:10 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:54:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,32 @@ void	handle_whitespace(t_tokenizer_ctx *ctx)
 
 void	handle_builtin(t_tokenizer_ctx *ctx)
 {
+	t_bau_args	bau;
+
+	bau.bau_bau = ctx->envp;
+	bau.meow = ctx->env;
 	ctx->pos += process_builtin(&ctx->token, ctx->str, ctx->pos,
-			&ctx->state, ctx->env, ctx->envp);
+			&bau);
 	ctx->pos += skip_whitespaces(&ctx->str[ctx->pos], &ctx->state);
-	update_state_from_char(ctx);
+	ctx->state = NORMAL;
 }
 
 void	handle_variable(t_tokenizer_ctx *ctx)
 {
+	t_bau_args	meow_diobono_sto_norminette_del_caizer;
+
+	meow_diobono_sto_norminette_del_caizer.meow = ctx->env;
+	meow_diobono_sto_norminette_del_caizer.bau_bau = ctx->envp;
 	ctx->pos += process_variable(&ctx->token, ctx->str,
-			ctx->pos + 1, ctx->env, ctx->envp) + 1;
+			ctx->pos + 1, &meow_diobono_sto_norminette_del_caizer) + 1;
 }
 
 void	handle_word(t_tokenizer_ctx *ctx)
 {
+	t_bau_args	meow_diobono_sto_norminette_del_caizer;
+
+	meow_diobono_sto_norminette_del_caizer.meow = ctx->env;
+	meow_diobono_sto_norminette_del_caizer.bau_bau = ctx->envp;
 	ctx->pos += process_word(&ctx->token, ctx->str, ctx->pos,
-			ctx->env);
+			&meow_diobono_sto_norminette_del_caizer);
 }

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:09:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:20:00 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ static char	*read_pipe_output(int pipe_read_fd)
 	char	*tmp;
 
 	result = NULL;
+	tmp = ft_strdup("");
 	while (1)
 	{
 		line = get_next_line(pipe_read_fd);
 		if (!line)
 			break ;
-		tmp = safe_strdup(result);
-		free(result);
+		if (result)
+		{
+			tmp = safe_strdup(result);
+			free(result);
+		}
 		result = ft_strjoin_until_nl(tmp, line);
 		free(tmp);
 		free(line);

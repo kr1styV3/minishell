@@ -6,15 +6,13 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:21:36 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:28:25 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:33:26 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 #include "../headers/parsing.h"
 #include "t_token.h"
-
-#include "operators_utils.h"
 
 static t_doc	*create_doc_from_delimiter(char *delimiter)
 {
@@ -45,7 +43,6 @@ static int	allocate_next_doc(t_token *token, char *delimiter, char *str)
 	token->doc->next = new_doc;
 	return (1);
 }
-
 
 static int	set_first_doc(t_token *token, char *delimiter, char *str)
 {

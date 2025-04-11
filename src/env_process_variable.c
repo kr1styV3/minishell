@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:04:17 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:04:29 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:35:16 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	process_braced_variable(t_token **token,
 }
 
 static int	process_subshell_variable(t_token **token,
-	char *str, int string_position, t_env_list *env, char **envp)
+	char *str, int string_position, t_bau_args *meow_norm)
 {
 	char	*command;
 	char	*command_output;
@@ -71,7 +71,8 @@ static int	process_subshell_variable(t_token **token,
 	command = extract_word(&str[string_position + 1], ')');
 	if (!command)
 		return (free_tokens_line(str, *token, "malloc error"), -1);
-	command_output = execute_and_capture_output(command, env, envp);
+	command_output = execute_and_capture_output(command,
+			meow_norm->meow, meow_norm->bau_bau);
 	free(command);
 	if (!command_output)
 		return (free_tokens_line(str, *token, "command execution error"), -1);
@@ -87,15 +88,17 @@ static int	process_subshell_variable(t_token **token,
 }
 
 int	process_variable(t_token **token, char *str, int string_position,
-	t_env_list *env, char **envp)
+	t_bau_args *miao_diobon)
 {
 	if (str[string_position] == '{')
-		return (process_braced_variable(token, str, string_position, env));
+		return (process_braced_variable(token, str,
+				string_position, miao_diobon->meow));
 	else if (str[string_position] == '(')
 		return (process_subshell_variable(token,
-				str, string_position, env, envp));
+				str, string_position, miao_diobon));
 	else if (str[string_position] == '?')
 		return (process_exit_code_variable(token));
 	else
-		return (process_simple_variable(token, str, string_position, env));
+		return (process_simple_variable(token,
+				str, string_position, miao_diobon->meow));
 }

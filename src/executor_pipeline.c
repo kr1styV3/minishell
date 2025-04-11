@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:29:22 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/08 20:59:46 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:41:18 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 	pid_t	child_pids[MAX_COMMANDS];
 	int		child_count;
 	int		status;
+	int		out;
 	int		pipe_fd[2];
 	int		prev_fd;
 	int i = 0;
@@ -102,6 +103,9 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 	prev_fd = -1;
 	child_count = 0;
 	status = 0;
+	out = 0;
+	if (dup2(STDOUT_FILENO, out) == -1)
+		exit(0);
 	while (current != job_end->next)
 	{
 		is_piped = (current != job_end && current->operator
@@ -118,12 +122,14 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 			g_should_exit = 1;
 		}
 		child_pids[child_count++] = fork_and_exec(current,
-				prev_fd, pipe_fd, is_piped, env, envp);
+				prev_fd, pipe_fd, is_piped, env, envp, out);
 		if (prev_fd != -1)
 			close(prev_fd);
 		prev_fd = (is_piped) ? pipe_fd[0] : -1;
 		current = current->next;
 	}
+	if (dup2(out, STDOUT_FILENO) == -1)
+		exit(0);
 	while (i < child_count)
 	{
 		waitpid(child_pids[i], &status, 0);

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:54 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:49:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:28:24 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	skip_assignment_whitespace(const char *line, int i)
 	return (i);
 }
 
-int		var_cleanup(char *full_entry, char *var_value, char *str)
+int	var_cleanup(char *full_entry, char *var_value, char *str)
 {
 	write(2, str, ft_strlen(str));
 	free(full_entry);

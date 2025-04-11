@@ -6,14 +6,14 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 20:26:37 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:43:03 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "minishell.h"
+# include "t_token.h"
 
 typedef enum e_exec_state
 {
@@ -37,6 +37,6 @@ int		execute_pipeline(t_token *job_start, t_token *job_end,
 			char **env, t_env_list *envp);
 void	setup_redirections(t_token *current);
 pid_t	fork_and_exec(t_token *current, int prev_fd, int *pipe_fd,
-			bool is_piped, char **env, t_env_list *envp);
+			bool is_piped, char **env, t_env_list *envp, int out);
 
 #endif

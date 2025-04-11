@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:16:18 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:15:14 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:29:21 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ void	read_line_from_user(t_token **token, t_env_list *env, char **envp)
 	line = NULL;
 	prompt = get_promt(env);
 	line = readline(prompt);
+	printf("%i", g_should_exit);
 	if (handle_read_line_edge_cases(line, prompt, token))
 		return ;
 	line = handle_empty_input(line, prompt);
