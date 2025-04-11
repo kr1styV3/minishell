@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:44 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 17:54:32 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:07:11 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	handle_builtin(t_tokenizer_ctx *ctx)
 	ctx->pos += process_builtin(&ctx->token, ctx->str, ctx->pos,
 			&bau);
 	ctx->pos += skip_whitespaces(&ctx->str[ctx->pos], &ctx->state);
-	ctx->state = NORMAL;
+	update_state_from_char(ctx);
+	if (ctx->state == IN_BUILTIN)
+		ctx->state = NORMAL;
 }
 
 void	handle_variable(t_tokenizer_ctx *ctx)

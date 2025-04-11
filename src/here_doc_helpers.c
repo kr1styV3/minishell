@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:55:17 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 19:28:04 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:50:22 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ int	heredoc_expansion(t_token **token, char *line,
 	char	*tmp;
 	char	*tmp3;
 	char	*tmp4;
+	t_bau_args meow;
 
+	meow.meow = env_list;
+	meow.bau_bau = envp;
 	dol_pos = get_dolpos(line);
 	if (dol_pos > 0)
 	{
-		var_length = process_variable(token, line, dol_pos, env_list, envp);
+		var_length = process_variable(token, line, dol_pos, &meow);
 		tmp = ft_substr(line, 0, dol_pos);
 		tmp3 = ft_substr(line, dol_pos + var_length, ft_strlen(line));
 		free(line);

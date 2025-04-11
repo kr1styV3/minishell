@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:50:32 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 18:13:27 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:04:07 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ static t_echo_ctx	init_echo_context( t_token *token, char *str,
 static void	echo_here_doc(t_echo_ctx *ctx, t_bau_args *meow)
 {
 	ctx->len += here_doc_init(ctx->token, ctx->str, ctx->i + ctx->len + 2) + 2;
+	(void)meow;
 }
 
 static int	handle_echo_content(t_echo_ctx *ctx, t_bau_args *meow)

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:19:26 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 13:58:45 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:10:00 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_syntax(char *line)
 	int	len;
 
 	i = 0;
-	len = strlen(line);
+	len = ft_strlen(line);
 	if (check_quotes(line, len))
 		return (1);
 	while (i < len)

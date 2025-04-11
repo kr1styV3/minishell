@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:29:22 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 13:41:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:48:34 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,15 @@ int	execute_pipeline(t_token *job_start, t_token *job_end,
 				prev_fd, pipe_fd, is_piped, env, envp, out);
 		if (prev_fd != -1)
 			close(prev_fd);
-		prev_fd = (is_piped) ? pipe_fd[0] : -1;
+		if (is_piped)
+		{
+			close(pipe_fd[1]);
+			prev_fd = pipe_fd[0];
+		}
+		else
+		{
+			prev_fd = -1;
+		}
 		current = current->next;
 	}
 	if (dup2(out, STDOUT_FILENO) == -1)

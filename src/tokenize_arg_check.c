@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_check.c                                        :+:      :+:    :+:   */
+/*   tokenize_arg_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:04:25 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 19:29:41 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:03:36 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ static int	ft_handle_operator_or_end(t_token **token,
 	return (-1);
 }
 
-static void	ft_allocate_args(t_token **token, int arg_count)
+static void	ft_allocate_args(t_token *token, int arg_count)
 {
 	if (arg_count == 0)
 	{
-		(*token)->arg = (char **)ft_calloc(2, sizeof(char *));
+		token->arg = (char **)ft_calloc(2, sizeof(char *));
 		return ;
 	}
-	(*token)->arg = (char **)ft_calloc(arg_count + 2, sizeof(char *));
-	(*token)->arg[0] = NULL;
+	token->arg = (char **)ft_calloc(arg_count + 2, sizeof(char *));
+	token->arg[0] = NULL;
 }
 
 static int	ft_calculate_final_position(char *str, int i, int arg_count)
@@ -91,7 +91,7 @@ int	ft_checkwordarg(t_token **token, char *str, int i)
 	if (final_pos != -1)
 		return (final_pos);
 	arg_count = count_arguments(str, i);
-	ft_allocate_args(token, arg_count);
+	ft_allocate_args(*token, arg_count);
 	if (arg_count == 0)
 		return (i - start_pos);
 	fill_arguments(*token, str, i, arg_count);
