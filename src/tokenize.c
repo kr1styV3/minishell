@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:05:01 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 13:28:30 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:42:18 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,18 @@
 
 static void	handle_normal(t_tokenizer_ctx *ctx)
 {
-	if (ft_isalnum(ctx->str[ctx->pos]))
+	if (ft_isalnum(ctx->str[ctx->pos]) || ctx->str[ctx->pos] == '/')
 		ctx->pos += process_token(&ctx->token, ctx->str, ctx->pos, &ctx->state);
+	if (access(ctx->token->parsed->token, X_OK) == 0)
+		ctx->token->checker = false;
 	if (check_var(&(ctx->token), ctx->str, &ctx->pos, &(ctx->env)) == 0)
 	{
 		ctx->token->env_work = true;
 		ctx->token->exec = false;
 	}
 	ctx->pos += ft_checkwordarg(&ctx->token, ctx->str, ctx->pos);
+	if (ctx->str[0] == '/' && ctx->token->checker == false)
+		ctx->token->arg[0] = ft_strdup(ctx->token->parsed->token);
 	ctx->pos += skip_whitespaces(&ctx->str[ctx->pos], &ctx->state);
 	if (!ctx->token->arg && ctx->token->checker == true
 		&& !ft_isbuiltin(ctx->token->parsed->token))

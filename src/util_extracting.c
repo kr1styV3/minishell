@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:09:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/06 19:13:40 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:34:53 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ char	*extract_token(char *str)
 	string_position = 0;
 	while (str[string_position]
 		&& (ft_isalnum(str[string_position]) || str[string_position] == '-'
-			|| str[string_position] == '_' || str[string_position] == '.'))
+			|| str[string_position] == '_' || str[string_position] == '.'
+			|| str[string_position] == '/'))
 		string_position++;
 	token = ft_calloc(string_position + 1, sizeof(char));
 	if (!token)

@@ -6,26 +6,13 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:04:25 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 20:03:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:38:13 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "builtins.h"
-
-static int	ft_handle_operator_or_end(t_token **token,
-		char *str, int i, int start_pos)
-{
-	if (ft_strchr(OPERATORS, str[i]) && (*token)->parsed->token == NULL)
-	{
-		(*token)->checker = false;
-		return (i - start_pos);
-	}
-	if (str[i] == '\0')
-		return (i - start_pos);
-	return (-1);
-}
 
 static void	ft_allocate_args(t_token *token, int arg_count)
 {
@@ -36,6 +23,19 @@ static void	ft_allocate_args(t_token *token, int arg_count)
 	}
 	token->arg = (char **)ft_calloc(arg_count + 2, sizeof(char *));
 	token->arg[0] = NULL;
+}
+
+static int	ft_handle_operator_or_end(t_token **token,
+		char *str, int i, int start_pos)
+{
+	if (ft_strchr(OPERATORS, str[i]) && (*token)->parsed->token == NULL)
+	{
+		(*token)->checker = false;
+		return (i - start_pos);
+	}
+	if (str[i] == '\0' && !(*token)->arg)
+		return (ft_allocate_args(*token, 0), i - start_pos);
+	return (-1);
 }
 
 static int	ft_calculate_final_position(char *str, int i, int arg_count)

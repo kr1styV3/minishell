@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:12:05 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 16:06:36 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:20:13 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_cd(t_token *token, char *str, int i, t_env_list *env)
 	if (path[0] == '~' || path[0] == '\0')
 	{
 		free(path);
-		path = ft_strdup(ft_getenv("HOME", env));
+		path = ft_getenv("HOME", env);
 		if (!path)
 			return (free_tokens_line(str, token, "malloc error"), -1);
 	}
@@ -50,6 +50,7 @@ int	ft_cd(t_token *token, char *str, int i, t_env_list *env)
 		free(path);
 		return (free_tokens_line(str, token, "cd error"), 0);
 	}
+	token->exec = false;
 	free(path);
 	return (len);
 }

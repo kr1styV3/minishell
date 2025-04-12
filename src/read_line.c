@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:16:18 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 12:29:21 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:07:30 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,8 +272,10 @@ static int	handle_read_line_edge_cases(char *line,
 	{
 		(*token)->exec = false;
 		ft_putendl_fd("basho dice syntax error", 2);
+		add_history(line);
 		free(prompt);
 		free(line);
+		line = NULL;
 		return (1);
 	}
 	if (g_should_exit > 0)
