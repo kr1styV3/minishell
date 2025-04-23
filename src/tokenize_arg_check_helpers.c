@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_check_helpers.c                                :+:      :+:    :+:   */
+/*   tokenize_arg_check_helpers.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:08:14 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/04 19:29:04 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:42:19 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_variables.h"
 #include "parsing.h"
 
 int	fill_unquoted_argument(t_token *token,
@@ -23,6 +24,8 @@ int	fill_unquoted_argument(t_token *token,
 	len = 0;
 	while (str[pos] && !ft_isspace(str[pos]) && !ft_strchr(OPERATORS, str[pos]))
 	{
+		// if (str[pos] == '$')
+		// 	pos += process_variable(&token, (char *)str, pos);
 		pos++;
 		len++;
 	}

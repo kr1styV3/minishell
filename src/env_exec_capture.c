@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:10:31 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 13:20:00 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:41:48 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ static void	handle_fork_error(int *pipefd)
 	close(pipefd[1]);
 }
 
-static char	*safe_strdup(char *src)
-{
-	if (src)
-		return (ft_strdup(src));
-	return (ft_strdup(""));
-}
-
 static char	*read_pipe_output(int pipe_read_fd)
 {
 	char	*line;
@@ -47,7 +40,9 @@ static char	*read_pipe_output(int pipe_read_fd)
 			break ;
 		if (result)
 		{
-			tmp = safe_strdup(result);
+			tmp = ft_strdup(result);
+			if (!tmp)
+				return (free(result), NULL);
 			free(result);
 		}
 		result = ft_strjoin_until_nl(tmp, line);
@@ -61,23 +56,28 @@ static void	handle_child_execution(int *pipefd, char *command,
 	t_env_list *env, char **envp)
 {
 	t_token	*token;
+	t_token	*start;
 
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	token = init_token();
+	start = token;
 	tokenizer(command, token, env, envp);
-	if (token->checker)
+	while (token)
 	{
-		if (checker(&token, env) == 1)
+		if (token->checker == true)
 		{
-			ft_putstr_fd("invalid command expansion : ", 2);
-			ft_putstr_fd(token->parsed->token, 2);
-			free_token(token);
-			g_should_exit = 1;
-			exit(EXIT_FAILURE);
+			if (checker(&token, env) == 1)
+			{
+				free_inside_token("minishell: command not found: ",
+					token->parsed->token);
+				g_should_exit = 2;
+			}
 		}
+		token = token->next;
 	}
+	token = start;
 	execute(&token, envp, env);
 	free_token(token);
 	exit(EXIT_SUCCESS);
@@ -103,6 +103,8 @@ char	*execute_and_capture_output(char *command,
 		handle_child_execution(pipefd, command, env, envp);
 	close(pipefd[1]);
 	output = read_pipe_output(pipefd[0]);
+	if (!output)
+		return (NULL);
 	close(pipefd[0]);
 	waitpid(pid, &status, 0);
 	return (output);

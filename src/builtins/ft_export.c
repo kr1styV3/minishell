@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:57 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 12:34:40 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:51:07 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ static int	export_set_var(t_env_list **env, t_token *token, char *str, int i)
 	if (str[i + len] == '=')
 	{
 		tmp = ft_freejoin(var_name, "=");
-		free(var_name);
 		var_name = tmp;
 		i += len + 1;
 		var_value = extract_token(&str[i]);
@@ -223,5 +222,7 @@ int	ft_export(t_token *token, t_env_list **env, char *str, int _i)
 			return (-1);
 		return (0);
 	}
+	token->checker = false;
+	token->exec = false;
 	return (len);
 }

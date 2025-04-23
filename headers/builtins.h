@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:01:19 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 13:45:10 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:15:16 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int		ft_env(t_token *token, t_env_list *env);
  * @param str Input string containing the command.
  * @return int This function does not return.
  */
-int		ft_exit(t_token *token, char *str);
+int		ft_exit(char *str);
 
 /**
  * @brief Process a built-in command and execute the appropriate function.

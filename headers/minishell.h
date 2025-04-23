@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:36:42 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 16:27:25 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:37:41 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int			heredoc_expansion(t_token **token, char *line,
 int			get_next_arg_len(const char *str, int *pos);
 int			fill_unquoted_argument(t_token *token,
 				const char *str, int pos, int arg_i);
-int			ft_checkwordarg(t_token **token, char *str, int i);
+int			ft_checkwordarg(t_token **token,
+				char *str, int i, t_bau_args *meow);
 char		*extract_bash_file(char *str);
 void		inside_token_free(t_token *token);
 void		setup_signal_handling(void);

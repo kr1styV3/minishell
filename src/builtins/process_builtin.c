@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:06:00 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/11 13:24:20 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:15:08 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	process_builtin(t_token **token, char *str, int i,
 	if (!ft_strcmp((*token)->parsed->token, "env"))
 		return (ft_env(*token, meow->meow));
 	if (!ft_strcmp((*token)->parsed->token, "exit"))
-		return (ft_exit(*token, str));
+		return (ft_exit(str));
 	ft_putstr_fd("minishell : builtin not found : ", 2);
 	ft_putendl_fd((*token)->parsed->token, 2);
 	g_should_exit = 2;

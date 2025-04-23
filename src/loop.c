@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:58:56 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/07 20:08:35 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:26:32 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static void	handle_execution(t_token **head, t_token *token,
 		token = token->next;
 	}
 	token = *head;
+	if (token->exec == false && token->next)
+		token->exec = true;
 	if (token->exec == true && !g_should_exit)
 		*status = execute(head, meow.bau_bau, meow.meow);
 }

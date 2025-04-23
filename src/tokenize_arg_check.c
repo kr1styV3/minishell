@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:04:25 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/12 12:38:13 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:42:31 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ static void	fill_arguments(t_token *token,
 	}
 }
 
-int	ft_checkwordarg(t_token **token, char *str, int i)
+int	ft_checkwordarg(t_token **token, char *str, int i, t_bau_args *meow)
 {
 	int	start_pos;
 	int	arg_count;
 	int	final_pos;
 
 	start_pos = i;
+	(void)meow;
 	if (ft_isbuiltin((*token)->parsed->token))
 		return (0);
 	i += skip_whitespaces(&str[i], NULL);

@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:05:01 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/12 12:42:18 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:18:47 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@
 
 static void	handle_normal(t_tokenizer_ctx *ctx)
 {
+	t_bau_args	tokenize_sto_norminette_del_caizer;
+
+	tokenize_sto_norminette_del_caizer.bau_bau = ctx->envp;
+	tokenize_sto_norminette_del_caizer.meow = ctx->env;
 	if (ft_isalnum(ctx->str[ctx->pos]) || ctx->str[ctx->pos] == '/')
 		ctx->pos += process_token(&ctx->token, ctx->str, ctx->pos, &ctx->state);
-	if (access(ctx->token->parsed->token, X_OK) == 0)
-		ctx->token->checker = false;
+	if (!ctx->token->parsed->token && ctx->str[ctx->pos] == '.')
+		ctx->pos += process_file_cmd(ctx->token, ctx->str, ctx->pos);
+	if (ctx->token->parsed->token)
+		if (access(ctx->token->parsed->token, X_OK) == 0)
+			ctx->token->checker = false;
 	if (check_var(&(ctx->token), ctx->str, &ctx->pos, &(ctx->env)) == 0)
-	{
-		ctx->token->env_work = true;
 		ctx->token->exec = false;
-	}
-	ctx->pos += ft_checkwordarg(&ctx->token, ctx->str, ctx->pos);
-	if (ctx->str[0] == '/' && ctx->token->checker == false)
+	ctx->pos += ft_checkwordarg(&ctx->token,
+			ctx->str, ctx->pos, &tokenize_sto_norminette_del_caizer);
+	if (ctx->str[0] == '/' && ctx->token->checker == false && ctx->token->arg)
 		ctx->token->arg[0] = ft_strdup(ctx->token->parsed->token);
 	ctx->pos += skip_whitespaces(&ctx->str[ctx->pos], &ctx->state);
 	if (!ctx->token->arg && ctx->token->checker == true

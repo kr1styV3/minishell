@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:04:17 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 13:35:16 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:02:38 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	process_simple_variable(t_token **token,
 
 	variable = extract_until_not_alfanum(&str[string_position]);
 	if (!variable)
-		return (free_tokens_line(str, *token, "malloc error"), -1);
+		return (free_tokens_line(str, *token, "malloc error"), 0);
 	(*token)->parsed->word = ft_getenv(variable, env);
 	len = ft_strlen(variable);
 	free(variable);
@@ -49,11 +49,11 @@ static int	process_braced_variable(t_token **token,
 	string_position++;
 	variable = extract_until_not_alfanum(&str[string_position]);
 	if (!variable)
-		return (free_tokens_line(str, *token, "malloc error"), -1);
+		return (free_tokens_line(str, *token, "malloc error"), 0);
 	if (str[string_position + ft_strlen(variable)] != '}')
 	{
 		free(variable);
-		return (free_tokens_line(str, *token, "missing '}'"), -1);
+		return (free_tokens_line(str, *token, "missing '}'"), 0);
 	}
 	(*token)->parsed->word = ft_getenv(variable, env);
 	len = ft_strlen(variable) + 2;
@@ -70,20 +70,20 @@ static int	process_subshell_variable(t_token **token,
 
 	command = extract_word(&str[string_position + 1], ')');
 	if (!command)
-		return (free_tokens_line(str, *token, "malloc error"), -1);
+		return (free_tokens_line(str, *token, "error\n"), 0);
 	command_output = execute_and_capture_output(command,
 			meow_norm->meow, meow_norm->bau_bau);
 	free(command);
 	if (!command_output)
-		return (free_tokens_line(str, *token, "command execution error"), -1);
+		return (free_tokens_line(str, *token, "command execution error"), 0);
 	trimmed = ft_strtrim(command_output, " ");
 	free(command_output);
 	if (!trimmed)
-		return (free_tokens_line(str, *token, "malloc error"), -1);
+		return (free_tokens_line(str, *token, "malloc error"), 0);
 	(*token)->parsed->word = ft_strdup(trimmed);
 	free(trimmed);
 	if (!(*token)->parsed->word)
-		return (free_tokens_line(str, *token, "malloc error"), -1);
+		return (free_tokens_line(str, *token, "malloc error"), 0);
 	return (ft_strlen(command) + 2);
 }
 

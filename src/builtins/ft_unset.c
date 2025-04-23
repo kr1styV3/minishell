@@ -6,7 +6,7 @@
 /*   By: chrlomba <chrlomba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 05:09:12 by chrlomba          #+#    #+#             */
-/*   Updated: 2025/04/10 12:35:57 by chrlomba         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:46:36 by chrlomba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,11 @@ int	ft_unset(t_token *token, char *str, int i, t_env_list **env)
 	len = skip_whitespaces(&str[i], NULL);
 	name = extract_token(&str[i + len]);
 	if (!name)
-		return (free_tokens_line(str, token, "malloc error"), -1);
+		return (free_tokens_line(str, token, "malloc error"), 0);
 	len += ft_strlen(name);
 	if (ft_unsetenv(name, env) != 0)
-		return (free_tokens_line(str, token, "failed to unset env\n"), -1);
+		return (free_tokens_line(str, token, "failed to unset env\n"), 0);
 	free(name);
+	token->checker = false;
 	return (len);
 }
